@@ -60,7 +60,7 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
                         <span>
-                            <i class="ti ti-healthcare"></i>
+                            <i class="ti ti-user"></i>
                         </span>
                         <span class="hide-menu">Pasien</span>
                     </a>
