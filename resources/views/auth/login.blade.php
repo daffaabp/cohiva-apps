@@ -19,9 +19,8 @@
                     <div class="col-md-8 col-lg-6 col-xxl-3">
                         <div class="card mb-0">
                             <div class="card-body">
-                                <a href="{{ route('login') }}"
-                                    class="text-nowrap logo-img text-center d-block py-3 w-100">
-                                    <img src="{{ URL::to('/assets/images/logos/cohiva-logo.svg') }}" width="180"
+                                <a href="{{ route('login') }}" class="text-nowrap logo-img text-center d-block w-100">
+                                    <img src="{{ URL::to('/assets/images/logos/cohiva-logo.svg') }}" width="170"
                                         alt="">
                                 </a>
                                 <p class="text-center">Selamat Datang di Cohiva Apps</p>
