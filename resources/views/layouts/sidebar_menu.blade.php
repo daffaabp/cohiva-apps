@@ -60,7 +60,7 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
                         <span>
-                            <i class="ti ti-cards"></i>
+                            <i class="ti ti-heart-broken"></i>
                         </span>
                         <span class="hide-menu">Pasien</span>
                     </a>
