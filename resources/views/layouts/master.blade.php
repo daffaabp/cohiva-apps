@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cohiva Apps</title>
+    <link rel="shortcut icon" type="image/png" href="{{ URL::to('/assets/images/logos/logo.svg') }}" />
+    <link rel="stylesheet" href="{{ URL::to('/assets/css/styles.min.css') }}" />
+</head>
+
+<body>
+    <!--  Body Wrapper -->
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed">
+
+        <!-- Sidebar Start -->
+        @include('layouts.sidebar_menu')
+        <!--  Sidebar End -->
+
+
+        <!--  Main wrapper -->
+        <div class="body-wrapper">
+
+
+            <!--  Header Start -->
+            @include('layouts.header')
+            <!--  Header End -->
+
+
+            <div class="container-fluid">
+                <!--  Row 1 -->
+
+                @yield('content')
+
+
+
+                @include('layouts.footer')
+            </div>
+        </div>
+    </div>
+    <script src="{{ URL::to('/assets/libs/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ URL::to('/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ URL::to('/assets/js/sidebarmenu.js') }}"></script>
+    <script src="{{ URL::to('/assets/js/app.min.js') }}"></script>
+    <script src="{{ URL::to('/assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
+    <script src="{{ URL::to('/assets/libs/simplebar/dist/simplebar.js') }}"></script>
+    <script src="{{ URL::to('/assets/js/dashboard.js') }}"></script>
+</body>
+
+</html>
