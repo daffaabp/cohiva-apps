@@ -50,7 +50,7 @@
                     <span class="hide-menu">MASTER</span>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('konselors.index') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-cards"></i>
                         </span>
@@ -58,7 +58,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('pasiens.index') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-heart-broken"></i>
                         </span>
@@ -86,7 +86,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
+                    <a class="sidebar-link" href="asgh" aria-expanded="false">
                         <span>
                             <i class="ti ti-user-plus"></i>
                         </span>

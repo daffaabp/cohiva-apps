@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('template_title')
-    Konselor
+    Pasien
 @endsection
 
 @section('content')
@@ -13,12 +13,12 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Konselor') }}
+                                {{ __('Pasien') }}
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('konselors.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                    {{ __('Tambah Konselor') }}
+                                <a href="{{ route('pasiens.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                  {{ __('Create New') }}
                                 </a>
                               </div>
                         </div>
@@ -36,30 +36,30 @@
                                     <tr>
                                         <th>No</th>
                                         
-										<th>Nama Konselor</th>
-										<th>Notelpon Konselor</th>
-										<th>Unit Kerja</th>
-										<th>Foto Konselor</th>
-										<th>Is Aktif</th>
+										<th>Nama Pasien</th>
+										<th>Alamat Pasien</th>
+										<th>Notelpon Pasien</th>
+										<th>Id User</th>
+										<th>Jk Pasien</th>
 
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($konselors as $konselor)
+                                    @foreach ($pasiens as $pasien)
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             
-											<td>{{ $konselor->nama_konselor }}</td>
-											<td>{{ $konselor->notelpon_konselor }}</td>
-											<td>{{ $konselor->unit_kerja }}</td>
-											<td>{{ $konselor->foto_konselor }}</td>
-											<td>{{ $konselor->is_aktif }}</td>
+											<td>{{ $pasien->nama_pasien }}</td>
+											<td>{{ $pasien->alamat_pasien }}</td>
+											<td>{{ $pasien->notelpon_pasien }}</td>
+											<td>{{ $pasien->id_user }}</td>
+											<td>{{ $pasien->jk_pasien }}</td>
 
                                             <td>
-                                                <form action="{{ route('konselors.destroy',$konselor->id_konselor) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('konselors.show',$konselor->id_konselor) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('konselors.edit',$konselor->id_konselor) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                <form action="{{ route('pasiens.destroy',$pasien->id_pasien) }}" method="POST">
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('pasiens.show',$pasien->id_pasien) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('pasiens.edit',$pasien->id_pasien) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin hapus data?')"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
@@ -72,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $konselors->links() !!}
+                {!! $pasiens->links() !!}
             </div>
         </div>
     </div>
