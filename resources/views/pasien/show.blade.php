@@ -11,10 +11,10 @@
                 <div class="card">
                     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Pasien</span>
+                            <span class="card-title">{{ __('Detail') }} Pasien</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary btn-sm" href="{{ route('pasiens.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary btn-sm" href="{{ route('pasiens.index') }}"> {{ __('Kembali') }}</a>
                         </div>
                     </div>
 
@@ -39,6 +39,18 @@
                         <div class="form-group mb-2 mb20">
                             <strong>Jk Pasien:</strong>
                             {{ $pasien->jk_pasien }}
+                        </div>
+                        <div class="form-group mb-2 mb20">
+                            <strong>Usia:</strong>
+                            {{ $pasien->usia }}
+                        </div>
+                        <div class="form-group mb-2 mb20">
+                            <strong>Berat Badan:</strong>
+                            {{ $pasien->berat_badan }}
+                        </div>
+                        <div class="form-group mb-2 mb20">
+                            <strong>Tinggi Badan:</strong>
+                            {{ $pasien->tinggi_badan }}
                         </div>
 
                     </div>

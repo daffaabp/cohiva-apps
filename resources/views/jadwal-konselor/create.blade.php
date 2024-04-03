@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('template_title')
-    {{ __('Create') }} Pasien
+    {{ __('Create') }} Jadwal Konselor
 @endsection
 
 @section('content')
@@ -11,13 +11,13 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">{{ __('Tambah') }} Pasien</span>
+                        <span class="card-title">{{ __('Tambah') }} Jadwal Konselor</span>
                     </div>
                     <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('pasiens.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('jadwal-konselors.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
-                            @include('pasien.form')
+                            @include('jadwal-konselor.form')
 
                         </form>
                     </div>

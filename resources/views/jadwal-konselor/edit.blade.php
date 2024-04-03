@@ -1,23 +1,24 @@
 @extends('layouts.master')
 
 @section('template_title')
-    {{ __('Create') }} Pasien
+    {{ __('Update') }} Jadwal Konselor
 @endsection
 
 @section('content')
     <section class="content container-fluid">
-        <div class="row">
+        <div class="">
             <div class="col-md-12">
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">{{ __('Tambah') }} Pasien</span>
+                        <span class="card-title">{{ __('Update') }} Jadwal Konselor</span>
                     </div>
                     <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('pasiens.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('jadwal-konselors.update', $jadwalKonselor->id) }}"  role="form" enctype="multipart/form-data">
+                            {{ method_field('PATCH') }}
                             @csrf
 
-                            @include('pasien.form')
+                            @include('jadwal-konselor.form')
 
                         </form>
                     </div>

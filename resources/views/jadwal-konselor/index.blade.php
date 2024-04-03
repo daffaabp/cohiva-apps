@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('template_title')
-    Pasien
+    Jadwal Konselor
 @endsection
 
 @section('content')
@@ -13,12 +13,12 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Pasien') }}
+                                {{ __('Jadwal Konselor') }}
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('pasiens.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Tambah Pasien') }}
+                                <a href="{{ route('jadwal-konselors.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                  {{ __('Tambah Jadwal') }}
                                 </a>
                               </div>
                         </div>
@@ -36,39 +36,37 @@
                                     <tr>
                                         <th>No</th>
                                         
-										<th>Nama Pasien</th>
-										<th>Alamat Pasien</th>
-										<th>Notelpon Pasien</th>
-										<th>Id User</th>
-										<th>Jk Pasien</th>
+										<th>Konselor</th>
+										<th>Hari</th>
+										<th>Jam</th>
+										<th>Status</th>
 
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($pasiens as $pasien)
+                                    @foreach ($jadwalKonselors as $jadwalKonselor)
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             
-											<td>{{ $pasien->nama_pasien }}</td>
-											<td>{{ $pasien->alamat_pasien }}</td>
-											<td>{{ $pasien->notelpon_pasien }}</td>
-											<td>{{ $pasien->id_user }}</td>
+											<td>{{ $jadwalKonselor->konselor->nama_konselor }}</td>
+											<td>{{ $jadwalKonselor->hari }}</td>
+											<td>{{ $jadwalKonselor->jam }}</td>
 											<td>
-                                                @if($pasien->jk_pasien == 'L')
-                                                {{ 'Laki-laki' }}
-                                                @else
-                                                {{ 'Perempuan' }}
-                                                @endif
+                                            @if($jadwalKonselor->status == 1)
+                                            Aktif
+                                            @else
+                                            Non Aktif
+                                            @endif
                                             </td>
 
                                             <td>
-                                                <form action="{{ route('pasiens.destroy',$pasien->id_pasien) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('pasiens.show',$pasien->id_pasien) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('pasiens.edit',$pasien->id_pasien) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                <form action="{{ route('jadwal-konselors.destroy',$jadwalKonselor->id) }}" method="POST">
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('jadwal-konselors.show',$jadwalKonselor->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('jadwal-konselors.edit',$jadwalKonselor->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin hapus data?')"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -78,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $pasiens->links() !!}
+                {!! $jadwalKonselors->links() !!}
             </div>
         </div>
     </div>

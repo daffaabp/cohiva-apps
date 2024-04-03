@@ -31,7 +31,7 @@ class Pasien extends Model
      *
      * @var array
      */
-    protected $fillable = ['nama_pasien', 'alamat_pasien', 'notelpon_pasien', 'id_user', 'jk_pasien'];
+    protected $fillable = ['nama_pasien', 'alamat_pasien', 'notelpon_pasien', 'id_user', 'jk_pasien', 'usia', 'berat_badan', 'tinggi_badan'];
 
 
 

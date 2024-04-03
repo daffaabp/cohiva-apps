@@ -41,6 +41,10 @@ class Konselor extends Model
     {
         return $this->hasMany(\App\Models\Konseling::class, 'id_konselor', 'id_konselor');
     }
+
+    public function jadwal_konselor(){
+        return $this->hasMany(JadwalKonselor::class, 'id_konselor', 'id_konselor');
+    }
     
 
 }
