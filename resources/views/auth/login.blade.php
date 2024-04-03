@@ -25,6 +25,13 @@
                                 </a>
                                 <p class="text-center">Selamat Datang di Cohiva Apps</p>
 
+                                @if (session('verified'))
+                                    <div class="alert alert-success" role="alert">
+                                        {{ session('verified') }}
+                                    </div>
+                                @endif
+
+
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
 
