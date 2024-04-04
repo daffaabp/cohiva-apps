@@ -22,6 +22,13 @@
                                 alt="">
                         </a>
                         <p class="text-center mb-4">Silahkan Registrasi Diri Anda</p>
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                {{ $errors->first() }}
+                            </div>
+                        @endif
+
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
                             <div class="mb-3">
@@ -49,18 +56,12 @@
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Password</label>
                                 <div class="input-group">
-                                    <input id="password" type="password" name="password"
-                                        class="form-control @error('password') is-invalid @enderror" required
+                                    <input id="password" type="password" name="password" class="form-control" required
                                         autocomplete="new-password">
                                     <button type="button" class="btn btn-outline-secondary" onclick="togglePassword()">
                                         <i id="password-toggle-icon" class="bi bi-eye-slash"></i>
                                     </button>
                                 </div>
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Konfirmasi Password</label>
