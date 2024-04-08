@@ -7,6 +7,7 @@
     <title>Cohiva Apps</title>
     <link rel="shortcut icon" type="image/png" href="{{ URL::to('/assets/images/logos/logo.svg') }}" />
     <link rel="stylesheet" href="{{ URL::to('/assets/css/styles.min.css') }}" />
+    @stack('css')
 </head>
 
 <body>
@@ -46,6 +47,8 @@
     <script src="{{ URL::to('/assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ URL::to('/assets/libs/simplebar/dist/simplebar.js') }}"></script>
     <script src="{{ URL::to('/assets/js/dashboard.js') }}"></script>
+
+    @stack('js')
 </body>
 
 </html>
