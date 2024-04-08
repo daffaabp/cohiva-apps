@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\KonselorController;
 use App\Http\Controllers\JadwalKonselorController;
+use App\Http\Controllers\JanjiKonselingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('konselors', KonselorController::class);
 Route::resource('pasiens', PasienController::class);
 Route::resource('jadwal-konselors', JadwalKonselorController::class);
+Route::resource('janji-konselings', JanjiKonselingController::class);

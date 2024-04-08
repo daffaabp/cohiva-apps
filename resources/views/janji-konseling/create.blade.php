@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('template_title')
-    {{ __('Create') }} Konselor
+    {{ __('Create') }} Janji Konseling
 @endsection
 
 @section('content')
@@ -10,15 +10,14 @@
             <div class="col-md-12">
 
                 <div class="card card-default">
-                    <div class="card-header d-flex justify-content-between">
-                        <span class="card-title">{{ __('Tambah') }} Konselor</span>
-                        <a href="{{ route('konselors.index') }}" class="btn btn-dark">kembali</a>
+                    <div class="card-header">
+                        <span class="card-title">{{ __('Tambah') }} Janji Konseling</span>
                     </div>
                     <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('konselors.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('janji-konselings.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
-                            @include('konselor.form')
+                            @include('janji-konseling.form')
 
                         </form>
                     </div>

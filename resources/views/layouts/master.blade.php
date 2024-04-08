@@ -28,15 +28,12 @@
             <!--  Header End -->
 
 
-            <div class="container-fluid">
-                <!--  Row 1 -->
 
-                @yield('content')
+            @yield('content')
 
 
 
-                @include('layouts.footer')
-            </div>
+            @include('layouts.footer')
         </div>
     </div>
     <script src="{{ URL::to('/assets/libs/jquery/dist/jquery.min.js') }}"></script>

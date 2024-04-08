@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class KonselorRequest extends FormRequest
+class JanjiKonselingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,9 @@ class KonselorRequest extends FormRequest
     public function rules(): array
     {
         return [
-			'nama_konselor' => 'required|string',
-			'notelpon_konselor' => 'string',
-			'unit_kerja' => 'string',
-			'foto_konselor' => 'required|mimes:jpg,png|max:2048',
-			'is_aktif' => 'required',
+			'id_jadwalkonselor' => 'required',
+			'id_pasien' => 'required',
+			'status_janji' => 'required|string',
         ];
     }
 }

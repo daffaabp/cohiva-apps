@@ -47,6 +47,26 @@
                 </li>
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                    <span class="hide-menu">JADWAL</span>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ route('jadwal-konselors.index') }}" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-calendar"></i>
+                        </span>
+                        <span class="hide-menu">Jadwal Konselor</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ route('janji-konselings.index') }}" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-clipboard"></i>
+                        </span>
+                        <span class="hide-menu">Janji Konseling</span>
+                    </a>
+                </li>
+                <li class="nav-small-cap">
+                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">MASTER</span>
                 </li>
                 <li class="sidebar-item">
