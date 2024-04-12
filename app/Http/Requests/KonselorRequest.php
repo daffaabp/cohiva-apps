@@ -25,7 +25,7 @@ class KonselorRequest extends FormRequest
 			'nama_konselor' => 'required|string',
 			'notelpon_konselor' => 'string',
 			'unit_kerja' => 'string',
-			'foto_konselor' => 'required|mimes:jpg,png|max:2048',
+			'foto_konselor' => 'mimes:jpg,png|max:2048',
 			'is_aktif' => 'required',
         ];
     }

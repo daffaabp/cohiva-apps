@@ -41,34 +41,39 @@ class KonselorController extends Controller
         //create random number for id_konselor
         $id_konselor = random_int(1, 999999);
 
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'nama_konselor' => 'required',
-            'notelpon_konselor'=>'required',
-            'unit_kerja'=>'required',
-            'foto_konselor' =>'mimes:jpg,png|max:2048',
+            'notelpon_konselor' => 'required',
+            'unit_kerja' => 'required',
+            'foto_konselor' => 'mimes:jpg,png|max:2048',
             'is_aktif' => 'required'
         ]);
 
         if ($validator->fails()) {
             return redirect('konselors.create')
-                        ->withErrors($validator)
-                        ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
-        
+
         $validated = $validator->validated();
         $validated['id_konselor'] = $id_konselor;
 
-        //get request file
-        $file = $request->file('foto_konselor');
-        $extension = $file->getClientOriginalExtension();
-        $filename = 'id_'.$id_konselor.'.'.$extension; //get file original name
-        $savefilename = 'id_'.$id_konselor.'.'.$file->getClientOriginalExtension(); //save with id konselor
-        $path = 'foto_konselor/'.$savefilename;
+        //cek apakah ada file yang diupload atau tidak
+        if ($request->file('foto_konselor') !== null) {
+            //get request file
+            $file = $request->file('foto_konselor');
+            $extension = $file->getClientOriginalExtension();
+            $filename = 'id_' . $id_konselor . '.' . $extension; //get file original name
+            $savefilename = 'id_' . $id_konselor . '.' . $file->getClientOriginalExtension(); //save with id konselor
+            $path = 'foto_konselor/' . $savefilename;
 
-        Storage::disk('public')->put($path, file_get_contents($file)); //save file to storage folder
-        $validated['foto_konselor'] = trim($filename);
+            Storage::disk('public')->put($path, file_get_contents($file)); //save file to storage folder
+            $validated['foto_konselor'] = trim($filename);
 
-        Konselor::create($validated);
+            Konselor::create($validated);
+        }else{
+            Konselor::create($validated);
+        }
 
         return redirect()->route('konselors.index')
             ->with('success', 'Konselor created successfully.');
@@ -98,36 +103,41 @@ class KonselorController extends Controller
      * Update the specified resource in storage.
      */
     public function update(KonselorRequest $request, Konselor $konselor)
-    {        
-        $validator = Validator::make($request->all(),[
+    {
+        $validator = Validator::make($request->all(), [
             'nama_konselor' => 'required',
-            'notelpon_konselor'=>'required',
-            'unit_kerja'=>'required',
-            'foto_konselor' =>'mimes:jpg,png|max:2048',
+            'notelpon_konselor' => 'required',
+            'unit_kerja' => 'required',
+            'foto_konselor' => 'mimes:jpg,png|max:2048',
             'is_aktif' => 'required'
         ]);
 
         if ($validator->fails()) {
-            return redirect()->action([KonselorController::class,'edit'],['id_konselor'=>$konselor->id_konselor])
-                        ->withErrors($validator)
-                        ->withInput();
+            return redirect()->action([KonselorController::class, 'edit'], ['id_konselor' => $konselor->id_konselor])
+                ->withErrors($validator)
+                ->withInput();
         }
-        
+
         $validated = $validator->validated();
 
-        //get request file
-        $file = $request->file('foto_konselor');
-        $extension = $file->getClientOriginalExtension();
-        $filename = 'id_'.$konselor->id_konselor.'.'.$extension; //get file original name
-        $savefilename = 'id_'.$konselor->id_konselor.'.'.$file->getClientOriginalExtension(); //save with id konselor
-        $path = 'foto_konselor/'.$savefilename;
+        //cek apakah ada file yang diupload atau tidak
+        if ($request->file('foto_konselor') == null) {
+            $validated['foto_konselor'] = $konselor->foto_konselor; //set tetap default
+            $konselor->update($validated);
+        } else {
+            //get request file
+            $file = $request->file('foto_konselor');
+            $extension = $file->getClientOriginalExtension();
+            $filename = 'id_' . $konselor->id_konselor . '.' . $extension; //get file original name
+            $savefilename = 'id_' . $konselor->id_konselor . '.' . $file->getClientOriginalExtension(); //save with id konselor
+            $path = 'foto_konselor/' . $savefilename;
 
-        Storage::disk('public')->put($path, file_get_contents($file)); //save file to storage folder
-        $validated['foto_konselor'] = trim($filename);
+            Storage::disk('public')->put($path, file_get_contents($file)); //save file to storage folder
+            $validated['foto_konselor'] = trim($filename);
 
-        $konselor->update($validated);
+            $konselor->update($validated);
+        }
 
-        
         return redirect()->route('konselors.index')
             ->with('success', 'Konselor updated successfully');
     }
