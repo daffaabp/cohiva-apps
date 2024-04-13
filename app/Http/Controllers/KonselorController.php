@@ -96,7 +96,8 @@ class KonselorController extends Controller
      */
     public function show($id)
     {
-        $konselor = Konselor::find($id);
+        $id_konselor = decrypt($id);
+        $konselor = Konselor::find($id_konselor);
 
         return view('konselor.show', compact('konselor'));
     }
@@ -106,7 +107,8 @@ class KonselorController extends Controller
      */
     public function edit($id)
     {
-        $konselor = Konselor::find($id);
+        $id_konselor = decrypt($id);
+        $konselor = Konselor::find($id_konselor);
 
         return view('konselor.edit', compact('konselor'));
     }
@@ -156,7 +158,8 @@ class KonselorController extends Controller
 
     public function destroy($id)
     {
-        Konselor::find($id)->delete();
+        $id_konselor = decrypt($id);
+        Konselor::find($id_konselor)->delete();
 
         return redirect()->route('konselors.index')
             ->with('success', 'Konselor deleted successfully');
