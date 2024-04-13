@@ -7,6 +7,7 @@
     <title>Cohiva Apps</title>
     <link rel="shortcut icon" type="image/png" href="{{ URL::to('/assets/images/logos/logo.svg') }}" />
     <link rel="stylesheet" href="{{ URL::to('/assets/css/styles.min.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     @stack('css')
 </head>
 

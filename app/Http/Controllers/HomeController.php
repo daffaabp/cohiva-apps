@@ -31,4 +31,9 @@ class HomeController extends Controller
     {
         return view('pasien.info_hiv');
     }
+
+    public function daftar_konselor()
+    {
+        return view('pasien.daftar_konselor');
+    }
 }
