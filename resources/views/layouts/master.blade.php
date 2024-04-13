@@ -43,6 +43,18 @@
     <script src="{{ URL::to('/assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ URL::to('/assets/libs/simplebar/dist/simplebar.js') }}"></script>
     <script src="{{ URL::to('/assets/js/dashboard.js') }}"></script>
+    
+    <script>
+        $(document).ready(function() {
+          $(document).keydown(function(event) {
+            if (event.ctrlKey && event.key === '/') {
+              $('#formkeyword').find('input, button').prop('disabled', false);
+              $('#formkeyword input:first').focus();
+              event.preventDefault();
+            }
+          });
+        });
+        </script>
 </body>
 
 </html>

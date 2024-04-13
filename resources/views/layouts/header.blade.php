@@ -9,7 +9,10 @@
         </ul>
         <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                
+                <form class="d-flex" role="search" id="formkeyword">
+                    <input style="width: 500px;" class="form-control me-2"  type="text" name="keyword" value="{{ request('keyword') }}" placeholder="Ctrl - / untuk mencari" aria-label="Search">
+                    <a href="{{ request()->url() }}" class="btn btn-outline-primary"><i class="ti ti-reload"></i></a>
+                </form>
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -37,3 +40,4 @@
         </div>
     </nav>
 </header>
+

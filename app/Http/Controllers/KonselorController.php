@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Konselor;
+use Illuminate\Http\Request;
 use App\Http\Requests\KonselorRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -16,9 +17,20 @@ class KonselorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $req)
     {
-        $konselors = Konselor::paginate();
+        $keyword = $req->keyword;
+        $konselors = Konselor::query(); 
+
+        if(isset($keyword)){
+            $konselors->where(function($query) use ($keyword){
+                $query->where('nama_konselor','like', '%'.$keyword.'%')
+                ->orWhere('notelpon_konselor','like', '%'.$keyword.'%')
+                ->orWhere('unit_kerja', 'like', '%'.$keyword.'%');
+            })->get();
+        }
+
+        $konselors = $konselors->paginate();
 
         return view('konselor.index', compact('konselors'))
             ->with('i', (request()->input('page', 1) - 1) * $konselors->perPage());
