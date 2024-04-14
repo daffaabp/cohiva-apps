@@ -98,7 +98,7 @@
                     <span class="hide-menu">PASIEN</span>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('info_hiv') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-heart-broken"></i>
                         </span>
@@ -106,7 +106,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="asgh" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('daftar_konselor') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-user-plus"></i>
                         </span>

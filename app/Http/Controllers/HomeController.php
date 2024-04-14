@@ -26,4 +26,14 @@ class HomeController extends Controller
         // return view('home');
         return view('home_new');
     }
+
+    public function info()
+    {
+        return view('pasien.info_hiv');
+    }
+
+    public function daftar_konselor()
+    {
+        return view('pasien.daftar_konselor');
+    }
 }

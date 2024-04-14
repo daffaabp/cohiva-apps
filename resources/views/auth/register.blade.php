@@ -4,9 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Modernize Free</title>
+    <title>Register</title>
     <link rel="shortcut icon" type="image/png/svg" href="{{ URL::to('/assets/images/logos/logo.svg') }}" />
     <link rel="stylesheet" href="{{ URL::to('/assets/css/styles.min.css') }}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
 <body>
@@ -21,21 +22,28 @@
                                 alt="">
                         </a>
                         <p class="text-center mb-4">Silahkan Registrasi Diri Anda</p>
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                {{ $errors->first() }}
+                            </div>
+                        @endif
+
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
                             <div class="mb-3">
-                                <label for="exampleInputtext1" class="form-label">Nama</label>
-                                <input id="name" type="text" name="name"
-                                    class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"
-                                    required autocomplete="name" autofocus>
-                                @error('name')
+                                <label for="exampleInputtext1" class="form-label">Username</label>
+                                <input id="username" type="text" name="username"
+                                    class="form-control @error('username') is-invalid @enderror"
+                                    value="{{ old('username') }}" required autocomplete="username" autofocus>
+                                @error('username')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Email Address</label>
+                                <label for="exampleInputEmail1" class="form-label">Alamat Email</label>
                                 <input id="email" type="email"
                                     class="form-control @error('email') is-invalid @enderror" name="email"
                                     value="{{ old('email') }}" required autocomplete="email">
@@ -47,14 +55,13 @@
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                                <input id="password" type="password" name="password"
-                                    class="form-control @error('password') is-invalid @enderror" required
-                                    autocomplete="new-password">
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <div class="input-group">
+                                    <input id="password" type="password" name="password" class="form-control" required
+                                        autocomplete="new-password">
+                                    <button type="button" class="btn btn-outline-secondary" onclick="togglePassword()">
+                                        <i id="password-toggle-icon" class="bi bi-eye-slash"></i>
+                                    </button>
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Konfirmasi Password</label>
@@ -77,6 +84,22 @@
 
     <script src="{{ URL::to('/assets/libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ URL::to('/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script>
+        function togglePassword() {
+            var passwordField = document.getElementById("password");
+            var passwordToggleIcon = document.getElementById("password-toggle-icon");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                passwordToggleIcon.classList.remove("bi-eye-slash");
+                passwordToggleIcon.classList.add("bi-eye");
+            } else {
+                passwordField.type = "password";
+                passwordToggleIcon.classList.remove("bi-eye");
+                passwordToggleIcon.classList.add("bi-eye-slash");
+            }
+        }
+    </script>
 </body>
 
 </html>

@@ -5,6 +5,8 @@ use App\Http\Controllers\PasienController;
 use App\Http\Controllers\KonselorController;
 use App\Http\Controllers\JadwalKonselorController;
 use App\Http\Controllers\JanjiKonselingController;
+use App\Http\Controllers\HomeController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,10 +23,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home_new');
+Route::get('/home', [HomeController::class, 'index'])->name('home_new')->middleware('verified');
 Route::resource('konselors', KonselorController::class);
 Route::resource('pasiens', PasienController::class);
 Route::resource('jadwal-konselors', JadwalKonselorController::class);
 Route::resource('janji-konselings', JanjiKonselingController::class);
+
+Route::get('/info-hiv', [HomeController::class, 'info'])->name('info_hiv');
+Route::get('/daftar_konselor', [HomeController::class, 'daftar_konselor'])->name('daftar_konselor');
