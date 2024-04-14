@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Konselor;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -34,6 +35,7 @@ class HomeController extends Controller
 
     public function daftar_konselor()
     {
-        return view('pasien.daftar_konselor');
+        $konselors = Konselor::where('is_aktif','=', 1)->get();
+        return view('pasien.daftar_konselor', compact('konselors'));
     }
 }
