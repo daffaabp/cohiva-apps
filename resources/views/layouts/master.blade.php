@@ -7,6 +7,7 @@
     <title>Cohiva Apps</title>
     <link rel="shortcut icon" type="image/png" href="{{ URL::to('/assets/images/logos/logo.svg') }}" />
     <link rel="stylesheet" href="{{ URL::to('/assets/css/styles.min.css') }}" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -43,18 +44,22 @@
     <script src="{{ URL::to('/assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ URL::to('/assets/libs/simplebar/dist/simplebar.js') }}"></script>
     <script src="{{ URL::to('/assets/js/dashboard.js') }}"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script>
         $(document).ready(function() {
-          $(document).keydown(function(event) {
-            if (event.ctrlKey && event.key === '/') {
-              $('#formkeyword').find('input, button').prop('disabled', false);
-              $('#formkeyword input:first').focus();
-              event.preventDefault();
-            }
-          });
+            $(document).keydown(function(event) {
+                if (event.ctrlKey && event.key === '/') {
+                    $('#formkeyword').find('input, button').prop('disabled', false);
+                    $('#formkeyword input:first').focus();
+                    event.preventDefault();
+                }
+            });
+
+            $('.js-example-basic-single').select2();
         });
-        </script>
+    </script>
+
 </body>
 
 </html>

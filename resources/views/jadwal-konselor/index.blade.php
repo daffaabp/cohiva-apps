@@ -54,19 +54,19 @@
 											<td>{{ $jadwalKonselor->jam }}</td>
 											<td>
                                             @if($jadwalKonselor->status == 1)
-                                            Aktif
+                                            <span class="badge text-bg-success">Aktif</span>
                                             @else
-                                            Non Aktif
+                                            <span class="badge text-bg-dark">Non Aktif</span>
                                             @endif
                                             </td>
 
                                             <td>
-                                                <form action="{{ route('jadwal-konselors.destroy',$jadwalKonselor->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('jadwal-konselors.show',$jadwalKonselor->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('jadwal-konselors.edit',$jadwalKonselor->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                <form action="{{ route('jadwal-konselors.destroy',encrypt($jadwalKonselor->id)) }}" method="POST">
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('jadwal-konselors.show',encrypt($jadwalKonselor->id)) }}"><i class="fa fa-fw fa-eye"></i> <i class="ti ti-eye"></i></a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('jadwal-konselors.edit',encrypt($jadwalKonselor->id)) }}"><i class="fa fa-fw fa-edit"></i> <i class="ti ti-pencil"></i></a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin hapus data?')"><i class="ti ti-trash"></i></button>
                                                 </form>
                                             </td>
                                         </tr>

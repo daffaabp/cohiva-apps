@@ -14,7 +14,7 @@
                         <span class="card-title">{{ __('Update') }} Jadwal Konselor</span>
                     </div>
                     <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('jadwal-konselors.update', $jadwalKonselor->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('jadwal-konselors.update', encrypt($jadwalKonselor->id)) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 
