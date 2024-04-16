@@ -36,4 +36,9 @@ class HomeController extends Controller
     {
         return view('pasien.daftar_konselor');
     }
+
+    public function jadwalkan_konseling()
+    {
+        return view('pasien.jadwalkan_konseling');
+    }
 }
