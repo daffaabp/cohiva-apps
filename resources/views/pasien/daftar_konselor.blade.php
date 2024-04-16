@@ -12,7 +12,8 @@
                                     style="width: 220px; height: 220px; box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);"
                                     alt="Profile Image">
                             @else
-                                <img src="{{ asset('/assets/images/profile/user-1.jpg') }}" class="card-img-top"
+                                <img src="{{ asset('/assets/images/profile/user-1.jpg') }}" class="card-img-top rounded-circle mx-auto d-block mt-3"
+                                    style="width: 220px; height: 220px; box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);"
                                     alt="avatar">
                             @endif
                         </div>
