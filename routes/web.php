@@ -33,3 +33,4 @@ Route::resource('janji-konselings', JanjiKonselingController::class);
 
 Route::get('/info-hiv', [HomeController::class, 'info'])->name('info_hiv');
 Route::get('/daftar_konselor', [HomeController::class, 'daftar_konselor'])->name('daftar_konselor');
+Route::get('/jadwalkan_konseling', [HomeController::class, 'jadwalkan_konseling'])->name('jadwalkan_konseling');

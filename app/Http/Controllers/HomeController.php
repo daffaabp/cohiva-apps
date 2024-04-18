@@ -38,4 +38,9 @@ class HomeController extends Controller
         $konselors = Konselor::where('is_aktif','=', 1)->get();
         return view('pasien.daftar_konselor', compact('konselors'));
     }
+
+    public function jadwalkan_konseling()
+    {
+        return view('pasien.jadwalkan_konseling');
+    }
 }
