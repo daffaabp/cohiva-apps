@@ -22,9 +22,11 @@ class JanjiKonselingRequest extends FormRequest
     public function rules(): array
     {
         return [
-			'id_jadwalkonselor' => 'required',
-			'id_pasien' => 'required',
-			'status_janji' => 'required|string',
+			'id_jadwalkonselor' => 'numeric',
+			'id_pasien' => 'numeric',
+			'status_janji' => 'string',
+            'id_konselor' => 'numeric',
+            'tgl_janji_konseling' => 'date',
         ];
     }
 }

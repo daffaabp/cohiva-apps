@@ -16,16 +16,14 @@
                                 {{ __('Janji Konseling') }}
                             </span>
 
-                             <div class="float-right">
-                                <a href="{{ route('janji-konselings.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Buat janji konseling') }}
-                                </a>
-                              </div>
+                            <a href="{{ route('janjikonseling.pilihkonselor') }}" class="btn btn-sm btn-primary">Buat
+                                janji</a>
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
-                        <div class="alert alert-success m-4">
-                            <p>{{ $message }}</p>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ $message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
 
@@ -35,11 +33,13 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-                                        
-										<th>Jadwal Konseling</th>
-										<th>Pasien</th>
-										<th>Status Janji</th> 
-										<th>Tanggal Janji</th> 
+
+                                        <th>Tanggal Janji</th>
+                                        <th>Konselor</th>
+                                        <th>Hari</th>
+                                        <th>Jam</th>
+                                        <th>Pasien</th>
+                                        <th>Status Janji</th>
 
                                         <th></th>
                                     </tr>
@@ -48,20 +48,61 @@
                                     @foreach ($janjiKonselings as $janjiKonseling)
                                         <tr>
                                             <td>{{ ++$i }}</td>
+
+                                            <?php
+                                            if ($janjiKonseling['tgl_janji_konseling'] != null) {
+                                                $tanggal = date('j', strtotime($janjiKonseling['tgl_janji_konseling']));
+                                                $bulan_array = [
+                                                    1 => 'Jan',
+                                                    2 => 'Feb',
+                                                    3 => 'Mar',
+                                                    4 => 'Apr',
+                                                    5 => 'Mei',
+                                                    6 => 'Jun',
+                                                    7 => 'Jul',
+                                                    8 => 'Ags',
+                                                    9 => 'Sep',
+                                                    10 => 'Okt',
+                                                    11 => 'Nov',
+                                                    12 => 'Des',
+                                                ];
                                             
-											<td>{{ $janjiKonseling->id_jadwalkonselor }}</td>
-											<td>{{ $janjiKonseling->id_pasien }}</td>
-											<td>{{ $janjiKonseling->status_janji }}</td>
-											<td>{{ $janjiKonseling->tgl_janji_konseling }}</td>
+                                                $bl = date('n', strtotime($janjiKonseling['tgl_janji_konseling']));
+                                                $bulan = $bulan_array[$bl];
+                                                $tahun = date('Y', strtotime($janjiKonseling['tgl_janji_konseling']));
+                                                $tgl_janji_konseling = $tanggal . ' ' . ' ' . $bulan . ' ' . $tahun;
+                                            } else {
+                                                $tgl_janji_konseling = '';
+                                            }
+                                            ?>
+                                            <td>{{ $tgl_janji_konseling }}</td>
+                                            <td>{{ $janjiKonseling->nama_konselor }}</td>
+                                            <td>{{ $janjiKonseling->hari }}</td>
+                                            <td>{{ $janjiKonseling->jam }}</td>
+                                            <td>{{ $janjiKonseling->pasien->nama_pasien.' | '.$janjiKonseling->pasien->alamat_pasien }}</td>
+                                            <td>
+                                                @if($janjiKonseling->status_janji == 'DIJADWALKAN')
+                                                <span  class="badge rounded-pill text-bg-primary">{{ $janjiKonseling->status_janji }}</span>
+                                                @elseif($janjiKonseling->status_janji == 'TERLAKSANA')
+                                                <span  class="badge rounded-pill text-bg-success">{{ $janjiKonseling->status_janji }}</span>
+                                                @elseif($janjiKonseling->status_janji == 'DIBATALKAN')
+                                                <span  class="badge rounded-pill text-bg-danger">{{ $janjiKonseling->status_janji }}</span>
+                                                @endif
+                                            </td>
 
                                             <td>
-                                                <form action="{{ route('janji-konselings.destroy',$janjiKonseling->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('janji-konselings.show',$janjiKonseling->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('janji-konselings.edit',$janjiKonseling->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                <a class="btn btn-sm btn-primary " href="{{ route('janji-konselings.show', $janjiKonseling->id) }}"> <i class="ti ti-eye"></i></a>
+
+                                                {{-- cek jika statusnya dijadwalkan maka masih bisa dirubah atau dihapus --}}
+                                                @if($janjiKonseling->status_janji == "DIJADWALKAN" && date('Y-m-d') <= $janjiKonseling->tgl_janji_konseling)
+                                                <a class="btn btn-sm btn-success" href="{{ route('janji-konselings.edit', $janjiKonseling->id) }}"> <i class="ti ti-pencil"></i></a>
+                                                <form id="delete-form" action="{{ route('janji-konselings.destroy', $janjiKonseling->id) }}"  method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm" id="delete-btn"> <i
+                                                            class="ti ti-trash"></i></button>
                                                 </form>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -74,4 +115,5 @@
             </div>
         </div>
     </div>
+
 @endsection
