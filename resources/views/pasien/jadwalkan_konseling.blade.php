@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
-    <div class="container mt-5">
-        <div class="row">
+    <div class="container-fluid"> <!-- Menambahkan margin top 5 -->
+        <div class="row mt-5">
             <!-- Card 1: Chat -->
             <div class="col-md-4">
                 <div class="card card-chat">
