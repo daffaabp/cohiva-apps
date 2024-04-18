@@ -29,7 +29,11 @@ Route::get('/home', [HomeController::class, 'index'])->name('home_new')->middlew
 Route::resource('konselors', KonselorController::class);
 Route::resource('pasiens', PasienController::class);
 Route::resource('jadwal-konselors', JadwalKonselorController::class);
-Route::resource('janji-konselings', JanjiKonselingController::class);
+
+Route::resource('janji-konselings', JanjiKonselingController::class)->except(['create']);
+Route::get('/janji-konseling/create/{id}', [JanjiKonselingController::class, 'create'])->name('janji-konseling.create');
+Route::get('/janji-konseling/pilihkonselor', [JanjiKonselingController::class, 'pilihkonselor'])->name('janjikonseling.pilihkonselor');
+Route::get('/getjadwal', [JanjiKonselingController::class, 'getjadwal'])->name('getjadwal');
 
 Route::get('/info-hiv', [HomeController::class, 'info'])->name('info_hiv');
 Route::get('/daftar_konselor', [HomeController::class, 'daftar_konselor'])->name('daftar_konselor');

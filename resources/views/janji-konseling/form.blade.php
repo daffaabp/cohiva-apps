@@ -1,34 +1,45 @@
 <div class="row padding-1 p-1">
     <div class="col-md-12">
-        
-        <div class="form-group mb-2 mb20">
-            <label for="id_jadwalkonselor" class="form-label">Jadwal Konselor</label>
-            <select name="id_jadwalkonselor" class="form-select" id="id_jadwalkonselor">
-                <option value="">Budi, Selasa 11:00</option>
-                <option value="">Budi, Selasa 11:00</option>
-                <option value="">Budi, Selasa 11:00</option>
-            </select>
+        <input type="hidden" name="id_konselor" value="{{ $id_konselor }}">
+        <div class="form-group mb-2 mb20 jadwaltersedia">
+            <label for="id_jadwalkonselor" class="form-label">{{ __('Jadwal Tersedia') }}</label>
+            @foreach ($jadwalkonselors as $jadwalkonselor)
+                <div class="form-check">
+                    <input class="form-check-input" value="{{ $jadwalkonselor->id }}" {{ old('id_jadwalkonselor') == $jadwalkonselor->id ? 'checked' : ''; }} type="radio"
+                        name="id_jadwalkonselor" id="flexRadioDefault{{ $jadwalkonselor->id }}">
+                    <label class="form-check-label" for="flexRadioDefault{{ $jadwalkonselor->id }}">
+                        {{ $jadwalkonselor->hari }}, {{ $jadwalkonselor->jam }} WIB
+                    </label>
+                </div>
+            @endforeach
         </div>
 
-        <div class="form-group mb-2 mb20">
-            <label for="id_pasien" class="form-label">{{ __('Id Pasien') }}</label>
-            <input type="text" name="id_pasien" class="form-control @error('id_pasien') is-invalid @enderror" value="{{ old('id_pasien', $janjiKonseling?->id_pasien) }}" id="id_pasien" placeholder="Id Pasien">
+        <div class="form-group mb-4 mb20">
+            <label for="id_pasien" class="form-label">{{ __('Pasien') }}</label>
+            <select name="id_pasien" id="id_pasien" class="form-select js-example-basic-single">
+                @foreach ($pasiens as $pasien)
+                    <option value="{{ $pasien->id_pasien }}">{{ $pasien->nama_pasien . ' | ' . $pasien->alamat_pasien }}
+                    </option>
+                @endforeach
+            </select>
             {!! $errors->first('id_pasien', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
-        </div>
-        <div class="form-group mb-2 mb20">
-            <label for="status_janji" class="form-label">{{ __('Status Janji') }}</label>
-            <input type="text" name="status_janji" class="form-control @error('status_janji') is-invalid @enderror" value="{{ old('status_janji', $janjiKonseling?->status_janji) }}" id="status_janji" placeholder="Status Janji">
-            {!! $errors->first('status_janji', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
 
         <div class="form-group mb-2 mb20">
             <label for="tgl_janji_konseling" class="form-label">{{ __('Tanggal Janji') }}</label>
-            <input type="text" name="tgl_janji_konseling" class="form-control @error('tgl_janji_konseling') is-invalid @enderror" value="{{ old('tgl_janji_konseling', $janjiKonseling?->tgl_janji_konseling) }}" id="tgl_janji_konseling" placeholder="Tanggal Janji">
-            {!! $errors->first('tgl_janji_konseling', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
+            <input type="date" name="tgl_janji_konseling"
+                class="form-control @error('tgl_janji_konseling') is-invalid @enderror"
+                value="{{ old('tgl_janji_konseling', $janjiKonseling?->tgl_janji_konseling) }}"
+                id="tgl_janji_konseling" placeholder="Tanggal Janji" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+            {!! $errors->first(
+                'tgl_janji_konseling',
+                '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>',
+            ) !!}
         </div>
 
     </div>
     <div class="col-md-12 mt20 mt-2">
-        <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
+        <button type="submit" class="btn btn-primary">{{ __('Simpan') }}</button>
+        <a href="{{ route('janjikonseling.pilihkonselor') }}" class="btn btn-outline-dark ms-2">Kembali</a>
     </div>
 </div>

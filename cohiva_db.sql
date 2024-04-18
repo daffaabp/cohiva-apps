@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Apr 2024 pada 15.44
+-- Waktu pembuatan: 14 Apr 2024 pada 15.51
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -58,7 +58,10 @@ CREATE TABLE `jadwal_konselor` (
 --
 
 INSERT INTO `jadwal_konselor` (`id`, `id_konselor`, `hari`, `jam`, `status`, `created_at`, `updated_at`) VALUES
-(1, 2, 'Kamis', '11:00:00', '0', '2024-04-02 20:05:39', '2024-04-02 20:15:11');
+(1, 2, 'Kamis', '11:00:00', '1', '2024-04-02 20:05:39', '2024-04-13 22:47:21'),
+(2, 6, 'Rabu', '09:10:00', '1', '2024-04-13 20:43:30', '2024-04-13 20:43:30'),
+(5, 4, 'Selasa', '10:00:00', '1', '2024-04-13 21:47:00', '2024-04-14 00:46:40'),
+(7, 21, 'Jumat', '14:00:00', '1', '2024-04-14 06:16:09', '2024-04-14 06:16:09');
 
 -- --------------------------------------------------------
 
@@ -111,8 +114,34 @@ CREATE TABLE `konselor` (
 --
 
 INSERT INTO `konselor` (`id_konselor`, `nama_konselor`, `notelpon_konselor`, `unit_kerja`, `foto_konselor`, `is_aktif`) VALUES
-(1, 'Dafaaaaaaaaa', '23423423', 'Purwokerto', 'sdas', 1),
-(2, 'Budi', '5675675', 'Purwokerto', 'asd', 1);
+(1, 'Dafa Budiiii', '23423423', 'Purwokerto', 'id_1.png', 0),
+(2, 'Budi', '5675675', 'Purwokerto', 'astronaut_ring_neon_156673_1920x1080.jpg', 1),
+(3, 'Dr. Budi, M.Psi', '081234567890', 'Unit A', 'foto1.jpg', 1),
+(4, 'Prof. Ani, S.Psi', '082345678901', 'Unit B', 'foto2.jpg', 1),
+(6, 'Dra. Dewi, M.Pd', '084567890123', 'Unit D', 'foto4.jpg', 1),
+(7, 'Ir. Edi, M.T', '085678901234', 'Unit E', 'foto5.jpg', 1),
+(8, 'Hj. Fitri, S.Psi', '086789012345', 'Unit F', 'foto6.jpg', 1),
+(9, 'H. Gatot, M.Psi', '087890123456', 'Unit G', 'foto7.jpg', 1),
+(10, 'Dr. Hana, M.Pd', '088901234567', 'Unit H', 'foto8.jpg', 1),
+(11, 'Prof. Irfan, S.Kom', '089012345678', 'Unit I', 'foto9.jpg', 1),
+(12, 'Drs. Joko, M.T', '090123456789', 'Unit J', 'foto10.jpg', 1),
+(13, 'Dra. Kurnia, M.Psi', '091234567890', 'Unit K', 'foto11.jpg', 1),
+(14, 'Ir. Lina, S.Kom', '092345678901', 'Unit L', 'foto12.jpg', 1),
+(15, 'Hj. Murni, M.T', '093456789012', 'Unit M', 'foto13.jpg', 1),
+(16, 'H. Nana, M.Psi', '094567890123', 'Unit N', 'foto14.jpg', 1),
+(17, 'Dr. Oktavian, S.Kom', '095678901234', 'Unit O', 'foto15.jpg', 1),
+(18, 'Prof. Putri, M.Pd', '096789012345', 'Unit P', 'foto16.jpg', 1),
+(19, 'Drs. Qori, M.Psi', '097890123456', 'Unit Q', 'foto17.jpg', 1),
+(20, 'Dra. Rini, S.Kom', '098901234567', 'Unit R', 'foto18.jpg', 1),
+(21, 'Ir. Sari, M.T', '099012345678', 'Unit S', 'foto19.jpg', 1),
+(22, 'Hj. Tuti, M.Psi', '100123456789', 'Unit T', 'foto20.jpg', 1),
+(27, 'Prasetya', '8768787', 'Purwokerto', 'C:\\xampp\\tmp\\php2AE6.tmp', 1),
+(28, 'asdasdasda', '123123', 'dasdas', 'C:\\xampp\\tmp\\php457F.tmp', 1),
+(29, 'asdasdasda', '123123', 'dasdas', 'C:\\xampp\\tmp\\phpD7FC.tmp', 1),
+(30, 'kansdkjanskjd', '98342983', 'adnskjdnakjsd', 'C:\\xampp\\tmp\\php1B9F.tmp', 1),
+(31, 'naksjdkhabsh', '234234', 'dasda', 'C:\\xampp\\tmp\\php24D.tmp', 1),
+(334940, 'Irfan', '89192831', 'akjshdkja', 'id_334940.jpg', 1),
+(751946, 'Danang', '213168768', 'Purwokerto', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -426,7 +455,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT untuk tabel `jadwal_konselor`
 --
 ALTER TABLE `jadwal_konselor`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `janji_konseling`
@@ -439,12 +468,6 @@ ALTER TABLE `janji_konseling`
 --
 ALTER TABLE `konseling`
   MODIFY `id_konseling` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `konselor`
---
-ALTER TABLE `konselor`
-  MODIFY `id_konselor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`

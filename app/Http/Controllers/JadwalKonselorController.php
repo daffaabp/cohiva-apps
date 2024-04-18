@@ -58,8 +58,8 @@ class JadwalKonselorController extends Controller
         $jam = $request->jam;
         //kita cek apakah sudah pernah buat jadwal yang sama atau belum
         $jadwalkonselor = JadwalKonselor::where('id_konselor', '=', $id_konselor)
-        ->orWhere('hari','=', $hari)
-        ->orWhere('jam','=',$jam)
+        ->where('hari','=', $hari)
+        ->where('jam','=',$jam)
         ->first();
         
         if(!empty($jadwalkonselor)){

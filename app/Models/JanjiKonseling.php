@@ -23,7 +23,7 @@ class JanjiKonseling extends Model
 {
 
     protected $table = "janji_konseling";
-    
+
 
     protected $perPage = 20;
 
@@ -32,7 +32,7 @@ class JanjiKonseling extends Model
      *
      * @var array
      */
-    protected $fillable = ['id_jadwalkonselor', 'id_pasien', 'status_janji'];
+    protected $fillable = ['id_jadwalkonselor', 'nama_konselor', 'hari', 'jam', 'id_pasien', 'status_janji', 'tgl_janji_konseling'];
 
 
     /**
@@ -42,7 +42,7 @@ class JanjiKonseling extends Model
     {
         return $this->belongsTo(\App\Models\JadwalKonselor::class, 'id_jadwalkonselor', 'id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -50,6 +50,4 @@ class JanjiKonseling extends Model
     {
         return $this->belongsTo(\App\Models\Pasien::class, 'id_pasien', 'id_pasien');
     }
-    
-
 }
