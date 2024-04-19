@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\KonselorController;
+use App\Http\Controllers\KonselingController;
 use App\Http\Controllers\JadwalKonselorController;
 use App\Http\Controllers\JanjiKonselingController;
 
@@ -28,6 +29,7 @@ Route::resource('konselors', KonselorController::class);
 Route::resource('pasiens', PasienController::class);
 Route::resource('jadwal-konselors', JadwalKonselorController::class);
 Route::resource('janji-konselings', JanjiKonselingController::class)->except(['create']);
+Route::resource('konselings', KonselingController::class);
 
 Route::get('/janji-konseling/create/{id}', [JanjiKonselingController::class, 'create'])->name('janji-konseling.create');
 

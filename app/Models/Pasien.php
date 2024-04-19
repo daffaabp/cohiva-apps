@@ -34,5 +34,8 @@ class Pasien extends Model
     protected $fillable = ['nama_pasien', 'alamat_pasien', 'notelpon_pasien', 'id_user', 'jk_pasien', 'usia', 'berat_badan', 'tinggi_badan'];
 
 
+    public function konseling(){
+        return $this->hasMany(Konseling::class, 'id_pasien', 'id_pasien');
+    }
 
 }

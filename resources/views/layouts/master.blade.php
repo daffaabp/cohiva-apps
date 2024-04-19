@@ -48,16 +48,14 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
-        document.getElementById("delete-btn").addEventListener("click", function(event) {
-            event.preventDefault(); // Menghentikan aksi default (submit form)
-            if (confirm('Yakin ingin menghapus data?')) {
-                document.getElementById("delete-form").submit(); // Mengirimkan formulir jika pengguna menekan OK
-            }
-        });
-    </script>
-
-    <script>
         $(document).ready(function() {
+            $("#delete-btn").click(function(event) {
+                event.preventDefault(); // Menghentikan aksi default (submit form)
+                if (confirm('Yakin ingin menghapus data?')) {
+                    $("#delete-form").submit(); // Mengirimkan formulir jika pengguna menekan OK
+                }
+            });
+
             $(document).keydown(function(event) {
                 if (event.ctrlKey && event.key === '/') {
                     $('#formkeyword').find('input, button').prop('disabled', false);

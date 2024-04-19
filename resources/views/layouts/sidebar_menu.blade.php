@@ -47,6 +47,18 @@
                 </li>
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                    <span class="hide-menu">KONSELING</span>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ route('konselings.index') }}" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-comments">&#xeaef;</i>
+                        </span>
+                        <span class="hide-menu">Konseling</span>
+                    </a>
+                </li>
+                <li class="nav-small-cap">
+                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">JADWAL</span>
                 </li>
                 <li class="sidebar-item">
