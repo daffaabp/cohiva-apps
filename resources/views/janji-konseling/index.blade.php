@@ -66,7 +66,7 @@
                                                     11 => 'Nov',
                                                     12 => 'Des',
                                                 ];
-                                            
+
                                                 $bl = date('n', strtotime($janjiKonseling['tgl_janji_konseling']));
                                                 $bulan = $bulan_array[$bl];
                                                 $tahun = date('Y', strtotime($janjiKonseling['tgl_janji_konseling']));
@@ -79,29 +79,39 @@
                                             <td>{{ $janjiKonseling->nama_konselor }}</td>
                                             <td>{{ $janjiKonseling->hari }}</td>
                                             <td>{{ $janjiKonseling->jam }}</td>
-                                            <td>{{ $janjiKonseling->pasien->nama_pasien.' | '.$janjiKonseling->pasien->alamat_pasien }}</td>
+                                            <td>{{ $janjiKonseling->pasien->nama_pasien . ' | ' . $janjiKonseling->pasien->alamat_pasien }}
+                                            </td>
                                             <td>
-                                                @if($janjiKonseling->status_janji == 'DIJADWALKAN')
-                                                <span  class="badge rounded-pill text-bg-primary">{{ $janjiKonseling->status_janji }}</span>
+                                                @if ($janjiKonseling->status_janji == 'DIJADWALKAN')
+                                                    <span
+                                                        class="badge rounded-pill text-bg-primary">{{ $janjiKonseling->status_janji }}</span>
                                                 @elseif($janjiKonseling->status_janji == 'TERLAKSANA')
-                                                <span  class="badge rounded-pill text-bg-success">{{ $janjiKonseling->status_janji }}</span>
+                                                    <span
+                                                        class="badge rounded-pill text-bg-success">{{ $janjiKonseling->status_janji }}</span>
                                                 @elseif($janjiKonseling->status_janji == 'DIBATALKAN')
-                                                <span  class="badge rounded-pill text-bg-danger">{{ $janjiKonseling->status_janji }}</span>
+                                                    <span
+                                                        class="badge rounded-pill text-bg-danger">{{ $janjiKonseling->status_janji }}</span>
                                                 @endif
                                             </td>
 
                                             <td>
-                                                <a class="btn btn-sm btn-primary " href="{{ route('janji-konselings.show', $janjiKonseling->id) }}"> <i class="ti ti-eye"></i></a>
+                                                <a class="btn btn-sm btn-primary "
+                                                    href="{{ route('janji-konselings.show', $janjiKonseling->id) }}"> <i
+                                                        class="ti ti-eye"></i></a>
 
                                                 {{-- cek jika statusnya dijadwalkan maka masih bisa dirubah atau dihapus --}}
-                                                @if($janjiKonseling->status_janji == "DIJADWALKAN" && date('Y-m-d') <= $janjiKonseling->tgl_janji_konseling)
-                                                <a class="btn btn-sm btn-success" href="{{ route('janji-konselings.edit', $janjiKonseling->id) }}"> <i class="ti ti-pencil"></i></a>
-                                                <form id="delete-form" action="{{ route('janji-konselings.destroy', $janjiKonseling->id) }}"  method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" id="delete-btn"> <i
-                                                            class="ti ti-trash"></i></button>
-                                                </form>
+                                                @if ($janjiKonseling->status_janji == 'DIJADWALKAN' && date('Y-m-d') <= $janjiKonseling->tgl_janji_konseling)
+                                                    <a class="btn btn-sm btn-success"
+                                                        href="{{ route('janji-konselings.edit', $janjiKonseling->id) }}">
+                                                        <i class="ti ti-pencil"></i></a>
+                                                    <form id="delete-form"
+                                                        action="{{ route('janji-konselings.destroy', $janjiKonseling->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                            id="delete-btn"> <i class="ti ti-trash"></i></button>
+                                                    </form>
                                                 @endif
                                             </td>
                                         </tr>
@@ -115,5 +125,4 @@
             </div>
         </div>
     </div>
-
 @endsection
