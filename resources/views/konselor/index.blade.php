@@ -62,7 +62,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('konselors.reset-password', $konselor->id_konselor) }}"
+                                                <a href="{{ route('konselors.resetPasswordForm', $konselor->id_konselor) }}"
                                                     class="btn btn-warning btn-sm"
                                                     onclick="return confirm('Apakah Anda yakin akan melakukan reset password konselor atas nama {{ $konselor->nama_konselor }}?')">
                                                     <i class="ti ti-lock"></i> Reset Password

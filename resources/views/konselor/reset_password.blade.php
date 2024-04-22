@@ -11,7 +11,7 @@
                     <div class="card-header">{{ __('Reset Password Konselor') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('konselors.reset-password.update', $konselor->id_konselor) }}">
+                        <form method="POST" action="{{ route('konselors.resetPassword', $konselor->id_konselor) }}">
                             @csrf
                             @method('PUT')
 
