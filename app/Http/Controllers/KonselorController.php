@@ -24,7 +24,7 @@ class KonselorController extends Controller
     public function index(Request $req)
     {
         $keyword = $req->keyword;
-        $konselors = Konselor::query(); 
+        $konselors = Konselor::query();
 
         if(isset($keyword)){
             $konselors->where(function($query) use ($keyword){
@@ -60,11 +60,11 @@ class KonselorController extends Controller
         //get last inserted id for redirecting
         $id_user = $user->id;
 
-        return redirect()->action([KonselorController::class, 'create'], ['id_user' => $id_user]);        
+        return redirect()->action([KonselorController::class, 'create'], ['id_user' => $id_user]);
     }
 
     /**
-     * Show the form for creating a new resource. 
+     * Show the form for creating a new resource.
      */
     public function create($id_user)
     {
@@ -137,10 +137,8 @@ class KonselorController extends Controller
      */
     public function update(KonselorRequest $request, Konselor $konselor)
     {
-        
-        $validated = $request->validated();
 
-        dd($validated);
+        $validated = $request->validated();
 
         //cek apakah ada file yang diupload atau tidak
         if ($request->file('foto_konselor') == null) {

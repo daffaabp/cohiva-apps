@@ -22,7 +22,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="card" style="width: 18rem;">
-                                    @if (Storage::disk('public')->exists('foto_konselor/' . $konselor->foto_konselor))
+                                    @if (Storage::disk('public')->exists('foto_konselor/' . $konselor->foto_konselor) && $konselor->foto_konselor)
                                         <img style="width: 18rem;" src="{{ asset('storage/foto_konselor/' . $konselor->foto_konselor) }}"
                                             class="card-img-top" alt="avatar">
                                     @else

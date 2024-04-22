@@ -25,7 +25,7 @@
                                 <div class="col-md-4">
                                     <div class="card">
                                         {{-- <img src="{{ asset('/') }}assets/images/profile/user-1.jpg" class="card-img-top" alt="avatar"> --}}
-                                        @if (Storage::disk('public')->exists('foto_konselor/' . $konselor->foto_konselor))
+                                        @if (Storage::disk('public')->exists('foto_konselor/' . $konselor->foto_konselor) && $konselor->foto_konselor)
                                             <img style="width: 18rem;"
                                                 src="{{ asset('storage/foto_konselor/' . $konselor->foto_konselor) }}"
                                                 class="card-img-top" alt="avatar">
