@@ -24,7 +24,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            
+
                             <div class="d-flex">
                                 <button type="submit" class="btn btn-primary mt-4">Lanjutkan</button>
                                 <a href="{{ route('janji-konselings.index') }}" class="btn btn-outline-dark mt-4 ms-2">Kembali</a>

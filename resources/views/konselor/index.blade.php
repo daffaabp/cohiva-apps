@@ -41,6 +41,7 @@
                                         <th>Notelpon Konselor</th>
                                         <th>Unit Kerja</th>
                                         <th>Is Aktif</th>
+                                        <th>Reset Password</th>
 
                                         <th></th>
                                     </tr>
@@ -60,9 +61,18 @@
                                                     <span class="badge text-bg-secondary">Non Aktif</span>
                                                 @endif
                                             </td>
+                                            <td>
+                                                <a href="{{ route('konselors.reset-password', $konselor->id_konselor) }}"
+                                                    class="btn btn-warning btn-sm"
+                                                    onclick="return confirm('Apakah Anda yakin akan melakukan reset password konselor atas nama {{ $konselor->nama_konselor }}?')">
+                                                    <i class="ti ti-lock"></i> Reset Password
+                                                </a>
+                                            </td>
+
 
                                             <td>
-                                                <form action="{{ route('konselors.destroy', encrypt($konselor->id_konselor)) }}"
+                                                <form
+                                                    action="{{ route('konselors.destroy', encrypt($konselor->id_konselor)) }}"
                                                     method="POST">
                                                     <a class="btn btn-sm btn-primary "
                                                         href="{{ route('konselors.show', encrypt($konselor->id_konselor)) }}"><i

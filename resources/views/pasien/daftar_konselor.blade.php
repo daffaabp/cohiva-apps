@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('template_title')
+    Daftar Konselor
+@endsection
 @section('content')
     <div class="container-fluid">
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
@@ -17,6 +20,10 @@
                                     style="width: 220px; height: 220px; box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);"
                                     alt="avatar">
                             @endif
+
+
+
+
                         </div>
                         <div class="card-body bg-light text-center">
                             <h4 class="card-title font-weight-bold">{{ $konselor->nama_konselor }}</h4>

@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('template_title')
+    Jadwalkan Konseling
+@endsection
 @section('content')
     <div class="container-fluid"> <!-- Menambahkan margin top 5 -->
         <div class="row mt-5">

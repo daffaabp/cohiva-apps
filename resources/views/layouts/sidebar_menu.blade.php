@@ -98,12 +98,42 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
+                    <a class="btn sidebar-link" data-toggle="collapse" aria-expanded="false"
+                        onclick="toggleUserDropdown()">
                         <span>
                             <i class="ti ti-user"></i>
                         </span>
                         <span class="hide-menu">User</span>
+                        <span class="menu-arrow">
+                            <i class="fas fa-chevron-down"></i>
+                        </span>
                     </a>
+                    <ul id="userDropdown" class="collapse list-unstyled">
+                        <li class="sidebar-item sub-menu">
+                            <a class="sidebar-link" href="{{ route('roles.index') }}" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-cards"></i>
+                                </span>
+                                <span class="hide-menu">Role Managemen</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item sub-menu">
+                            <a class="sidebar-link" href="#" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-cards"></i>
+                                </span>
+                                <span class="hide-menu">User Managemen</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item sub-menu">
+                            <a class="sidebar-link" href="#" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-cards"></i>
+                                </span>
+                                <span class="hide-menu">Pasien</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
@@ -141,3 +171,38 @@
     </div>
     <!-- End Sidebar scroll-->
 </aside>
+
+<style>
+    #userDropdown {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s linear;
+    }
+
+    #userDropdown.show {
+        max-height: 200px;
+    }
+
+    .menu-arrow {
+        margin-left: auto;
+        margin-right: 10px;
+    }
+
+    .sub-menu {
+        padding-left: 20px;
+    }
+</style>
+
+<script>
+    function toggleUserDropdown() {
+        var userDropdown = document.getElementById("userDropdown");
+        userDropdown.classList.toggle("show");
+
+
+        var menuArrow = document.querySelector(
+            ".sidebar-item .menu-arrow i"); // Perbarui selektor untuk mengambil ikon FontAwesome
+        menuArrow.classList.toggle("fa-chevron-down");
+        menuArrow.classList.toggle("fa-chevron-up");
+
+    }
+</script>

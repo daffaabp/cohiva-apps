@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('template_title')
+    Info HIV AIDS
+@endsection
 @section('content')
     <div class="container-fluid">
         <div class="card">

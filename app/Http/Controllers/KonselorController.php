@@ -26,18 +26,20 @@ class KonselorController extends Controller
         $keyword = $req->keyword;
         $konselors = Konselor::query();
 
-        if(isset($keyword)){
-            $konselors->where(function($query) use ($keyword){
-                $query->where('nama_konselor','like', '%'.$keyword.'%')
-                ->orWhere('notelpon_konselor','like', '%'.$keyword.'%')
-                ->orWhere('unit_kerja', 'like', '%'.$keyword.'%');
-            })->get();
+        if (isset($keyword)) {
+            $konselors
+                ->where(function ($query) use ($keyword) {
+                    $query
+                        ->where('nama_konselor', 'like', '%' . $keyword . '%')
+                        ->orWhere('notelpon_konselor', 'like', '%' . $keyword . '%')
+                        ->orWhere('unit_kerja', 'like', '%' . $keyword . '%');
+                })
+                ->get();
         }
 
         $konselors = $konselors->paginate();
 
-        return view('konselor.index', compact('konselors'))
-            ->with('i', (request()->input('page', 1) - 1) * $konselors->perPage());
+        return view('konselor.index', compact('konselors'))->with('i', (request()->input('page', 1) - 1) * $konselors->perPage());
     }
 
     public function createuser(){
@@ -102,12 +104,11 @@ class KonselorController extends Controller
             $validated['foto_konselor'] = trim($filename);
 
             Konselor::create($validated);
-        }else{
+        } else {
             Konselor::create($validated);
         }
 
-        return redirect()->route('konselors.index')
-            ->with('success', 'Konselor created successfully.');
+        return redirect()->route('konselors.index')->with('success', 'Konselor created successfully.');
     }
 
     /**
@@ -167,7 +168,30 @@ class KonselorController extends Controller
         $id_konselor = decrypt($id);
         Konselor::find($id_konselor)->delete();
 
-        return redirect()->route('konselors.index')
-            ->with('success', 'Konselor deleted successfully');
+        return redirect()->route('konselors.index')->with('success', 'Konselor deleted successfully');
     }
+
+    public function resetPasswordForm($id)
+    {
+        $konselor = Konselor::findOrFail($id);
+        return view('konselor.reset_password', compact('konselor'));
+    }
+
+    // public function resetPassword(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'password' => 'required|string|min:8|confirmed',
+    //     ]);
+
+    //     $konselor = Konselor::findOrFail($id);
+    //     $user = User::where('email', $konselor->email)->first();
+    //     if (!$user) {
+    //         return redirect()->back()->with('error', 'User tidak ditemukan.');
+    //     }
+
+    //     $user->password = bcrypt($request->password);
+    //     $user->save();
+
+    //     return redirect()->route('konselors.index')->with('success', 'Password konselor berhasil direset.');
+    // }
 }

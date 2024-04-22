@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\KonselorController;
 use App\Http\Controllers\KonselingController;
@@ -41,6 +42,8 @@ Route::get('/home', [HomeController::class, 'index'])->name('home_new')->middlew
     Route::get('/konselors/{id_konselor}/edit', [KonselorController::class, 'edit'])->name('konselors.edit');
     Route::delete('/konselors/{id_konselor}', [KonselorController::class, 'destroy'])->name('konselors.destroy');
     Route::get('/konselors/{id_konselor}', [KonselorController::class, 'show'])->name('konselors.show');
+    Route::get('/konselors/reset-password/{id}', [KonselorController::class, 'resetPasswordForm'])->name('konselors.resetPasswordForm');
+    Route::put('/konselors/{id}/reset-password', [KonselorController::class, 'resetPassword'])->name('konselors.resetPassword');
     // end routing menu konselors
 
     // routing menu pasiens
@@ -62,6 +65,12 @@ Route::get('/home', [HomeController::class, 'index'])->name('home_new')->middlew
     Route::get('/janji-konseling/pilihkonselor', [JanjiKonselingController::class, 'pilihkonselor'])->name('janjikonseling.pilihkonselor');
 
     Route::get('/getjadwal', [JanjiKonselingController::class, 'getjadwal'])->name('getjadwal');
+
+    // routing menu role managemen
+    Route::get('roles/get-permissions', [RoleController::class, 'getPermissions'])->name('roles.get-permissions');
+    Route::get('roles/refresh-delete-permission', [RoleController::class, 'refreshAndDeletePermissions'])->name('roles.refresh-delete-permissions');
+    Route::resource('roles', RoleController::class);
+    // end routing menu role managemen
 
     Route::get('/info-hiv', [HomeController::class, 'info'])->name('info_hiv');
     Route::get('/daftar_konselor', [HomeController::class, 'daftar_konselor'])->name('daftar_konselor');
