@@ -31,7 +31,7 @@ class Konselor extends Model
      *
      * @var array
      */
-    protected $fillable = ['id_konselor', 'nama_konselor', 'notelpon_konselor', 'unit_kerja', 'foto_konselor', 'is_aktif'];
+    protected $fillable = ['id_konselor', 'nama_konselor', 'notelpon_konselor', 'unit_kerja', 'foto_konselor', 'is_aktif', 'id_user'];
 
 
     /**

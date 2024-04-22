@@ -9,10 +9,11 @@
         </div>
     </div>
     <div class="col-md-8">
+        <input type="hidden" name="id_user" value="{{ encrypt($user->id) }}">
         <div class="form-group mb-2 mb20">
             <label for="nama_konselor" class="form-label">{{ __('Nama Konselor') }}</label>
             <input type="text" name="nama_konselor" class="form-control @error('nama_konselor') is-invalid @enderror"
-                value="{{ old('nama_konselor', $konselor?->nama_konselor) }}" id="nama_konselor"
+                value="{{ old('nama_konselor', ($user?->name) ? $user?->name : $konselor->nama_konselor) }}" id="nama_konselor"
                 placeholder="Nama Konselor">
             {!! $errors->first(
                 'nama_konselor',
@@ -53,6 +54,7 @@
                 </label>
             </div>
         </div>
+        {{-- form untuk input ke table konselor --}}
     </div>
 </div>
 <div class="col-md-12 mt20 mt-2 d-flex justify-content-end">

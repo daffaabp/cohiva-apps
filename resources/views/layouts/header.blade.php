@@ -7,16 +7,20 @@
                 </a>
             </li>
         </ul>
-        <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                @if (Route::is('*.index'))
+        <div class="navbar-collapse justify-content-between px-0" id="navbarNav">
+            @if (Route::is('*.index'))
                     <form class="d-flex" role="search" id="formkeyword">
                         <input style="width: 500px;" class="form-control me-2" type="text" name="keyword"
                             value="{{ request('keyword') }}" placeholder="Ctrl - / untuk mencari" aria-label="Search">
-                        <a href="{{ request()->url() }}" class="btn btn-outline-primary"><i
-                                class="ti ti-reload"></i></a>
+                        <a href="{{ request()->url() }}" class="btn btn-outline-primary">
+                            {{-- <i class="ti ti-reload"></i> --}}
+                            reset
+                        </a>
                     </form>
                 @endif
+            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+                <h5>{{ Auth::user()->username }}</h5>
+                
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -26,8 +30,8 @@
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                         <div class="message-body">
                             <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                                <i class="ti ti-user fs-6"></i>
-                                <p class="mb-0 fs-3">My Profile</p>
+                                <i class="ti ti-settings fs-6"></i>
+                                <p class="mb-0 fs-3">Ubah Password</p>
                             </a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf

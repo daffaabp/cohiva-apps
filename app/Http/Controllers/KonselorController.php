@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Konselor;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\KonselorRequest;
+use App\Http\Requests\UserKonselorRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -36,13 +40,38 @@ class KonselorController extends Controller
             ->with('i', (request()->input('page', 1) - 1) * $konselors->perPage());
     }
 
+    public function createuser(){
+        $user = new User();
+
+        return view('konselor.createuser', compact('user'));
+    }
+
+    public function storeuser(UserKonselorRequest $request){
+        $user = new User();
+        $validated = $request->validated();
+
+        $user->name = $validated['name'];
+        $user->username = Str::lower($validated['username']);
+        $user->email = $validated['email'];
+        $user->password = Hash::make($validated['password']);
+        $user->isPasien = 0;
+        $user->save();
+
+        //get last inserted id for redirecting
+        $id_user = $user->id;
+
+        return redirect()->action([KonselorController::class, 'create'], ['id_user' => $id_user]);        
+    }
+
     /**
      * Show the form for creating a new resource. 
      */
-    public function create()
+    public function create($id_user)
     {
         $konselor = new Konselor();
-        return view('konselor.create', compact('konselor'));
+        $user = User::findOrFail($id_user);
+
+        return view('konselor.create', compact('konselor', 'user'));
     }
 
     /**
@@ -50,25 +79,15 @@ class KonselorController extends Controller
      */
     public function store(KonselorRequest $request)
     {
-        //create random number for id_konselor
+        //mendefinisikan nilai untuk id_konselor dan id_user
         $id_konselor = random_int(1, 999999);
 
-        $validator = Validator::make($request->all(), [
-            'nama_konselor' => 'required',
-            'notelpon_konselor' => 'required',
-            'unit_kerja' => 'required',
-            'foto_konselor' => 'mimes:jpg,png|max:2048',
-            'is_aktif' => 'required'
-        ]);
+        // ambil nilai yang sudah valid
+        $validated = $request->validated();
 
-        if ($validator->fails()) {
-            return redirect('konselors.create')
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        $validated = $validator->validated();
+        //definisikan kolom lain yang tidak berasal dari form input
         $validated['id_konselor'] = $id_konselor;
+        $validated['id_user'] = decrypt($request->id_user);
 
         //cek apakah ada file yang diupload atau tidak
         if ($request->file('foto_konselor') !== null) {
@@ -118,21 +137,10 @@ class KonselorController extends Controller
      */
     public function update(KonselorRequest $request, Konselor $konselor)
     {
-        $validator = Validator::make($request->all(), [
-            'nama_konselor' => 'required',
-            'notelpon_konselor' => 'required',
-            'unit_kerja' => 'required',
-            'foto_konselor' => 'mimes:jpg,png|max:2048',
-            'is_aktif' => 'required'
-        ]);
+        
+        $validated = $request->validated();
 
-        if ($validator->fails()) {
-            return redirect()->action([KonselorController::class, 'edit'], ['id_konselor' => $konselor->id_konselor])
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        $validated = $validator->validated();
+        dd($validated);
 
         //cek apakah ada file yang diupload atau tidak
         if ($request->file('foto_konselor') == null) {
@@ -153,7 +161,7 @@ class KonselorController extends Controller
         }
 
         return redirect()->route('konselors.index')
-            ->with('success', 'Konselor updated successfully');
+            ->with('success', 'Konselor berhasil diubah');
     }
 
     public function destroy($id)

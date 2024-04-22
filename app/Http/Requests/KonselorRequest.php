@@ -22,11 +22,22 @@ class KonselorRequest extends FormRequest
     public function rules(): array
     {
         return [
-			'nama_konselor' => 'required|string',
-			'notelpon_konselor' => 'string',
-			'unit_kerja' => 'string',
-			'foto_konselor' => 'mimes:jpg,png|max:2048',
-			'is_aktif' => 'required',
+            'nama_konselor' => 'required|string',
+            'notelpon_konselor' => 'required|string',
+            'unit_kerja' => 'required',
+            'foto_konselor' => 'mimes:jpg,png|max:2048',
+            'is_aktif' => 'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'nama_konselor.required' => 'Nama Konselor harus diisi!',
+            'notelpon_konselor.required' => 'Nomor Telepon harus diisi!',
+            'unit_kerja.required' => 'Unit Kerja harus diisi!',
+            'foto_konselor.mimes' => 'Foto harus bertipe JPG atau PNG!',
+            'foto_konselor.max' => 'Foto maksimal 2MB!'
         ];
     }
 }

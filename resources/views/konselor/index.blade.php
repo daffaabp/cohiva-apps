@@ -17,7 +17,7 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('konselors.create') }}" class="btn btn-primary btn-sm float-right"
+                                <a href="{{ route('konselors.createuser') }}" class="btn btn-primary btn-sm float-right"
                                     data-placement="left">
                                     {{ __('Tambah Konselor') }}
                                 </a>
