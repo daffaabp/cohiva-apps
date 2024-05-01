@@ -15,7 +15,7 @@ class isLoggedin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->session()->has('login')) {
+        if (!$request->session()->has('users')) {
             return redirect('/login');
         }
 

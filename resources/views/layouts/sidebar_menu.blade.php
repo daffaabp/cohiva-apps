@@ -103,7 +103,7 @@
                         <span>
                             <i class="ti ti-user"></i>
                         </span>
-                        <span class="hide-menu">User</span>
+                        <span class="hide-menu">Users management</span>
                         <span class="menu-arrow">
                             <i class="fas fa-chevron-down"></i>
                         </span>
@@ -118,19 +118,11 @@
                             </a>
                         </li>
                         <li class="sidebar-item sub-menu">
-                            <a class="sidebar-link" href="#" aria-expanded="false">
+                            <a class="sidebar-link" href="{{ route('users.index') }}" aria-expanded="false">
                                 <span>
-                                    <i class="ti ti-cards"></i>
+                                    <i class="ti ti-id-badge"></i>
                                 </span>
                                 <span class="hide-menu">User Managemen</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item sub-menu">
-                            <a class="sidebar-link" href="#" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-cards"></i>
-                                </span>
-                                <span class="hide-menu">Pasien</span>
                             </a>
                         </li>
                     </ul>

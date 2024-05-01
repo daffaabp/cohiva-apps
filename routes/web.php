@@ -9,7 +9,7 @@ use App\Http\Controllers\KonselorController;
 use App\Http\Controllers\KonselingController;
 use App\Http\Controllers\JadwalKonselorController;
 use App\Http\Controllers\JanjiKonselingController;
-
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +29,7 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home_new')->middleware('verified');
+
 
 // Route::middleware(['auth','isloggedin'])->group(function () {
 
@@ -59,6 +60,17 @@ Route::get('/home', [HomeController::class, 'index'])->name('home_new')->middlew
     Route::resource('jadwal-konselors', JadwalKonselorController::class);
     Route::resource('janji-konselings', JanjiKonselingController::class)->except(['create']);
     Route::resource('konselings', KonselingController::class);
+
+
+    // routing menu users
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
+    Route::patch('/users/{id}', [UserController::class, 'update'])->name('users.update');
+    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
+    // end routing menu users
 
     Route::get('/janji-konseling/create/{id}', [JanjiKonselingController::class, 'create'])->name('janji-konseling.create');
 
