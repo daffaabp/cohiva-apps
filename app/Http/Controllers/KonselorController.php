@@ -58,6 +58,7 @@ class KonselorController extends Controller
         $user->password = Hash::make($validated['password']);
         $user->isPasien = 0;
         $user->save();
+        $user->assignRole('Admin');
 
         //get last inserted id for redirecting
         $id_user = $user->id;

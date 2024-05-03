@@ -1,6 +1,6 @@
 <div class="row padding-1 p-1">
     <div class="col-md-12">
-       
+
         <div class="form-group mb-2 mb20">
             <label for="name" class="form-label">{{ __('Name') }}</label>
             <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
@@ -35,8 +35,8 @@
                     Non Pasien
                 </label>
             </div>
-            @error('ispasien')
-                <div class="text-danger" style="font-weight: 800">{{ $errors->first('ispasien', ':message') }}</div>
+            @error('isPasien')
+                <div class="text-danger" style="font-weight: 800">{{ $errors->first('isPasien', ':message') }}</div>
             @enderror
         </div>
         <div class="form-group mb-2 mb20">

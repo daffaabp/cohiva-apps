@@ -25,7 +25,7 @@ class UserRequest extends FormRequest
             'name' => 'required',
             'username' => 'required|regex:/^\S*$/',
             'email' => 'required|email',
-            'ispasien' => 'required',
+            'isPasien' => 'required',
             'password' => 'required|min:8|confirmed|regex:/^\S*$/',
             'password_confirmation' => 'required|min:8|regex:/^\S*$/',
             'role' => 'required|string'
@@ -40,7 +40,7 @@ class UserRequest extends FormRequest
             'username.required' => 'Username harus diisi!',
             'username.regex' => 'Username TIDAK BOLEH mengandung spasi!',
             'email.required'  => 'Email harus diisi!',
-            'ispasien.required'  => 'is Pasien harus diisi!',
+            'isPasien.required'  => 'is Pasien harus diisi!',
             'password.required'  => 'Password harus diisi!',
             'password.confirmed'  => 'Password harus sama!',
             'password.min'  => 'Password minimal 8 karakter!',
