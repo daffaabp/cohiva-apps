@@ -29,6 +29,12 @@
                         </div>
                     @endif
 
+                    @if ($message = Session::get('error'))
+                        <div class="alert alert-danger m-4">
+                            <p>{{ $message }}</p>
+                        </div>
+                    @endif
+
                     <div class="card-body bg-white">
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
@@ -62,8 +68,8 @@
 
                                             <td>
                                                 <form action="{{ route('jadwal-konselors.destroy',encrypt($jadwalKonselor->id)) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('jadwal-konselors.show',encrypt($jadwalKonselor->id)) }}"><i class="fa fa-fw fa-eye"></i> <i class="ti ti-eye"></i></a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('jadwal-konselors.edit',encrypt($jadwalKonselor->id)) }}"><i class="fa fa-fw fa-edit"></i> <i class="ti ti-pencil"></i></a>
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('jadwal-konselors.show',encrypt($jadwalKonselor->id)) }}"></i> <i class="ti ti-eye"></i></a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('jadwal-konselors.edit',encrypt($jadwalKonselor->id)) }}"></i> <i class="ti ti-pencil"></i></a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin hapus data?')"><i class="ti ti-trash"></i></button>

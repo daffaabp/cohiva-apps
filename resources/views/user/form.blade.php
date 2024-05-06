@@ -1,5 +1,9 @@
 <div class="row padding-1 p-1">
     <div class="col-md-12">
+<<<<<<< Updated upstream
+=======
+       
+>>>>>>> Stashed changes
 
         <div class="form-group mb-2 mb20">
             <label for="name" class="form-label">{{ __('Name') }}</label>

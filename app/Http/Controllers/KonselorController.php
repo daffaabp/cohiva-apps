@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\KonselorRequest;
 use App\Http\Requests\UserKonselorRequest;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -42,25 +43,36 @@ class KonselorController extends Controller
         return view('konselor.index', compact('konselors'))->with('i', (request()->input('page', 1) - 1) * $konselors->perPage());
     }
 
-    public function createuser(){
+    public function createuser()
+    {
         $user = new User();
 
         return view('konselor.createuser', compact('user'));
     }
 
-    public function storeuser(UserKonselorRequest $request){
+    public function storeuser(UserKonselorRequest $request)
+    {
         $user = new User();
         $validated = $request->validated();
 
-        $user->name = $validated['name'];
-        $user->username = Str::lower($validated['username']);
-        $user->email = $validated['email'];
-        $user->password = Hash::make($validated['password']);
-        $user->isPasien = 0;
-        $user->save();
-        $user->assignRole('Admin');
+        try {
+            $user->name = $validated['name'];
+            $user->username = Str::lower($validated['username']);
+            $user->email = $validated['email'];
+            $user->password = Hash::make($validated['password']);
+            $user->isPasien = 0;
+            $user->save();
+        } catch (QueryException $e) {
+            $errorCode = $e->errorInfo[1];
+            if ($errorCode == 1062) {
+                return redirect()->route('konselors.createuser')
+                    ->with('error', 'User sudah pernah dibuat!');
+            }
+        }
+
 
         //get last inserted id for redirecting
+        $user->assignRole('Admin');
         $id_user = $user->id;
 
         return redirect()->action([KonselorController::class, 'create'], ['id_user' => $id_user]);
@@ -166,8 +178,17 @@ class KonselorController extends Controller
 
     public function destroy($id)
     {
-        $id_konselor = decrypt($id);
-        Konselor::find($id_konselor)->delete();
+
+        try {
+            $id_konselor = decrypt($id);
+            Konselor::find($id_konselor)->delete();
+        } catch (QueryException $e) {
+            $errorCode = $e->errorInfo[1];
+            if ($errorCode == 1451) {
+                return redirect()->route('konselors.index')
+                    ->with('error', 'Konselor tidak bisa dihapus!');
+            }
+        }
 
         return redirect()->route('konselors.index')->with('success', 'Konselor deleted successfully');
     }

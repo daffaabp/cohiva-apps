@@ -8,6 +8,11 @@
     <section class="content container-fluid">
         <div class="row">
             <div class="col-md-12">
+                @if ($message = Session::get('error'))
+                    <div class="alert alert-danger m-4">
+                        <p>{{ $message }}</p>
+                    </div>
+                @endif
 
                 <div class="card card-default">
                     <div class="card-header d-flex justify-content-between">
@@ -25,8 +30,7 @@
                                         <label for="name" class="form-label">{{ __('Nama') }}</label>
                                         <input type="text" name="name"
                                             class="form-control @error('name') is-invalid @enderror"
-                                            value="{{ old('name', $user?->name) }}" id="name"
-                                            placeholder="Nama">
+                                            value="{{ old('name', $user?->name) }}" id="name" placeholder="Nama">
                                         {!! $errors->first('name', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
                                     </div>
                                     <div class="form-group mb-2 mb20">
@@ -35,8 +39,9 @@
                                             class="form-control @error('username') is-invalid @enderror"
                                             value="{{ old('username', $user?->username) }}" id="username"
                                             placeholder="Username">
-                                        <div id="username" class="form-text"><span class="text-danger">*</span>silahkan isi username tanpa spasi dan hanya huruf kecil</div>
-                                        
+                                        <div id="username" class="form-text"><span class="text-danger">*</span>silahkan isi
+                                            username tanpa spasi dan hanya huruf kecil</div>
+
                                     </div>
                                     <div class="form-group mb-2 mb20">
                                         <label for="email" class="form-label">{{ __('Email') }}</label>

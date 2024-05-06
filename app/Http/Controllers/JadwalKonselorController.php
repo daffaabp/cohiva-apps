@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\JadwalKonselor;
-use App\Http\Requests\JadwalKonselorRequest;
 use App\Models\Konselor;
 use Illuminate\Http\Request;
+use App\Models\JadwalKonselor;
+use Illuminate\Database\QueryException;
+use App\Http\Requests\JadwalKonselorRequest;
 
 /**
  * Class JadwalKonselorController
@@ -21,14 +22,13 @@ class JadwalKonselorController extends Controller
         $keyword = $req->keyword;
         $jadwalKonselors = JadwalKonselor::query();
 
-        if(isset($keyword)){
-            $jadwalKonselors = $jadwalKonselors->join('konselor', 'jadwal_konselor.id_konselor','=','konselor.id_konselor')
-                                            ->where(function($query) use ($keyword){
-                                                $query->where('konselor.nama_konselor','like','%'.$keyword.'%')
-                                                ->orWhere('hari', 'like', '%'.$keyword.'%')
-                                                ->orWhere('jam', 'like', '%'.$keyword.'%');
-                                            });
-            
+        if (isset($keyword)) {
+            $jadwalKonselors = $jadwalKonselors->join('konselor', 'jadwal_konselor.id_konselor', '=', 'konselor.id_konselor')
+                ->where(function ($query) use ($keyword) {
+                    $query->where('konselor.nama_konselor', 'like', '%' . $keyword . '%')
+                        ->orWhere('hari', 'like', '%' . $keyword . '%')
+                        ->orWhere('jam', 'like', '%' . $keyword . '%');
+                });
         }
 
         $jadwalKonselors = $jadwalKonselors->paginate();
@@ -58,16 +58,16 @@ class JadwalKonselorController extends Controller
         $jam = $request->jam;
         //kita cek apakah sudah pernah buat jadwal yang sama atau belum
         $jadwalkonselor = JadwalKonselor::where('id_konselor', '=', $id_konselor)
-        ->where('hari','=', $hari)
-        ->where('jam','=',$jam)
-        ->first();
-        
-        if(!empty($jadwalkonselor)){
+            ->where('hari', '=', $hari)
+            ->where('jam', '=', $jam)
+            ->first();
+
+        if (!empty($jadwalkonselor)) {
             return redirect()->route('jadwal-konselors.create')
-            ->with('error', 'Jadwal Konselor sudah pernah dibuat!')
-            ->with('id',$jadwalkonselor->id);
+                ->with('error', 'Jadwal Konselor sudah pernah dibuat!')
+                ->with('id', $jadwalkonselor->id);
         }
-        
+
 
         JadwalKonselor::create($request->validated());
 
@@ -113,8 +113,16 @@ class JadwalKonselorController extends Controller
 
     public function destroy($id)
     {
-        $id_jadwalkonselor = decrypt($id);
-        JadwalKonselor::find($id_jadwalkonselor)->delete();
+        try {
+            $id_jadwalkonselor = decrypt($id);
+            JadwalKonselor::find($id_jadwalkonselor)->delete();
+        } catch (QueryException $e) {
+            $errorCode = $e->errorInfo[1];
+            if ($errorCode == 1451) {
+                return redirect()->route('jadwal-konselors.index')
+                    ->with('error', 'Jadwal tidak bisa dihapus!');
+            }
+        }
 
         return redirect()->route('jadwal-konselors.index')
             ->with('success', 'Jadwal Konselor berhasil dihapus');

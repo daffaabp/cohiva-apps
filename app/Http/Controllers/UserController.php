@@ -49,7 +49,7 @@ class UserController extends Controller
         $user = User::create($validated);
         $user->assignRole($role);
 
-        return redirect()->route('users.index')
+        return redirect()->route('users.index') 
             ->with('success', 'User berhasil dibuat.');
     }
 

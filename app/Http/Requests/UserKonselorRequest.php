@@ -24,7 +24,7 @@ class UserKonselorRequest extends FormRequest
         return [
             'name' => 'required',
             'username' => 'required|regex:/^\S*$/',
-            'email' => 'required|email',
+            'email' => 'required|unique:users|email:rfc,dns',
             'password' => 'required|min:8|confirmed|regex:/^\S*$/',
             'password_confirmation' => 'required|min:8|regex:/^\S*$/'
         ];
@@ -37,6 +37,8 @@ class UserKonselorRequest extends FormRequest
             'username.required' => 'Username harus diisi!',
             'username.regex' => 'Username TIDAK BOLEH mengandung spasi!',
             'email.required'  => 'Email harus diisi!',
+            'email.unique'  => 'Email sudah pernah terdaftar!',
+            'email.email'  => 'Format email harus sesuai!',
             'password.required'  => 'Password harus diisi!',
             'password.confirmed'  => 'Password harus sama!',
             'password.min'  => 'Password minimal 8 karakter!',
