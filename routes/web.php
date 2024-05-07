@@ -33,6 +33,13 @@ Route::get('/home', [HomeController::class, 'index'])
     ->middleware('verified');
 
 Route::middleware(['auth', 'isloggedin'])->group(function () {
+    // routing menu role management
+    Route::get('roles/get-permissions', [RoleController::class, 'getPermissions'])->name('roles.get-permissions');
+    Route::get('roles/refresh-delete-permission', [RoleController::class, 'refreshAndDeletePermissions'])->name('roles.refresh-delete-permissions');
+    Route::resource('roles', RoleController::class);
+
+    // end routing menu role management
+
     // routing menu konselors
     Route::get('/konselors/createusers', [KonselorController::class, 'createuser'])->name('konselors.createuser');
     Route::post('/konselors/storeusers', [KonselorController::class, 'storeuser'])->name('konselors.storeusers');
@@ -43,15 +50,11 @@ Route::middleware(['auth', 'isloggedin'])->group(function () {
     Route::get('/konselors/{id_konselor}/edit', [KonselorController::class, 'edit'])->name('konselors.edit');
     Route::delete('/konselors/{id_konselor}', [KonselorController::class, 'destroy'])->name('konselors.destroy');
     Route::get('/konselors/{id_konselor}', [KonselorController::class, 'show'])->name('konselors.show');
-    // Route::get('/konselors/reset-password/{id}', [KonselorController::class, 'resetPasswordForm'])->name('konselors.resetPasswordForm');
-    // Route::get('/konselors/{id}/reset-password', [KonselorController::class, 'showResetPasswordForm'])->name('konselors.resetPassword');
-
     Route::get('konselors/reset-password/{id}', [KonselorController::class, 'showResetPasswordForm'])->name('konselors.showResetPasswordForm');
     Route::put('konselors/reset-password/{id}', [KonselorController::class, 'updatePassword'])->name('konselors.updatePassword');
-
     // end routing menu konselors
 
-    // routing menu pasiens
+    // routing menu create pasiens
     Route::get('/pasiens', [PasienController::class, 'index'])->name('pasiens.index');
     Route::get('/pasiens/create', [PasienController::class, 'create'])->name('pasiens.create');
     Route::post('/pasiens', [PasienController::class, 'store'])->name('pasiens.store');
@@ -59,11 +62,7 @@ Route::middleware(['auth', 'isloggedin'])->group(function () {
     Route::get('/pasiens/{id_pasien}/edit', [PasienController::class, 'edit'])->name('pasiens.edit');
     Route::delete('/pasiens/{id_pasien}', [PasienController::class, 'destroy'])->name('pasiens.destroy');
     Route::get('/pasiens/{id_pasien}', [PasienController::class, 'show'])->name('pasiens.show');
-    // end routing menu pasiens
-
-    Route::resource('jadwal-konselors', JadwalKonselorController::class);
-    Route::resource('janji-konselings', JanjiKonselingController::class)->except(['create']);
-    Route::resource('konselings', KonselingController::class);
+    // end routing menu create pasiens
 
     // routing menu users
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
@@ -75,19 +74,24 @@ Route::middleware(['auth', 'isloggedin'])->group(function () {
     Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
     // end routing menu users
 
-    Route::get('/janji-konseling/create/{id}', [JanjiKonselingController::class, 'create'])->name('janji-konseling.create');
-
-    Route::get('/janji-konseling/pilihkonselor', [JanjiKonselingController::class, 'pilihkonselor'])->name('janjikonseling.pilihkonselor');
-
+    // routing menu jadwal
+    Route::resource('jadwal-konselors', JadwalKonselorController::class);
     Route::get('/getjadwal', [JanjiKonselingController::class, 'getjadwal'])->name('getjadwal');
+    // end routing menu jadwal
 
-    // routing menu role managemen
-    Route::get('roles/get-permissions', [RoleController::class, 'getPermissions'])->name('roles.get-permissions');
-    Route::get('roles/refresh-delete-permission', [RoleController::class, 'refreshAndDeletePermissions'])->name('roles.refresh-delete-permissions');
-    Route::resource('roles', RoleController::class);
-    // end routing menu role managemen
+    // routing menu janji konseling
+    Route::resource('janji-konselings', JanjiKonselingController::class)->except(['create']);
+    Route::get('/janji-konseling/create/{id}', [JanjiKonselingController::class, 'create'])->name('janji-konseling.create');
+    Route::get('/janji-konseling/pilihkonselor', [JanjiKonselingController::class, 'pilihkonselor'])->name('janjikonseling.pilihkonselor');
+    // end routing menu janji konseling
 
+    // routing menu konselings
+    Route::resource('konselings', KonselingController::class);
+    // end routing menu konselings
+
+    // routing menu yang dapat diakses oleh pasien
     Route::get('/info-hiv', [HomeController::class, 'info'])->name('info_hiv');
     Route::get('/daftar_konselor', [HomeController::class, 'daftar_konselor'])->name('daftar_konselor');
     Route::get('/jadwalkan_konseling', [HomeController::class, 'jadwalkan_konseling'])->name('jadwalkan_konseling');
+    // end routing menu yang dapat diakses oleh pasien
 });
