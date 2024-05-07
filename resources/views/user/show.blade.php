@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('template_title')
-    {{ $user->name ?? __('Show') . " " . __('User') }}
+    {{ $user->name ?? __('Show') . ' ' . __('User') }}
 @endsection
 
 @section('content')
@@ -19,7 +19,7 @@
                     </div>
 
                     <div class="card-body bg-white">
-                        
+
                         <div class="form-group mb-2 mb20">
                             <strong>Name:</strong>
                             {{ $user->name }}
@@ -35,6 +35,12 @@
                         <div class="form-group mb-2 mb20">
                             <strong>Ispasien:</strong>
                             {{ $user->isPasien }}
+                        </div>
+                        <div class="form-group mb-2 mb20">
+                            <strong>Role:</strong>
+                            @foreach ($user->roles as $role)
+                                {{ $role->name }}
+                            @endforeach
                         </div>
 
                     </div>

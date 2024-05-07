@@ -12,7 +12,7 @@
                 <div class="card card-default">
                     <div class="card-header d-flex justify-content-between">
                         <span class="card-title">{{ __('Tambah') }} Konselor</span>
-                        <a href="{{ route('konselors.index') }}" class="btn btn-dark">kembali</a>
+                        {{-- <a href="{{ route('konselors.index') }}" class="btn btn-dark">kembali</a> --}}
                     </div>
                     <div class="card-body bg-white">
                         <form method="POST" action="{{ route('konselors.store') }}"  role="form" enctype="multipart/form-data">

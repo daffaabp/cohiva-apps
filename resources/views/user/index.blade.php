@@ -40,29 +40,33 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-                                        
+
 										<th>Name</th>
 										<th>Email</th>
 										<th>Username</th>
 										<th>Ispasien</th>
-
-                                        <th></th>
+                                        <th>Role</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($users as $user)
                                         <tr>
                                             <td>{{ ++$i }}</td>
-                                            
+
 											<td>{{ $user->name }}</td>
 											<td>{{ $user->email }}</td>
 											<td>{{ $user->username }}</td>
 											<td>{{ $user->isPasien }}</td>
+											<td>
+                                                @foreach ($user->roles as $role)
+                                                    {{ $role->name }}
+                                                @endforeach
+                                            </td>
 
                                             <td>
                                                 <form action="{{ route('users.destroy',$user->id) }}" method="POST">
                                                     <a class="btn btn-sm btn-primary " href="{{ route('users.show',$user->id) }}"><i class="fa fa-fw fa-eye"></i> </a>
-                                                    {{-- <a class="btn btn-sm btn-success" href="{{ route('users.edit',$user->id) }}"><i class="fa fa-fw fa-edit"></i> </a> --}}
+                                                    <a class="btn btn-sm btn-success" href="{{ route('users.edit',$user->id) }}"><i class="fa fa-fw fa-edit"></i> </a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" onclick="return confirm('Yakin ingin hapus data?')" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> </button>

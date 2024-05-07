@@ -1,9 +1,5 @@
 <div class="row padding-1 p-1">
     <div class="col-md-12">
-<<<<<<< Updated upstream
-=======
-       
->>>>>>> Stashed changes
 
         <div class="form-group mb-2 mb20">
             <label for="name" class="form-label">{{ __('Name') }}</label>
@@ -65,7 +61,7 @@
             @foreach ($roles as $r)
                 <div class="form-check">
                     <input class="form-check-input" value="{{ $r->name }}" type="radio" name="role"
-                        id="{{ $r->name }}">
+                        id="{{ $r->name }}" {{ $user->hasRole($r->name) ? 'checked' : '' }}>
                     <label class="form-check-label" for="{{ $r->name }}">
                         {{ $r->name }}
                     </label>

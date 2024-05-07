@@ -28,10 +28,11 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', [HomeController::class, 'index'])->name('home_new')->middleware('verified');
+Route::get('/home', [HomeController::class, 'index'])
+    ->name('home_new')
+    ->middleware('verified');
 
-Route::middleware(['auth','isloggedin'])->group(function () {
-
+Route::middleware(['auth', 'isloggedin'])->group(function () {
     // routing menu konselors
     Route::get('/konselors/createusers', [KonselorController::class, 'createuser'])->name('konselors.createuser');
     Route::post('/konselors/storeusers', [KonselorController::class, 'storeuser'])->name('konselors.storeusers');
@@ -42,8 +43,12 @@ Route::middleware(['auth','isloggedin'])->group(function () {
     Route::get('/konselors/{id_konselor}/edit', [KonselorController::class, 'edit'])->name('konselors.edit');
     Route::delete('/konselors/{id_konselor}', [KonselorController::class, 'destroy'])->name('konselors.destroy');
     Route::get('/konselors/{id_konselor}', [KonselorController::class, 'show'])->name('konselors.show');
-    Route::get('/konselors/reset-password/{id}', [KonselorController::class, 'resetPasswordForm'])->name('konselors.resetPasswordForm');
-    Route::put('/konselors/{id}/reset-password', [KonselorController::class, 'resetPassword'])->name('konselors.resetPassword');
+    // Route::get('/konselors/reset-password/{id}', [KonselorController::class, 'resetPasswordForm'])->name('konselors.resetPasswordForm');
+    // Route::get('/konselors/{id}/reset-password', [KonselorController::class, 'showResetPasswordForm'])->name('konselors.resetPassword');
+
+    Route::get('konselors/reset-password/{id}', [KonselorController::class, 'showResetPasswordForm'])->name('konselors.showResetPasswordForm');
+    Route::put('konselors/reset-password/{id}', [KonselorController::class, 'updatePassword'])->name('konselors.updatePassword');
+
     // end routing menu konselors
 
     // routing menu pasiens
@@ -59,7 +64,6 @@ Route::middleware(['auth','isloggedin'])->group(function () {
     Route::resource('jadwal-konselors', JadwalKonselorController::class);
     Route::resource('janji-konselings', JanjiKonselingController::class)->except(['create']);
     Route::resource('konselings', KonselingController::class);
-
 
     // routing menu users
     Route::get('/users', [UserController::class, 'index'])->name('users.index');

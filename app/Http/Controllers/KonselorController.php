@@ -6,12 +6,14 @@ use App\Models\User;
 use App\Models\Konselor;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\KonselorRequest;
-use App\Http\Requests\UserKonselorRequest;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\UserKonselorRequest;
 
 /**
  * Class KonselorController
@@ -62,17 +64,18 @@ class KonselorController extends Controller
             $user->password = Hash::make($validated['password']);
             $user->isPasien = 0;
             $user->save();
+
+            $role = Role::where('name', 'Konselor')->first();
+            $user->assignRole($role);
+            $user->syncPermissions($role->permissions);
         } catch (QueryException $e) {
             $errorCode = $e->errorInfo[1];
             if ($errorCode == 1062) {
-                return redirect()->route('konselors.createuser')
-                    ->with('error', 'User sudah pernah dibuat!');
+                return redirect()->route('konselors.createuser')->with('error', 'User sudah pernah dibuat!');
             }
         }
 
-
         //get last inserted id for redirecting
-        $user->assignRole('Admin');
         $id_user = $user->id;
 
         return redirect()->action([KonselorController::class, 'create'], ['id_user' => $id_user]);
@@ -151,7 +154,6 @@ class KonselorController extends Controller
      */
     public function update(KonselorRequest $request, Konselor $konselor)
     {
-
         $validated = $request->validated();
 
         //cek apakah ada file yang diupload atau tidak
@@ -172,32 +174,95 @@ class KonselorController extends Controller
             $konselor->update($validated);
         }
 
-        return redirect()->route('konselors.index')
-            ->with('success', 'Konselor berhasil diubah');
+        return redirect()->route('konselors.index')->with('success', 'Konselor berhasil diubah');
     }
 
     public function destroy($id)
     {
-
         try {
+            // Dekripsi ID konselor
             $id_konselor = decrypt($id);
-            Konselor::find($id_konselor)->delete();
+
+            // Temukan konselor berdasarkan ID
+            $konselor = Konselor::findOrFail($id_konselor);
+
+            // Hapus konselor dari tabel konselors
+            $konselor->delete();
+
+            // Hapus pengguna yang terkait dari tabel users
+            $user = User::where('id', $konselor->id_user)->firstOrFail();
+            $user->delete();
+
+            // Hapus peran "Konselor" dari pengguna
+            $role = Role::where('name', 'Konselor')->first();
+            $user->removeRole($role);
+
+            // Hapus izin yang terkait dengan peran "Konselor"
+            $user->revokePermissionTo($role->permissions);
         } catch (QueryException $e) {
             $errorCode = $e->errorInfo[1];
             if ($errorCode == 1451) {
-                return redirect()->route('konselors.index')
-                    ->with('error', 'Konselor tidak bisa dihapus!');
+                return redirect()->route('konselors.index')->with('error', 'Konselor tidak bisa dihapus!');
             }
         }
 
         return redirect()->route('konselors.index')->with('success', 'Konselor deleted successfully');
     }
 
-    public function resetPasswordForm($id)
+    public function showResetPasswordForm($id)
     {
-        $konselor = Konselor::findOrFail($id);
-        return view('konselor.reset_password', compact('konselor'));
+        try {
+            // Temukan konselor berdasarkan ID
+            $konselor = Konselor::findOrFail($id);
+
+            // Temukan pengguna yang terkait dari tabel users
+            $user = User::where('id', $konselor->id_user)->firstOrFail();
+        } catch (QueryException $e) {
+            return redirect()->route('konselors.index')->with('error', 'Gagal membuka halaman reset password!');
+        }
+
+        return view('konselor.reset_password', compact('konselor', 'user'));
     }
+
+    public function updatePassword(Request $request, $id)
+    {
+        // Validasi input form disini jika diperlukan
+        $validatedData = $request->validate([
+            'password' => 'nullable|min:8|confirmed|regex:/^\S*$/',
+            'password_confirmation' => 'nullable|min:8|regex:/^\S*$/',
+        ], [
+            'password.min' => 'Password minimal harus 8 karakter.',
+            'password.confirmed' => 'Konfirmasi password tidak cocok.',
+            'password.regex' => 'Password tidak boleh mengandung spasi.',
+            'password_confirmation.min' => 'Konfirmasi password minimal harus 8 karakter.',
+            'password_confirmation.regex' => 'Konfirmasi password tidak boleh mengandung spasi.',
+        ]);
+
+        try {
+            // Temukan konselor berdasarkan ID
+            $konselor = Konselor::findOrFail($id);
+
+            // Temukan pengguna yang terkait dari tabel users
+            $user = User::where('id', $konselor->id_user)->firstOrFail();
+
+            // Update password pengguna
+            $user->name = $request->name;
+            $user->username = $request->username;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->save();
+        } catch (QueryException $e) {
+            return redirect()->route('konselors.index')->with('error', 'Gagal mereset password!');
+        }
+
+        return redirect()->route('konselors.index')->with('success', 'Password berhasil direset!');
+    }
+
+    // public function resetPasswordForm($id)
+    // {
+    //     $konselor = Konselor::findOrFail($id);
+    //     return view('konselor.reset_password', compact('konselor'));
+    // }
 
     // public function resetPassword(Request $request, $id)
     // {
