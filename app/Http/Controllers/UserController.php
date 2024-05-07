@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\UserRequest;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\QueryException;
 
@@ -20,9 +21,18 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index(Request $request)
+    // {
+    //     $users = User::with('roles')->paginate();
+    //     return view('user.index', compact('users'))->with('i', (request()->input('page', 1) - 1) * $users->perPage());
+    // }
+
     public function index(Request $request)
     {
-        $users = User::with('roles')->paginate();
+        $users = User::whereHas('roles', function ($query) {
+            $query->whereIn('name', ['Superadmin', 'Admin']);
+        })->paginate();
+
         return view('user.index', compact('users'))->with('i', (request()->input('page', 1) - 1) * $users->perPage());
     }
 
@@ -53,7 +63,7 @@ class UserController extends Controller
                     $user->assignRole($selectedRole);
                     $permissionsFromRole = $selectedRole->permissions;
                     $user->givePermissionTo($permissionsFromRole);
-                    return redirect()->route('users.index')->with('success', 'User berhasil dibuat dan ditugaskan role.');
+                    return redirect()->route('users.index')->with('success', 'Berhasil membuat user.');
                 } else {
                     return redirect()->route('users.index')->with('error', 'Role yang dipilih tidak valid.');
                 }
@@ -89,29 +99,33 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'username' => ['required', Rule::unique('users')->ignore($id), 'regex:/^\S*$/'],
-            'email' => 'required|email|unique:users,email,' . $id,
-            'isPasien' => 'required',
-            'password' => 'nullable|min:8|confirmed|regex:/^\S*$/',
-            'password_confirmation' => 'nullable|min:8|regex:/^\S*$/',
-            'role' => 'required|string',
-        ], [
-            'name.required' => 'Nama harus diisi!',
-            'username.required' => 'Username harus diisi!',
-            'username.regex' => 'Username TIDAK BOLEH mengandung spasi!',
-            'email.required'  => 'Email harus diisi!',
-            'email.email'  => 'Email harus berformat valid!',
-            'email.unique'  => 'Email sudah digunakan!',
-            'isPasien.required'  => 'is Pasien harus diisi!',
-            'password.min'  => 'Password minimal 8 karakter!',
-            'password.confirmed'  => 'Password harus sama dengan konfirmasi password!',
-            'password.regex'  => 'Password TIDAK BOLEH mengandung spasi!',
-            'password_confirmation.min'  => 'Konfirmasi Password minimal 8 karakter!',
-            'password_confirmation.regex'  => 'Konfirmasi Password TIDAK BOLEH mengandung spasi!',
-            'role.required'  => 'Role harus dipilih!',
-        ]);
+        $this->validate(
+            $request,
+            [
+                'name' => 'required',
+                'username' => ['required', Rule::unique('users')->ignore($id), 'regex:/^\S*$/'],
+                'email' => 'required|email|unique:users,email,' . $id,
+                'isPasien' => 'required',
+                'password' => 'nullable|min:8|confirmed|regex:/^\S*$/',
+                'password_confirmation' => 'nullable|min:8|regex:/^\S*$/',
+                'role' => 'required|string',
+            ],
+            [
+                'name.required' => 'Nama harus diisi!',
+                'username.required' => 'Username harus diisi!',
+                'username.regex' => 'Username TIDAK BOLEH mengandung spasi!',
+                'email.required' => 'Email harus diisi!',
+                'email.email' => 'Email harus berformat valid!',
+                'email.unique' => 'Email sudah digunakan!',
+                'isPasien.required' => 'is Pasien harus diisi!',
+                'password.min' => 'Password minimal 8 karakter!',
+                'password.confirmed' => 'Password harus sama dengan konfirmasi password!',
+                'password.regex' => 'Password TIDAK BOLEH mengandung spasi!',
+                'password_confirmation.min' => 'Konfirmasi Password minimal 8 karakter!',
+                'password_confirmation.regex' => 'Konfirmasi Password TIDAK BOLEH mengandung spasi!',
+                'role.required' => 'Role harus dipilih!',
+            ],
+        );
 
         $user = User::findOrFail($id);
         $input = $request->only('name', 'email', 'username', 'isPasien');
@@ -133,6 +147,13 @@ class UserController extends Controller
     public function destroy($id)
     {
         try {
+            $loggedInUserId = Auth::id();
+
+            // Cek apakah pengguna yang akan dihapus sama dengan pengguna yang sedang login
+            if ($loggedInUserId == $id) {
+                return redirect()->route('users.index')->with('error', 'Anda tidak dapat menghapus diri sendiri.');
+            }
+
             User::find($id)->delete();
         } catch (QueryException $e) {
             $errorCode = $e->errorInfo[1];

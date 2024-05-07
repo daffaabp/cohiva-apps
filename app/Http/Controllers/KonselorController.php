@@ -257,28 +257,4 @@ class KonselorController extends Controller
 
         return redirect()->route('konselors.index')->with('success', 'Password berhasil direset!');
     }
-
-    // public function resetPasswordForm($id)
-    // {
-    //     $konselor = Konselor::findOrFail($id);
-    //     return view('konselor.reset_password', compact('konselor'));
-    // }
-
-    // public function resetPassword(Request $request, $id)
-    // {
-    //     $request->validate([
-    //         'password' => 'required|string|min:8|confirmed',
-    //     ]);
-
-    //     $konselor = Konselor::findOrFail($id);
-    //     $user = User::where('email', $konselor->email)->first();
-    //     if (!$user) {
-    //         return redirect()->back()->with('error', 'User tidak ditemukan.');
-    //     }
-
-    //     $user->password = bcrypt($request->password);
-    //     $user->save();
-
-    //     return redirect()->route('konselors.index')->with('success', 'Password konselor berhasil direset.');
-    // }
 }

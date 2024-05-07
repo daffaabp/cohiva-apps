@@ -52,7 +52,7 @@ class RoleController extends Controller
             $role->syncPermissions($permissions);
         }
 
-        return redirect()->route('roles.index')->with('success', 'Role created successfully.');
+        return redirect()->route('roles.index')->with('success', 'Role berhasil dibuat.');
     }
 
     /**
@@ -83,55 +83,38 @@ class RoleController extends Controller
     public function update(RoleRequest $request, Role $role)
     {
         $role->update($request->validated());
-
-        // Mendapatkan permission yang telah dipilih dari formulir edit
         $permissions = $request->input('permission', []);
-
-        // Mendapatkan permission yang sudah dimiliki oleh role yang sedang diubah
         $existingPermissions = $role->permissions->pluck('id')->toArray();
-
-        // Menemukan permission baru yang harus ditambahkan ke role
         $permissionsToAdd = array_diff($permissions, $existingPermissions);
-
-        // Menemukan permission yang harus dihapus dari role
         $permissionsToRemove = array_diff($existingPermissions, $permissions);
 
-        // Menambahkan permission baru ke role
         foreach ($permissionsToAdd as $permissionId) {
             $permission = Permission::find($permissionId);
             $role->givePermissionTo($permission);
         }
 
-        // Menghapus permission yang tidak dipilih dari role
         foreach ($permissionsToRemove as $permissionId) {
             $permission = Permission::find($permissionId);
             $role->revokePermissionTo($permission);
         }
 
-        // Update permission pada model_has_permissions untuk pengguna terkait
         foreach ($role->users as $user) {
+            
             $userPermissions = $user->permissions->pluck('id')->toArray();
-
-            // Menemukan permission baru yang harus ditambahkan ke pengguna
             $userPermissionsToAdd = array_diff($permissions, $userPermissions);
-
-            // Menemukan permission yang harus dihapus dari pengguna
             $userPermissionsToRemove = array_diff($userPermissions, $permissions);
-
-            // Menambahkan permission baru ke pengguna
             foreach ($userPermissionsToAdd as $permissionId) {
                 $permission = Permission::find($permissionId);
                 $user->givePermissionTo($permission);
             }
 
-            // Menghapus permission yang tidak dipilih dari pengguna
             foreach ($userPermissionsToRemove as $permissionId) {
                 $permission = Permission::find($permissionId);
                 $user->revokePermissionTo($permission);
             }
         }
 
-        return redirect()->route('roles.index')->with('success', 'Role updated successfully');
+        return redirect()->route('roles.index')->with('success', 'Role berhasil di update');
     }
 
     public function destroy($id)
@@ -143,19 +126,19 @@ class RoleController extends Controller
 
         // Periksa apakah rolenya adalah superadmin
         if ($role->name === 'Superadmin' && $user->hasRole('Superadmin')) {
-            return redirect()->route('role.index')->with('error', 'Anda tidak bisa menghapus peran Superadmin sendiri.');
+            return redirect()->route('roles.index')->with('error', 'Anda tidak bisa menghapus peran Superadmin sendiri.');
         }
 
         // Periksa apakah masih ada pengguna yang memiliki role ini
         $usersWithRole = $role->users;
         if ($usersWithRole->isNotEmpty()) {
-            return redirect()->route('role.index')->with('error', 'Tidak dapat menghapus role yang masih digunakan oleh pengguna');
+            return redirect()->route('roles.index')->with('error', 'Tidak dapat menghapus role yang masih digunakan oleh pengguna');
         }
 
         // Hapus peran jika bukan peran Superadmin atau pengguna yang login bukanlah Superadmin
         $role->delete();
 
-        return redirect()->route('roles.index')->with('success', 'Role deleted successfully');
+        return redirect()->route('roles.index')->with('success', 'Role berhasil dihapus');
     }
 
     public function getPermissions()
