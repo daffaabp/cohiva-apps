@@ -16,11 +16,14 @@
                                 {{ __('User') }}
                             </span>
 
-                             <div class="float-right">
-                                <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Buat user') }}
-                                </a>
-                              </div>
+                            @can('users.create')
+                                <div class="float-right">
+                                    <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm float-right"
+                                        data-placement="left">
+                                        {{ __('Buat user') }}
+                                    </a>
+                                </div>
+                            @endcan
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -40,11 +43,10 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-
-										<th>Name</th>
-										<th>Email</th>
-										<th>Username</th>
-										<th>Ispasien</th>
+                                        <th>Nama</th>
+                                        <th>Email</th>
+                                        <th>Username</th>
+                                        <th>IsPasien</th>
                                         <th>Role</th>
                                     </tr>
                                 </thead>
@@ -53,23 +55,38 @@
                                         <tr>
                                             <td>{{ ++$i }}</td>
 
-											<td>{{ $user->name }}</td>
-											<td>{{ $user->email }}</td>
-											<td>{{ $user->username }}</td>
-											<td>{{ $user->isPasien }}</td>
-											<td>
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $user->username }}</td>
+                                            <td>{{ $user->isPasien }}</td>
+                                            <td>
                                                 @foreach ($user->roles as $role)
                                                     {{ $role->name }}
                                                 @endforeach
                                             </td>
 
                                             <td>
-                                                <form action="{{ route('users.destroy',$user->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('users.show',$user->id) }}"><i class="fa fa-fw fa-eye"></i> </a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('users.edit',$user->id) }}"><i class="fa fa-fw fa-edit"></i> </a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" onclick="return confirm('Yakin ingin hapus data?')" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> </button>
+                                                <form action="{{ route('users.destroy', $user->id) }}" method="POST">
+                                                    @can('users.show')
+                                                        <a class="btn btn-sm btn-primary "
+                                                            href="{{ route('users.show', $user->id) }}"><i
+                                                                class="fa fa-fw fa-eye"></i> </a>
+                                                    @endcan
+
+                                                    @can('users.edit')
+                                                        <a class="btn btn-sm btn-success"
+                                                            href="{{ route('users.edit', $user->id) }}"><i
+                                                                class="fa fa-fw fa-edit"></i> </a>
+                                                    @endcan
+
+                                                    @can('users.destroy')
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            onclick="return confirm('Yakin ingin hapus data?')"
+                                                            class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i>
+                                                        </button>
+                                                    @endcan
                                                 </form>
                                             </td>
                                         </tr>

@@ -13,8 +13,8 @@
         <div class="form-group mb-2 mb20">
             <label for="nama_konselor" class="form-label">{{ __('Nama Konselor') }}</label>
             <input type="text" name="nama_konselor" class="form-control @error('nama_konselor') is-invalid @enderror"
-                value="{{ old('nama_konselor', ($user?->name) ? $user?->name : $konselor->nama_konselor) }}" id="nama_konselor"
-                placeholder="Nama Konselor">
+                value="{{ old('nama_konselor', $user?->name ? $user?->name : $konselor->nama_konselor) }}"
+                id="nama_konselor" placeholder="Nama Konselor">
             {!! $errors->first(
                 'nama_konselor',
                 '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>',
@@ -57,6 +57,8 @@
         {{-- form untuk input ke table konselor --}}
     </div>
 </div>
-<div class="col-md-12 mt20 mt-2 d-flex justify-content-end">
-    <button type="submit" class="btn btn-lg btn-primary">{{ __('Simpan') }}</button>
-</div>
+@can('konselors.store')
+    <div class="col-md-12 mt20 mt-2 d-flex justify-content-end">
+        <button type="submit" class="btn btn-lg btn-primary">{{ __('Simpan') }}</button>
+    </div>
+@endcan

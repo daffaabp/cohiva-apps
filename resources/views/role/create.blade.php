@@ -16,9 +16,17 @@
                                 {{ __('Create Role') }}
                             </span>
                             <div class="text-center">
-                                <a href="{{ route('roles.get-permissions') }}" class="btn btn-sm btn-primary">Get Permissions</a>
+                                @can('roles.get-permissions')
+                                    <a href="{{ route('roles.get-permissions') }}" class="btn btn-sm btn-primary">Get
+                                        Permissions</a>
+                                @endcan
+
                                 <span style="margin: 0 5px;"></span>
-                                <a href="{{ route('roles.refresh-delete-permissions') }}" class="btn btn-sm btn-primary">Refresh And Delete Permissions</a>
+
+                                @can('roles.refresh-delete-permissions')
+                                    <a href="{{ route('roles.refresh-delete-permissions') }}"
+                                        class="btn btn-sm btn-primary">Refresh And Delete Permissions</a>
+                                @endcan
                             </div>
                         </div>
                     </div>

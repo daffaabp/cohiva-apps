@@ -16,8 +16,11 @@
                                 {{ __('Janji Konseling') }}
                             </span>
 
-                            <a href="{{ route('janjikonseling.pilihkonselor') }}" class="btn btn-sm btn-primary">Buat
-                                janji</a>
+                            @can('janjikonseling.pilihkonselor')
+                                <a href="{{ route('janjikonseling.pilihkonselor') }}" class="btn btn-sm btn-primary">Buat
+                                    janji</a>
+                            @endcan
+
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -33,7 +36,6 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-
                                         <th>Tanggal Janji</th>
                                         <th>Konselor</th>
                                         <th>Hari</th>
@@ -95,22 +97,32 @@
                                             </td>
 
                                             <td>
-                                                <a class="btn btn-sm btn-primary "
-                                                    href="{{ route('janji-konselings.show', $janjiKonseling->id) }}"> <i
-                                                        class="ti ti-eye"></i></a>
+                                                @can('janji-konselings.show')
+                                                    <a class="btn btn-sm btn-primary "
+                                                        href="{{ route('janji-konselings.show', $janjiKonseling->id) }}"> <i
+                                                            class="ti ti-eye"></i></a>
+                                                @endcan
+
 
                                                 {{-- cek jika statusnya dijadwalkan maka masih bisa dirubah atau dihapus --}}
                                                 @if ($janjiKonseling->status_janji == 'DIJADWALKAN' && date('Y-m-d') <= $janjiKonseling->tgl_janji_konseling)
-                                                    <a class="btn btn-sm btn-success"
-                                                        href="{{ route('janji-konselings.edit', $janjiKonseling->id) }}">
-                                                        <i class="ti ti-pencil"></i></a>
+                                                    @can('janji-konselings.edit')
+                                                        <a class="btn btn-sm btn-success"
+                                                            href="{{ route('janji-konselings.edit', $janjiKonseling->id) }}">
+                                                            <i class="ti ti-pencil"></i></a>
+                                                    @endcan
+
                                                     <form id="delete-form"
                                                         action="{{ route('janji-konselings.destroy', $janjiKonseling->id) }}"
                                                         method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"
-                                                            id="delete-btn"> <i class="ti ti-trash"></i></button>
+
+                                                        @can('janji-konselings.destroy')
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                                id="delete-btn"> <i class="ti ti-trash"></i></button>
+                                                        @endcan
+
                                                     </form>
                                                 @endif
                                             </td>

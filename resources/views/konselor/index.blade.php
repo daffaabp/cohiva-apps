@@ -17,10 +17,12 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('konselors.createuser') }}" class="btn btn-primary btn-sm float-right"
-                                    data-placement="left">
-                                    {{ __('Tambah Konselor') }}
-                                </a>
+                                @can('konselors.createuser')
+                                    <a href="{{ route('konselors.createuser') }}" class="btn btn-primary btn-sm float-right"
+                                        data-placement="left">
+                                        {{ __('Tambah Konselor') }}
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -41,7 +43,6 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-
                                         <th>Nama Konselor</th>
                                         <th>Notelpon Konselor</th>
                                         <th>Unit Kerja</th>
@@ -67,11 +68,13 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('konselors.showResetPasswordForm', $konselor->id_konselor) }}"
-                                                    class="btn btn-warning btn-sm"
-                                                    onclick="return confirm('Apakah Anda yakin akan melakukan reset password konselor atas nama {{ $konselor->nama_konselor }}?')">
-                                                    <i class="ti ti-lock"></i> Reset Password
-                                                </a>
+                                                @can('konselors.showResetPasswordForm')
+                                                    <a href="{{ route('konselors.showResetPasswordForm', $konselor->id_konselor) }}"
+                                                        class="btn btn-warning btn-sm"
+                                                        onclick="return confirm('Apakah Anda yakin akan melakukan reset password konselor atas nama {{ $konselor->nama_konselor }}?')">
+                                                        <i class="ti ti-lock"></i> Reset Password
+                                                    </a>
+                                                @endcan
                                             </td>
 
 
@@ -79,17 +82,26 @@
                                                 <form
                                                     action="{{ route('konselors.destroy', encrypt($konselor->id_konselor)) }}"
                                                     method="POST">
-                                                    <a class="btn btn-sm btn-primary "
-                                                        href="{{ route('konselors.show', encrypt($konselor->id_konselor)) }}"><i
-                                                            class="ti ti-eye"></i></a>
-                                                    <a class="btn btn-sm btn-success"
-                                                        href="{{ route('konselors.edit', encrypt($konselor->id_konselor)) }}"><i
-                                                            class="ti ti-pencil"></i></a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"
-                                                        onclick="return confirm('Yakin ingin hapus data?')"><i
-                                                            class="ti ti-trash"></i> </button>
+
+                                                    @can('konselors.show')
+                                                        <a class="btn btn-sm btn-primary "
+                                                            href="{{ route('konselors.show', encrypt($konselor->id_konselor)) }}"><i
+                                                                class="ti ti-eye"></i></a>
+                                                    @endcan
+
+                                                    @can('konselors.edit')
+                                                        <a class="btn btn-sm btn-success"
+                                                            href="{{ route('konselors.edit', encrypt($konselor->id_konselor)) }}"><i
+                                                                class="ti ti-pencil"></i></a>
+                                                    @endcan
+
+                                                    @can('konselors.destroy')
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                            onclick="return confirm('Yakin ingin hapus data?')"><i
+                                                                class="ti ti-trash"></i> </button>
+                                                    @endcan
                                                 </form>
                                             </td>
                                         </tr>

@@ -99,7 +99,7 @@ class RoleController extends Controller
         }
 
         foreach ($role->users as $user) {
-            
+
             $userPermissions = $user->permissions->pluck('id')->toArray();
             $userPermissionsToAdd = array_diff($permissions, $userPermissions);
             $userPermissionsToRemove = array_diff($userPermissions, $permissions);

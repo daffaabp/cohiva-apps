@@ -97,9 +97,11 @@
                                     {{-- form untuk input ke table konselor --}}
                                 </div>
                             </div>
-                            <div class="col-md-12 mt20 mt-2 d-flex justify-content-end">
-                                <button type="submit" class="btn btn-lg btn-primary">{{ __('Simpan') }}</button>
-                            </div>
+                            @can('konselors.update')
+                                <div class="col-md-12 mt20 mt-2 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-lg btn-primary">{{ __('Simpan') }}</button>
+                                </div>
+                            @endcan
 
 
                         </form>

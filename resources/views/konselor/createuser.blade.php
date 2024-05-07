@@ -70,10 +70,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 mt20 mt-2 d-flex justify-content-start">
-                                <button type="submit" class="btn btn-lg btn-primary">{{ __('Lanjutkan') }}</button>
-                            </div>
-
+                            @can('konselors.storeusers')
+                                <div class="col-md-12 mt20 mt-2 d-flex justify-content-start">
+                                    <button type="submit" class="btn btn-lg btn-primary">{{ __('Lanjutkan') }}</button>
+                                </div>
+                            @endcan
                         </form>
                     </div>
                 </div>

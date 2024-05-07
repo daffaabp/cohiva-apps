@@ -16,12 +16,15 @@
                                 {{ __('Role') }}
                             </span>
 
-                            <div class="float-right">
-                                <a href="{{ route('roles.create') }}" class="btn btn-primary btn-sm float-right"
-                                    data-placement="left">
-                                    {{ __('Tambah Role') }}
-                                </a>
-                            </div>
+                            @can('roles.create')
+                                <div class="float-right">
+                                    <a href="{{ route('roles.create') }}" class="btn btn-primary btn-sm float-right"
+                                        data-placement="left">
+                                        {{ __('Tambah Role') }}
+                                    </a>
+                                </div>
+                            @endcan
+
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -58,16 +61,25 @@
 
                                             <td>
                                                 <form action="{{ route('roles.destroy', $role->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary "
-                                                        href="{{ route('roles.show', $role->id) }}"><i
-                                                            class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success"
-                                                        href="{{ route('roles.edit', $role->id) }}"><i
-                                                            class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                    @can('roles.show')
+                                                        <a class="btn btn-sm btn-primary "
+                                                            href="{{ route('roles.show', $role->id) }}"><i
+                                                                class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
+                                                    @endcan
+
+                                                    @can('roles.edit')
+                                                        <a class="btn btn-sm btn-success"
+                                                            href="{{ route('roles.edit', $role->id) }}"><i
+                                                                class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                    @endcan
+
+                                                    @can('roles.destroy')
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm"><i
+                                                                class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                    @endcan
+
                                                 </form>
                                             </td>
                                         </tr>

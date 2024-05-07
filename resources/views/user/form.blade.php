@@ -75,7 +75,10 @@
 
     </div>
     <div class="col-md-12 mt20 mt-2">
-        <button type="submit" class="btn btn-primary">{{ __('Simpan') }}</button>
+        @canany(['users.store', 'users.update'])
+            <button type="submit" class="btn btn-primary">{{ __('Simpan') }}</button>
+        @endcan
+
         <a href="{{ route('users.index') }}" class="btn btn-outline-dark ms-2">kembali</a>
     </div>
 </div>
