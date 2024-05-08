@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use App\Jobs\DeleteUnverifiedUser;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -30,7 +33,9 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    // protected $redirectTo = '/home';
+    // protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -40,6 +45,18 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    protected function registered(Request $request, $user)
+    {
+        $user->sendEmailVerificationNotification();
+        // Tambahkan role "Pasien" setelah registrasi dan verifikasi email
+        $role = Role::where('name', 'Pasien')->first();
+        $user->assignRole($role);
+
+        // Tambahkan permissions yang terkait dengan role "Pasien"
+        $user->syncPermissions($role->permissions);
+        return redirect($this->redirectPath());
     }
 
     /**
@@ -59,7 +76,7 @@ class RegisterController extends Controller
             ],
             [
                 'username.unique' => 'Username sudah pernah digunakan.',
-                'email.unique' => 'Email sudah pernah digunakan.',
+                'email.unique' => 'Email sudah pernah digunakan atau tidak valid.',
             ],
         );
     }
