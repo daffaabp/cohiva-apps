@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pasien;
 use App\Http\Requests\PasienRequest;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class PasienController
@@ -36,10 +37,17 @@ class PasienController extends Controller
      */
     public function store(PasienRequest $request)
     {
-        // dd($request);
-        
-        Pasien::create($request->validated());
+        $validated = $request->validated();
+        $validated['id_user'] = Auth::user()->id;
 
+        Pasien::create($validated);
+
+        //kalau pasien nanti di redirect ke home
+        if(Auth::user()->hasRole('Pasien')){
+            return redirect()->route('info_hiv')
+                ->with('success', 'Berhasil mengisi data pasien.');
+        }
+        
         return redirect()->route('pasiens.index')
             ->with('success', 'Pasien created successfully.');
     }

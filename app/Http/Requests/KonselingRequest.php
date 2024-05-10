@@ -29,6 +29,20 @@ class KonselingRequest extends FormRequest
 			'penilaian' => 'required|string',
 			'jenis_konseling' => 'required|string',
 			'status_konseling' => 'required|string',
+            'id_janjikonseling' => 'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'tgl_konseling.required' => 'Tanggal konseling wajib diisi!',
+			'keterangan.required' => 'Keterangan wajib diisi!',
+			'status_pasien.required' => 'Status wajib diisi!',
+			'keluhan.required' => 'Keluhan wajib diisi!',
+			'penilaian.required' => 'Penilaian wajib diisi!',
+			'jenis_konseling.required' => 'Jenis konseling wajib diisi!',
+			'status_konseling.required' => 'Status konseling wajib diisi!',
         ];
     }
 }

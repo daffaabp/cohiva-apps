@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\Role;
+use App\Models\Pasien;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -40,17 +41,22 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        if (!$user->hasVerifiedEmail()) {
-             return redirect()->route('verification.verify');  // Jika email belum diverifikasi, arahkan ke halaman tertentu
-        }
+        if (!$user->hasRole(['Superadmin', 'Admin', 'Konselor'])) {
 
-        // Jika pengguna telah diverifikasi, tetapi belum memiliki role "Pasien", tambahkan role "Pasien"
-        if (!$user->hasRole('Pasien')) {
-            $role = Role::where('name', 'Pasien')->first();
-            $user->assignRole($role);
+            if (!$user->hasVerifiedEmail()) {
+                return redirect()->route('verification.verify');  // Jika email belum diverifikasi, arahkan ke halaman tertentu
+            }
 
-            // Tambahkan permissions yang terkait dengan role "Pasien"
-            $user->syncPermissions($role->permissions);
+            //cek role usernya dulu
+            if ($user->hasRole('Pasien')) {
+                //cek user dengan role pasien untuk input data pasien
+                $pasien = Pasien::where('id_user', $user->id)->first();
+                if (empty($pasien)) {
+                    return redirect()->route('pasiens.create');
+                }
+            }
+        }else{
+            return redirect()->route('home_new');
         }
     }
 

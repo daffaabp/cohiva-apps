@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Konseling;
-use App\Http\Requests\KonselingRequest;
-use App\Models\Konselor;
 use App\Models\Pasien;
+use App\Models\Konselor;
+use App\Models\Konseling;
+use App\Models\JanjiKonseling;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\KonselingRequest;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -25,14 +28,24 @@ class KonselingController extends Controller
             ->with('i', (request()->input('page', 1) - 1) * $konselings->perPage());
     }
 
+    public function konselingbykonselor(){
+        $id_user = Auth::user()->id;
+        $konselor = Konselor::where('id_user', $id_user)->first();
+        $konselings = Konseling::where('id_konselor', $konselor->id_konselor)->get();
+
+        return view('konseling.konselingbykonselor', compact('konselings'));
+        
+    }
+
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($id)
     {
+        $janjiKonseling = JanjiKonseling::find($id);
         $konseling = new Konseling();
 
-        return view('konseling.create', compact('konseling'));
+        return view('konseling.create', compact('konseling', 'janjiKonseling'));
     }
 
     /**
@@ -40,30 +53,28 @@ class KonselingController extends Controller
      */
     public function store(KonselingRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'tgl_konseling' => 'required',
-            'status_pasien' => 'required',
-            'keluhan' => 'required',
-            'penilaian' => 'required',
-            'keterangan' => 'required',
-            'jenis_konseling' => 'required',
-            'status_konseling' => 'required'
-        ]);
-
-        if($validator->fails()){
-            return redirect('konselings.create')
-                    ->withErrors($validator)
-                    ->withInput();
-        }
-
-        $validated = $validator->validate();
-        $validated['id_pasien'] = 1; //input menggunakan dummy karna belum terkoneksi dengan login konselor
-        $validated['id_konselor'] = 1; //input menggunakan dummy karna belum terkoneksi dengan login konselor
+        $validated = $request->validated();
+        
+        $id_janjikonseling = $validated['id_janjikonseling'];
+        
+        $janjiKonseling = JanjiKonseling::find($id_janjikonseling);
+               
+        $validated['id_pasien'] = $janjiKonseling->id_pasien; 
+        $validated['id_konselor'] = $janjiKonseling->id_konselor; 
 
         Konseling::create($validated);
 
-        return redirect()->route('konselings.index')
+        return redirect()->route('konselings.konselingbykonselor')
             ->with('success', 'Konseling berhasil disimpan.');
+    }
+
+    public function rekapkonseling(){
+        $rekapkonselings = DB::table('konseling')
+                            ->select(DB::raw('COUNT(id_konseling) as jml_konseling, MONTH(tgl_konseling) as rekap_bln, YEAR(tgl_konseling) as rekap_tahun'))
+                            ->groupByRaw("MONTH('tgl_konseling')")
+                            ->get();
+        
+        return view('konseling.rekapkonseling', compact('rekapkonselings'))                               ;
     }
 
     /**

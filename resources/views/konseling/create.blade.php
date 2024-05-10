@@ -11,12 +11,13 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">{{ __('Tambah') }} Hasil Konseling</span>
+                        <span class="card-title">{{ __('Input') }} hasil konseling pasien : {{ $janjiKonseling->pasien->nama_pasien }}</span>
                     </div>
                     <div class="card-body bg-white">
                         <form method="POST" action="{{ route('konselings.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
+                            <input type="hidden" name="id_janjikonseling" value="{{ $janjiKonseling->id }}">
                             @include('konseling.form')
 
                         </form>

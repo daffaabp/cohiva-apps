@@ -13,24 +13,27 @@
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
             <ul id="sidebarnav">
-                <li class="nav-small-cap">
-                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                    <span class="hide-menu">Home</span>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="./index.html" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-layout-dashboard"></i>
-                        </span>
-                        <span class="hide-menu">Dashboard</span>
-                    </a>
-                </li>
+                @hasanyrole('Superadmin|Admin')
+                    <li class="nav-small-cap">
+                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                        <span class="hide-menu">Home</span>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-layout-dashboard"></i>
+                            </span>
+                            <span class="hide-menu">Dashboard</span>
+                        </a>
+                    </li>
+                @endhasanyrole
+
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">LAPORAN</span>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('konselings.index') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-article"></i>
                         </span>
@@ -38,29 +41,48 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('konselings.rekapkonseling') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-calendar"></i>
                         </span>
                         <span class="hide-menu">Rekap perbulan</span>
                     </a>
                 </li>
+
+                @canany(['konselings.index','konselings.konselingbykonselor'])
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">KONSELING</span>
                 </li>
+                @endcanany
+                @can('konselings.index')
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('konselings.index') }}" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-comments">&#xeaef;</i>
+                            </span>
+                            <span class="hide-menu">Konseling</span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('konselings.konselingbykonselor')
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('konselings.index') }}" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('konselings.konselingbykonselor') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-comments">&#xeaef;</i>
                         </span>
-                        <span class="hide-menu">Konseling</span>
+                        <span class="hide-menu">Konseling by konselor</span>
                     </a>
                 </li>
-                <li class="nav-small-cap">
-                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                    <span class="hide-menu">JADWAL</span>
-                </li>
+                @endcan
+
+                @canany(['jadwal-konselors.index', 'janji-konselings.index', 'janji-konselings.janjikonselor'])
+                    <li class="nav-small-cap">
+                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                        <span class="hide-menu">JADWAL</span>
+                    </li>
+                @endcanany
 
                 @can('jadwal-konselors.index')
                     <li class="sidebar-item">
@@ -84,105 +106,129 @@
                     </li>
                 @endcan
 
-                <li class="nav-small-cap">
-                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                    <span class="hide-menu">MASTER</span>
-                </li>
-                @can('konselors.index')
+                @can('janji-konselings.janjikonselor')
+                    {{-- menu janji konseling by konselor --}}
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{ route('konselors.index') }}" aria-expanded="false">
+                        <a class="sidebar-link" href="{{ route('janji-konselings.janjikonselor') }}" aria-expanded="false">
                             <span>
-                                <i class="ti ti-cards"></i>
+                                <i class="ti ti-clipboard"></i>
                             </span>
-                            <span class="hide-menu">Konselor</span>
+                            <span class="hide-menu">Janji Konselor</span>
                         </a>
                     </li>
                 @endcan
 
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('pasiens.index') }}" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-heart-broken"></i>
-                        </span>
-                        <span class="hide-menu">Pasien</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="btn sidebar-link" data-toggle="collapse" aria-expanded="false"
-                        onclick="toggleUserDropdown()">
-                        <span>
-                            <i class="ti ti-user"></i>
-                        </span>
-                        <span class="hide-menu">Users management</span>
-                        <span class="menu-arrow">
-                            <i class="fas fa-chevron-down"></i>
-                        </span>
-                    </a>
-                    <ul id="userDropdown" class="collapse list-unstyled">
-                        @can('roles.index')
-                            <li class="sidebar-item sub-menu">
-                                <a class="sidebar-link" href="{{ route('roles.index') }}" aria-expanded="false">
-                                    <span>
-                                        <i class="ti ti-cards"></i>
-                                    </span>
-                                    <span class="hide-menu">Role Managemen</span>
-                                </a>
-                            </li>
-                        @endcan
-
-                        @can('users.index')
-                            <li class="sidebar-item sub-menu">
-                                <a class="sidebar-link" href="{{ route('users.index') }}" aria-expanded="false">
-                                    <span>
-                                        <i class="ti ti-id-badge"></i>
-                                    </span>
-                                    <span class="hide-menu">User Managemen</span>
-                                </a>
-                            </li>
-                        @endcan
-                    </ul>
-                </li>
-
-                @canany(['info_hiv', 'daftar_konselor', 'jadwalkan_konseling'])
+                @hasanyrole('Superadmin|Admin')
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">PASIEN</span>
+                        <span class="hide-menu">MASTER</span>
                     </li>
-                @endcanany()
+                    @can('konselors.index')
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{ route('konselors.index') }}" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-cards"></i>
+                                </span>
+                                <span class="hide-menu">Konselor</span>
+                            </a>
+                        </li>
+                    @endcan
 
-                @can('info_hiv')
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{ route('info_hiv') }}" aria-expanded="false">
+                        <a class="sidebar-link" href="{{ route('pasiens.index') }}" aria-expanded="false">
                             <span>
                                 <i class="ti ti-heart-broken"></i>
                             </span>
-                            <span class="hide-menu">Info lengkap HIV AIDS</span>
+                            <span class="hide-menu">Pasien</span>
                         </a>
                     </li>
-                @endcan
 
-                @can('daftar_konselor')
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{ route('daftar_konselor') }}" aria-expanded="false">
+                        <a class="btn sidebar-link" data-toggle="collapse" aria-expanded="false"
+                            onclick="toggleUserDropdown()">
                             <span>
-                                <i class="ti ti-user-plus"></i>
+                                <i class="ti ti-user"></i>
                             </span>
-                            <span class="hide-menu">Daftar konselor</span>
+                            <span class="hide-menu">Users management</span>
+                            <span class="menu-arrow">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
                         </a>
-                    </li>
-                @endcan
+                        <ul id="userDropdown" class="collapse list-unstyled">
+                            @can('roles.index')
+                                <li class="sidebar-item sub-menu">
+                                    <a class="sidebar-link" href="{{ route('roles.index') }}" aria-expanded="false">
+                                        <span>
+                                            <i class="ti ti-cards"></i>
+                                        </span>
+                                        <span class="hide-menu">Role Managemen</span>
+                                    </a>
+                                </li>
+                            @endcan
 
-                @can('jadwalkan_konseling')
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{ route('jadwalkan_konseling') }}" aria-expanded="false">
-                            <span>
-                                <i class="ti ti-mood-happy"></i>
-                            </span>
-                            <span class="hide-menu">Jadwalkan konseling</span>
-                        </a>
+                            @can('users.index')
+                                <li class="sidebar-item sub-menu">
+                                    <a class="sidebar-link" href="{{ route('users.index') }}" aria-expanded="false">
+                                        <span>
+                                            <i class="ti ti-id-badge"></i>
+                                        </span>
+                                        <span class="hide-menu">User Managemen</span>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
                     </li>
-                @endcan
+                @endhasanyrole
+
+                <?php
+                $id = Auth::user()->id;
+                $pasien = App\Models\Pasien::where('id_user', $id)->first();
+                
+                ?>
+
+                @isset($pasien)
+                    @canany(['info_hiv', 'daftar_konselor', 'jadwalkan_konseling'])
+                        <li class="nav-small-cap">
+                            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                            <span class="hide-menu">PASIEN</span>
+                        </li>
+                    @endcanany()
+
+                    @can('info_hiv')
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{ route('info_hiv') }}" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-heart-broken"></i>
+                                </span>
+                                <span class="hide-menu">Info lengkap HIV AIDS</span>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('daftar_konselor')
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{ route('daftar_konselor') }}" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-user-plus"></i>
+                                </span>
+                                <span class="hide-menu">Daftar konselor</span>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('jadwalkan_konseling')
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{ route('jadwalkan_konseling') }}" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-mood-happy"></i>
+                                </span>
+                                <span class="hide-menu">Jadwalkan konseling</span>
+                            </a>
+                        </li>
+                    @endcan
+                @endisset
+
+
             </ul>
 
         </nav>

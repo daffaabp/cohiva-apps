@@ -68,7 +68,7 @@
                                 <input id="password-confirm" type="password" name="password_confirmation"
                                     class="form-control" required autocomplete="new-password">
                             </div>
-                            <button type="submit" class="btn btn-primary w-100 py-2 fs-5 rounded-2">
+                            <button type="submit" class="btn btn-primary w-100 py-2 fs-5 rounded-2" onclick="this.disabled=true;this.value='Sending, please wait...';this.form.submit();">
                                 Register
                             </button>
                             <div class="text-center mt-3">

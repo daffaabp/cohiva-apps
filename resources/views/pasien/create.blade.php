@@ -11,7 +11,7 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">{{ __('Tambah') }} Pasien</span>
+                        <span class="card-title">{{ __('Silahkan lengkapi data') }} Pasien</span>
                     </div>
                     <div class="card-body bg-white">
                         <form method="POST" action="{{ route('pasiens.store') }}"  role="form" enctype="multipart/form-data">

@@ -14,7 +14,13 @@
                             <span class="card-title">{{ __('Detail') }} Konseling</span>
                         </div>
                         <div class="float-right">
+                            @can('konselings.index')
                             <a class="btn btn-primary btn-sm" href="{{ route('konselings.index') }}"> {{ __('Kembali') }}</a>
+                            @endcan
+                            
+                            @can('konselings.konselingbykonselor')
+                            <a class="btn btn-primary btn-sm" href="{{ route('konselings.konselingbykonselor') }}"> {{ __('Kembali') }}</a>
+                            @endcan
                         </div>
                     </div>
 

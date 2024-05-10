@@ -1,6 +1,8 @@
 <?php
 
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
@@ -23,6 +25,7 @@ use App\Http\Controllers\Auth\VerificationController;
 |
 */
 
+
 Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('/register', 'App\Http\Controllers\Auth\RegisterController@register');
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
@@ -30,7 +33,8 @@ Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'
 
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return redirect()->route('login');
 });
 
 Auth::routes(['verify' => true]);
@@ -39,7 +43,7 @@ Route::get('/home', [HomeController::class, 'index'])
     ->name('home_new')
     ->middleware(['auth', 'verified', 'isloggedin']);
 
-Route::middleware(['auth', 'isloggedin', 'verified'])->group(function () {
+Route::middleware(['auth', 'isloggedin'])->group(function () {
     // routing menu role management
     Route::get('roles/get-permissions', [RoleController::class, 'getPermissions'])->name('roles.get-permissions')->middleware('permission:roles.get-permissions');
     Route::get('roles/refresh-delete-permission', [RoleController::class, 'refreshAndDeletePermissions'])->name('roles.refresh-delete-permissions')->middleware('permission:roles.refresh-delete-permissions');
@@ -108,12 +112,19 @@ Route::middleware(['auth', 'isloggedin', 'verified'])->group(function () {
         'permission:janji-konselings.update',
         'permission:janji-konselings.destroy',
     ]);
+    Route::get('/janji-konseling/{id}/detailbykonselor', [JanjiKonselingController::class, 'detailbykonselor'])->name('janji-konselings.detailbykonselor');
+
+    Route::get('/janji-konseling/janjikonselor', [JanjiKonselingController::class, 'janjikonselor'])->name('janji-konselings.janjikonselor');
     Route::get('/janji-konseling/create/{id}', [JanjiKonselingController::class, 'create'])->name('janji-konseling.create')->middleware('permission:janji-konseling.create');
     Route::get('/janji-konseling/pilihkonselor', [JanjiKonselingController::class, 'pilihkonselor'])->name('janjikonseling.pilihkonselor')->middleware('permission:janjikonseling.pilihkonselor');
     // end routing menu janji konseling
 
     // routing menu konselings
-    Route::resource('konselings', KonselingController::class);
+    Route::get('/konselings/rekapkonseling', [KonselingController::class, 'rekapkonseling'])->name('konselings.rekapkonseling');
+    Route::get('/konselings/konselingbykonselor', [KonselingController::class, 'konselingbykonselor'])->name('konselings.konselingbykonselor')->middleware('permission:konselings.konselingbykonselor');
+
+    Route::resource('konselings', KonselingController::class)->except(['create']);
+    Route::get('/konselings/create/{id}', [KonselingController::class, 'create'])->name('konselings.create');
     // end routing menu konselings
 
     // routing menu yang dapat diakses oleh pasien

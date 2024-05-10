@@ -11,10 +11,28 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">{{ __('Update') }} Role</span>
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                            <span id="card_title" style="margin-right: auto;">
+                                {{ __('Update Role') }}
+                            </span>
+                            <div class="text-center">
+                                @can('roles.get-permissions')
+                                    <a href="{{ route('roles.get-permissions') }}" class="btn btn-sm btn-primary">Get
+                                        Permissions</a>
+                                @endcan
+
+                                <span style="margin: 0 5px;"></span>
+
+                                @can('roles.refresh-delete-permissions')
+                                    <a href="{{ route('roles.refresh-delete-permissions') }}"
+                                        class="btn btn-sm btn-primary">Refresh And Delete Permissions</a>
+                                @endcan
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('roles.update', $role->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('roles.update', $role->id) }}" role="form"
+                            enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 

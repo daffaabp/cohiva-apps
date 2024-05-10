@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\JadwalKonselor;
 use App\Models\JanjiKonseling;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\JanjiKonselingRequest;
 
 /**
@@ -27,6 +28,25 @@ class JanjiKonselingController extends Controller
 
         return view('janji-konseling.index', compact('janjiKonselings', 'konselors'))
             ->with('i', (request()->input('page', 1) - 1) * $janjiKonselings->perPage());
+    }
+
+    public function janjikonselor(){
+        //ambil id usernya
+        $id_user = Auth::user()->id;
+
+        //ambil data konselornya
+        $konselor = Konselor::where('id_user', $id_user)->first();
+        $id_konselor = $konselor->id_konselor;
+
+        $janjiKonselings = JanjiKonseling::where('id_konselor',$id_konselor)->get();
+
+        return view('janji-konseling.janjikonselor', compact('janjiKonselings'));
+    }
+
+    public function detailbykonselor($id){
+        $janjiKonseling = JanjiKonseling::find($id);
+        
+        return view('janji-konseling.detailbykonselor', compact('janjiKonseling'));
     }
 
     /**
@@ -48,7 +68,6 @@ class JanjiKonselingController extends Controller
     public function store(JanjiKonselingRequest $request)
     {
         //deklarasi variable
-        $id_konselor = $request->id_konselor;
         $id_jadwalkonselor = $request->id_jadwalkonselor;
         $id_pasien = $request->id_pasien;
 
@@ -57,6 +76,7 @@ class JanjiKonselingController extends Controller
         $jadwal_hari = $jadwalkonselor->hari;
         $jadwal_jam = $jadwalkonselor->jam;
         $jadwal_namakonselor = $jadwalkonselor->konselor->nama_konselor;
+        $id_konselor = $jadwalkonselor->id_konselor;
        
         
         $tgl_janjikonseling = Carbon::parse($request->tgl_janji_konseling)->format('Y-m-d');
@@ -65,6 +85,7 @@ class JanjiKonselingController extends Controller
         $validated = [
             'id_jadwalkonselor' => $id_jadwalkonselor,
             'id_pasien' => $id_pasien,
+            'id_konselor' => $id_konselor,
             'nama_konselor' => $jadwal_namakonselor,
             'hari' => $jadwal_hari,
             'jam' => $jadwal_jam,

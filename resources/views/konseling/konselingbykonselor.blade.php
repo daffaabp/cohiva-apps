@@ -70,7 +70,7 @@
                                         }
                                         ?>
                                         <tr>
-                                            <td>{{ ++$i }}</td>
+                                            <td>{{ $loop->iteration }}</td>
 
                                             <td>{{ $tgl_konseling }}</td>
                                             <td>{{ $konseling->pasien->nama_pasien }}</td>
@@ -90,8 +90,8 @@
                                                             class="ti ti-pencil"></i></a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" id="delete-btn" class="btn btn-danger btn-sm"><i
-                                                            class="ti ti-trash"></i></button>
+                                                    {{-- <button type="submit" id="delete-btn" class="btn btn-danger btn-sm"><i
+                                                            class="ti ti-trash"></i></button> --}}
                                                 </form>
                                             </td>
                                         </tr>
@@ -101,7 +101,6 @@
                         </div>
                     </div>
                 </div>
-                {!! $konselings->links() !!}
             </div>
         </div>
     </div>

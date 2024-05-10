@@ -16,11 +16,6 @@
                                 {{ __('Janji Konseling') }}
                             </span>
 
-                            @can('janjikonseling.pilihkonselor')
-                                <a href="{{ route('janjikonseling.pilihkonselor') }}" class="btn btn-sm btn-primary">Buat
-                                    janji</a>
-                            @endcan
-
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -49,7 +44,7 @@
                                 <tbody>
                                     @foreach ($janjiKonselings as $janjiKonseling)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
+                                            <td>{{ $loop->iteration }}</td>
 
                                             <?php
                                             if ($janjiKonseling['tgl_janji_konseling'] != null) {
@@ -75,7 +70,7 @@
                                                 $tgl_janji_konseling = $tanggal . ' ' . ' ' . $bulan . ' ' . $tahun;
                                             } else {
                                                 $tgl_janji_konseling = '';
-                                            } 
+                                            }
                                             ?>
                                             <td>{{ $tgl_janji_konseling }}</td>
                                             <td>{{ $janjiKonseling->nama_konselor }}</td>
@@ -133,7 +128,6 @@
                         </div>
                     </div>
                 </div>
-                {!! $janjiKonselings->links() !!}
             </div>
         </div>
     </div>

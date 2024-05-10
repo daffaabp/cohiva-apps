@@ -93,6 +93,14 @@
     </div>
     <div class="col-md-12 mt20 mt-2">
         <button type="submit" class="btn btn-primary">{{ __('Simpan') }}</button>
+
+        @can('konselings.index')
         <a href="{{ route('konselings.index') }}" class="btn btn-outline-dark ms-2">Kembali</a>
+        @endcan
+
+        @can('konselings.konselingbykonselor')
+        <a href="{{ route('konselings.konselingbykonselor') }}" class="btn btn-outline-dark ms-2">Kembali</a>
+        @endcan
+
     </div>
 </div>

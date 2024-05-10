@@ -35,7 +35,7 @@ class Konseling extends Model
      *
      * @var array
      */
-    protected $fillable = ['id_konseling','tgl_konseling', 'id_pasien', 'id_konselor', 'keterangan', 'status_pasien', 'keluhan', 'penilaian', 'jenis_konseling', 'status_konseling'];
+    protected $fillable = ['id_konseling','tgl_konseling', 'id_pasien', 'id_konselor', 'id_janjikonseling', 'keterangan', 'status_pasien', 'keluhan', 'penilaian', 'jenis_konseling', 'status_konseling'];
 
 
     /**
