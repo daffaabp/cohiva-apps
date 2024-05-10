@@ -45,7 +45,7 @@ class JanjiKonselingController extends Controller
 
     public function detailbykonselor($id){
         $janjiKonseling = JanjiKonseling::find($id);
-        
+
         return view('janji-konseling.detailbykonselor', compact('janjiKonseling'));
     }
 
@@ -72,13 +72,13 @@ class JanjiKonselingController extends Controller
         $id_pasien = $request->id_pasien;
 
         //ambil jadwal untuk mengecek apakah tanggalnya sesuaid dengan jadwal atau tidak
-        $jadwalkonselor = JadwalKonselor::with('konselor')->find($id_jadwalkonselor); 
+        $jadwalkonselor = JadwalKonselor::with('konselor')->find($id_jadwalkonselor);
         $jadwal_hari = $jadwalkonselor->hari;
         $jadwal_jam = $jadwalkonselor->jam;
         $jadwal_namakonselor = $jadwalkonselor->konselor->nama_konselor;
         $id_konselor = $jadwalkonselor->id_konselor;
-       
-        
+
+
         $tgl_janjikonseling = Carbon::parse($request->tgl_janji_konseling)->format('Y-m-d');
 
         //jika kondisi sudah terpenuhi lanjut proses input dalam table
@@ -94,7 +94,7 @@ class JanjiKonselingController extends Controller
         ];
 
         // dd($validated);
-        
+
         JanjiKonseling::create($validated);
 
         return redirect()->route('janji-konselings.index')
@@ -111,14 +111,14 @@ class JanjiKonselingController extends Controller
         $id_pasien = $request->id_pasien;
 
         //ambil jadwal untuk mengecek apakah tanggalnya sesuaid dengan jadwal atau tidak
-        $jadwalkonselor = JadwalKonselor::find($id_jadwalkonselor); 
+        $jadwalkonselor = JadwalKonselor::find($id_jadwalkonselor);
         $jadwal_hari = $jadwalkonselor->hari;
-        
+
         $selectedHari = Carbon::parse($request->tgl_janji_konseling)->locale('id')->dayName;
         if($selectedHari != $jadwal_hari){
             return redirect()->action([JanjiKonselingController::class, 'create'], ['id' => $id_konselor])->with('error', 'Tanggal yang dipilih tidak sesuai jadwal!');
         }
-        
+
         $tgl_janjikonseling = Carbon::parse($request->tgl_janji_konseling)->format('Y-m-d');
 
         //jika kondisi sudah terpenuhi lanjut proses input dalam table
@@ -130,7 +130,7 @@ class JanjiKonselingController extends Controller
         ];
 
         // dd($validated);
-        
+
         JanjiKonseling::create($validated);
 
         return redirect()->route('janji-konselings.index')
@@ -178,7 +178,7 @@ class JanjiKonselingController extends Controller
 
     public function getjadwal(Request $request){
         $idKonselor = $request->input('id_konselor');
-        
+
         $jadwalKonselor = JadwalKonselor::where('id_konselor', '=', $idKonselor)->get();
 
         return response()->json($jadwalKonselor);

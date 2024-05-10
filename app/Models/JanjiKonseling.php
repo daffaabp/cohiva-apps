@@ -32,7 +32,7 @@ class JanjiKonseling extends Model
      *
      * @var array
      */
-    protected $fillable = ['id_jadwalkonselor', 'nama_konselor', 'hari', 'jam', 'id_pasien', 'status_janji', 'tgl_janji_konseling'];
+    protected $fillable = ['id_jadwalkonselor', 'id_konselor', 'nama_konselor', 'hari', 'jam', 'id_pasien', 'status_janji', 'tgl_janji_konseling'];
 
 
     /**

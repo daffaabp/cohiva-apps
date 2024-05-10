@@ -22,11 +22,23 @@ class JanjiKonselingRequest extends FormRequest
     public function rules(): array
     {
         return [
-			'id_jadwalkonselor' => 'numeric',
+			'id_jadwalkonselor' => 'required|numeric',
 			'id_pasien' => 'numeric',
 			'status_janji' => 'string',
             'id_konselor' => 'numeric',
             'tgl_janji_konseling' => 'date',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'id_jadwalkonselor.required' => 'Jadwal Konselor wajib diisi!',
+			'id_jadwalkonselor.numeric' => 'Id Jadwal Konselor wajib diisi!',
+			'id_pasien.numeric' => 'ID Pasien wajib numeric!',
+			'status_janji.string' => 'Status janji wajib bersifat string!',
+			'id_konselor.numeric' => 'ID Konselor wajib numeric!',
+			'tgl_janji_konseling.date' => 'Tanggal Janji Konseling wajib diisi!',
         ];
     }
 }

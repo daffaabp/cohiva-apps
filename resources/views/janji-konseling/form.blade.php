@@ -13,6 +13,10 @@
                     </label>
                 </div>
             @endforeach
+                @error('id_jadwalkonselor')
+                    <div><span class="text-danger"><strong>{{ $message }}</strong></span></div>
+                @enderror
+
         </div>
 
         <div class="form-group mb-4 mb20">

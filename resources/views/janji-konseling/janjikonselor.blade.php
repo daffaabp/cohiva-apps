@@ -92,34 +92,11 @@
                                             </td>
 
                                             <td>
-                                                @can('janji-konselings.show')
+                                                @can('janji-konselings.detailbykonselor')
                                                     <a class="btn btn-sm btn-primary "
-                                                        href="{{ route('janji-konselings.show', $janjiKonseling->id) }}"> <i
+                                                        href="{{ route('janji-konselings.detailbykonselor', $janjiKonseling->id) }}"> <i
                                                             class="ti ti-eye"></i></a>
                                                 @endcan
-
-
-                                                {{-- cek jika statusnya dijadwalkan maka masih bisa dirubah atau dihapus --}}
-                                                @if ($janjiKonseling->status_janji == 'DIJADWALKAN' && date('Y-m-d') <= $janjiKonseling->tgl_janji_konseling)
-                                                    @can('janji-konselings.edit')
-                                                        <a class="btn btn-sm btn-success"
-                                                            href="{{ route('janji-konselings.edit', $janjiKonseling->id) }}">
-                                                            <i class="ti ti-pencil"></i></a>
-                                                    @endcan
-
-                                                    <form id="delete-form"
-                                                        action="{{ route('janji-konselings.destroy', $janjiKonseling->id) }}"
-                                                        method="POST">
-
-                                                        @can('janji-konselings.destroy')
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger btn-sm"
-                                                                id="delete-btn"> <i class="ti ti-trash"></i></button>
-                                                        @endcan
-
-                                                    </form>
-                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

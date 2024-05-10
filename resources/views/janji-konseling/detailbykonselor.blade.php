@@ -6,10 +6,11 @@
 
 @push('custom-css')
     <style>
-        .judul{
+        .judul {
             width: 150px;
         }
-        .titikdua{
+
+        .titikdua {
             width: 50px;
         }
     </style>
@@ -48,7 +49,7 @@
                                 11 => 'Nov',
                                 12 => 'Des',
                             ];
-                        
+
                             $bl = date('n', strtotime($janjiKonseling['tgl_janji_konseling']));
                             $bulan = $bulan_array[$bl];
                             $tahun = date('Y', strtotime($janjiKonseling['tgl_janji_konseling']));
@@ -131,9 +132,12 @@
                                 </td>
                             </tr>
                         </table>
-                        <div class="col-md-12 d-flex justify-content-end">
-                            <a href="{{ route('konselings.create', $janjiKonseling->id) }}" class="btn btn-success">Input hasil konseling</a>
-                        </div>
+                        @if ($janjiKonseling->status_janji == 'DIJADWALKAN')
+                            <div class="col-md-12 d-flex justify-content-end">
+                                <a href="{{ route('konselings.create', $janjiKonseling->id) }}"
+                                    class="btn btn-success">Input hasil konseling</a>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
