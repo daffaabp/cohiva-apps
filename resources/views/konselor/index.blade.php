@@ -64,7 +64,7 @@
                                                 @if ($konselor->is_aktif == 1)
                                                     <span class="badge text-bg-success">Aktif</span>
                                                 @else
-                                                    <span class="badge text-bg-secondary">Non Aktif</span>
+                                                    <span class="badge text-bg-danger">Non Aktif</span>
                                                 @endif
                                             </td>
                                             <td>

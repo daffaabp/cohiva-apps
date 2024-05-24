@@ -11,7 +11,7 @@
     <div class="col-md-8">
         <input type="hidden" name="id_user" value="{{ encrypt($user->id) }}">
         <div class="form-group mb-2 mb20">
-            <label for="nama_konselor" class="form-label">{{ __('Nama Konselor') }}</label>
+            <label for="nama_konselor" class="form-label">{{ __('Nama Konselor') }} <span class="text-danger">*</span></label>
             <input type="text" name="nama_konselor" class="form-control @error('nama_konselor') is-invalid @enderror"
                 value="{{ old('nama_konselor', $user?->name ? $user?->name : $konselor->nama_konselor) }}"
                 id="nama_konselor" placeholder="Nama Konselor">
@@ -24,7 +24,7 @@
             <label for="notelpon_konselor" class="form-label">{{ __('Notelpon Konselor') }}</label>
             <input type="text" name="notelpon_konselor"
                 class="form-control @error('notelpon_konselor') is-invalid @enderror"
-                value="{{ old('notelpon_konselor', $konselor?->notelpon_konselor) }}" id="notelpon_konselor"
+                value="{{ old('notelpon_konselor', $konselor?->notelpon_konselor ?? 0) }}" id="notelpon_konselor"
                 placeholder="Notelpon Konselor">
             {!! $errors->first(
                 'notelpon_konselor',
@@ -32,22 +32,22 @@
             ) !!}
         </div>
         <div class="form-group mb-2 mb20">
-            <label for="unit_kerja" class="form-label">{{ __('Unit Kerja') }}</label>
+            <label for="unit_kerja" class="form-label">{{ __('Unit Kerja') }} <span class="text-danger">*</span> </label>
             <input type="text" name="unit_kerja" class="form-control @error('unit_kerja') is-invalid @enderror"
                 value="{{ old('unit_kerja', $konselor?->unit_kerja) }}" id="unit_kerja" placeholder="Unit Kerja">
             {!! $errors->first('unit_kerja', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
         <div class="form-group mb-2 mb20">
-            <label for="is_aktif" class="form-label">{{ __('Is Aktif') }}</label>
+            <label for="is_aktif" class="form-label">{{ __('Is Aktif') }} <span class="text-danger">*</span></label>
             <div class="form-check">
-                <input class="form-check-input" value="1" {{ $konselor->is_aktif == 1 ? 'checked' : '' }}
+                <input class="form-check-input" value="1" {{ ($konselor->is_aktif ?? 1) == 1 ? 'checked' : '' }}
                     type="radio" name="is_aktif" id="flexRadioDefault1">
                 <label class="form-check-label" for="flexRadioDefault1">
                     Aktif
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" value="0" {{ $konselor->is_aktif == 0 ? 'checked' : '' }}
+                <input class="form-check-input" value="0" {{ ($konselor->is_aktif ?? 1) == 0 ? 'checked' : '' }}
                     type="radio" name="is_aktif" id="flexRadioDefault2">
                 <label class="form-check-label" for="flexRadioDefault2">
                     Non Aktif

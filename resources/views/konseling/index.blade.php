@@ -76,7 +76,13 @@
                                             <td>{{ $konseling->pasien->nama_pasien }}</td>
                                             <td>{{ $konseling->status_pasien }}</td>
                                             <td>{{ $konseling->konselor->nama_konselor }}</td>
-                                            <td>{{ $konseling->status_konseling }}</td>
+                                            <td>
+                                                @if ($konseling->status_konseling == 'selesai')
+                                                    <span class="badge text-bg-success">Selesai</span>
+                                                @else
+                                                    <span class="badge text-bg-warning">Membutuhkan Tindak Lanjut</span>
+                                                @endif
+                                            </td>
 
                                             <td>
                                                 <form id="delete-form"

@@ -16,11 +16,11 @@
                                 {{ __('Pasien') }}
                             </span>
 
-                             <div class="float-right">
+                             {{-- <div class="float-right">
                                 <a href="{{ route('pasiens.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
                                   {{ __('Tambah Pasien') }}
                                 </a>
-                              </div>
+                              </div> --}}
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -39,8 +39,7 @@
 										<th>Nama Pasien</th>
 										<th>Alamat Pasien</th>
 										<th>Notelpon Pasien</th>
-										<th>Id User</th>
-										<th>Jk Pasien</th>
+										<th>Jenis kelamin Pasien</th>
 
                                         <th></th>
                                     </tr>
@@ -53,7 +52,6 @@
 											<td>{{ $pasien->nama_pasien }}</td>
 											<td>{{ $pasien->alamat_pasien }}</td>
 											<td>{{ $pasien->notelpon_pasien }}</td>
-											<td>{{ $pasien->id_user }}</td>
 											<td>
                                                 @if($pasien->jk_pasien == 'L')
                                                 {{ 'Laki-laki' }}
@@ -64,11 +62,11 @@
 
                                             <td>
                                                 <form action="{{ route('pasiens.destroy',$pasien->id_pasien) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('pasiens.show',$pasien->id_pasien) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('pasiens.edit',$pasien->id_pasien) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('pasiens.show',$pasien->id_pasien) }}"><i class="fa fa-fw fa-eye"></i></a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('pasiens.edit',$pasien->id_pasien) }}"><i class="fa fa-fw fa-edit"></i></a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin hapus data?')"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                    {{-- <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin hapus data?')"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button> --}}
                                                 </form>
                                             </td>
                                         </tr>

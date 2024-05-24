@@ -56,20 +56,11 @@
             {!! $errors->first('keterangan', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
         <div class="form-group mb-2 mb20">
-            {{-- jenis_konseling ada beberapa macam
-            1. Offline
-            2. Online
-            3. Individu
-            4. Group
-            5. Pasangan
-            6. Keluarga
-            7. Edukasi
-            8. Dukungan Emosional --}}
             <label for="jenis_konseling" class="form-label">{{ __('Jenis Konseling') }}</label>
-            <input type="text" name="jenis_konseling"
-                class="form-control @error('jenis_konseling') is-invalid @enderror"
-                value="{{ old('jenis_konseling', $konseling?->jenis_konseling) }}" id="jenis_konseling"
-                placeholder="Jenis Konseling">
+            <select name="jenis_konseling" class="form-select" id="jenis_konseling">
+                <option value="Terbuka">Terbuka</option>
+                <option value="Tertutup">Tertutup</option>
+            </select>
             {!! $errors->first(
                 'jenis_konseling',
                 '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>',
@@ -78,11 +69,7 @@
         <div class="form-group mb-2 mb20">
             <label for="status_konseling" class="form-label">{{ __('Status Konseling') }}</label>
             <select name="status_konseling" class="form-select" id="status_konseling">
-                <option value="berhasil">Berhasil</option>
-                <option value="gagal">Gagal</option>
-                <option value="dalamproses">Dalam Proses</option>
-                <option value="dibatalkan">Dibatalkan</option>
-                <option value="ditunda">Ditunda</option>
+                <option value="selesai">Selesai</option>
                 <option value="membutuhkantindaklanjut">Membutuhkan Tindak Lanjut</option>
             </select>
             {!! $errors->first(

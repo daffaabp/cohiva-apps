@@ -25,7 +25,7 @@ class JanjiKonseling extends Model
     protected $table = "janji_konseling";
 
 
-    protected $perPage = 20;
+    protected $perPage = 1;
 
     /**
      * Attributes that should be mass-assignable.
