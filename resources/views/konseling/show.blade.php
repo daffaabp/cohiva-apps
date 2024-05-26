@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('template_title')
-    {{ $konseling->name ?? __('Show') . " " . __('Konseling') }}
+    {{ $konseling->name ?? __('Show') . ' ' . __('Konseling') }}
 @endsection
 
 @section('content')
@@ -15,17 +15,20 @@
                         </div>
                         <div class="float-right">
                             @can('konselings.index')
-                            <a class="btn btn-primary btn-sm" href="{{ route('konselings.index') }}"> {{ __('Kembali') }}</a>
+                                <a class="btn btn-primary btn-sm" href="{{ route('konselings.index') }}"> {{ __('Kembali') }}</a>
                             @endcan
-                            
-                            @can('konselings.konselingbykonselor')
-                            <a class="btn btn-primary btn-sm" href="{{ route('konselings.konselingbykonselor') }}"> {{ __('Kembali') }}</a>
-                            @endcan
+
+                            @hasanyrole('Konselor')
+                                @can('konselings.konselingbykonselor')
+                                    <a class="btn btn-primary btn-sm" href="{{ route('konselings.konselingbykonselor') }}">
+                                        {{ __('Kembali') }}</a>
+                                @endcan
+                            @endhasanyrole
                         </div>
                     </div>
 
                     <div class="card-body bg-white">
-                        
+
                         <table class="table">
                             <tr>
                                 <th style="width: 200px; vertical-align: top;">Tanggal Konseling</th>
@@ -65,7 +68,13 @@
                             <tr>
                                 <th style="width: 200px; vertical-align: top;">Status Konseling</th>
                                 <th style="width: 30px; vertical-align: top;">:</th>
-                                <td>{{ $konseling->status_konseling }}</td>
+                                <td>
+                                    @if ($konseling->status_konseling == 'Selesai')
+                                        <span class="badge text-bg-success">Selesai</span>
+                                    @else
+                                        <span class="badge text-bg-warning">Membutuhkan Tindak Lanjut</span>
+                                    @endif
+                                </td>
                             </tr>
                             <tr>
                                 <th style="width: 200px; vertical-align: top;">Keterangan</th>

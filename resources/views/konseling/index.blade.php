@@ -60,7 +60,7 @@
                                                 11 => 'Nov',
                                                 12 => 'Des',
                                             ];
-                                        
+
                                             $bl = date('n', strtotime($konseling['tgl_konseling']));
                                             $bulan = $bulan_array[$bl];
                                             $tahun = date('Y', strtotime($konseling['tgl_konseling']));
@@ -77,7 +77,7 @@
                                             <td>{{ $konseling->status_pasien }}</td>
                                             <td>{{ $konseling->konselor->nama_konselor }}</td>
                                             <td>
-                                                @if ($konseling->status_konseling == 'selesai')
+                                                @if ($konseling->status_konseling == 'Selesai')
                                                     <span class="badge text-bg-success">Selesai</span>
                                                 @else
                                                     <span class="badge text-bg-warning">Membutuhkan Tindak Lanjut</span>
@@ -88,16 +88,22 @@
                                                 <form id="delete-form"
                                                     action="{{ route('konselings.destroy', $konseling->id_konseling) }}"
                                                     method="POST">
-                                                    <a class="btn btn-sm btn-primary "
-                                                        href="{{ route('konselings.show', $konseling->id_konseling) }}"><i
-                                                            class="ti ti-eye"></i></a>
-                                                    <a class="btn btn-sm btn-success"
-                                                        href="{{ route('konselings.edit', $konseling->id_konseling) }}"><i
-                                                            class="ti ti-pencil"></i></a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" id="delete-btn" class="btn btn-danger btn-sm"><i
-                                                            class="ti ti-trash"></i></button>
+                                                    @can('konselings.show')
+                                                        <a class="btn btn-sm btn-primary "
+                                                            href="{{ route('konselings.show', $konseling->id_konseling) }}"><i
+                                                                class="ti ti-eye"></i></a>
+                                                    @endcan
+                                                    @can('konselings.edit')
+                                                        <a class="btn btn-sm btn-success"
+                                                            href="{{ route('konselings.edit', $konseling->id_konseling) }}"><i
+                                                                class="ti ti-pencil"></i></a>
+                                                    @endcan
+                                                    @can('konselings.destroy')
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin hapus data?')"><i
+                                                                class="ti ti-trash"></i></button>
+                                                    @endcan
                                                 </form>
                                             </td>
                                         </tr>

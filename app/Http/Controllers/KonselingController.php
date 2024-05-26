@@ -35,7 +35,7 @@ class KonselingController extends Controller
         $konselings = Konseling::where('id_konselor', $konselor->id_konselor)->get();
 
         return view('konseling.konselingbykonselor', compact('konselings'));
-        
+
     }
 
     /**
@@ -55,13 +55,13 @@ class KonselingController extends Controller
     public function store(KonselingRequest $request)
     {
         $validated = $request->validated();
-        
+
         $id_janjikonseling = $validated['id_janjikonseling'];
-        
+
         $janjiKonseling = JanjiKonseling::find($id_janjikonseling);
-               
-        $validated['id_pasien'] = $janjiKonseling->id_pasien; 
-        $validated['id_konselor'] = $janjiKonseling->id_konselor; 
+
+        $validated['id_pasien'] = $janjiKonseling->id_pasien;
+        $validated['id_konselor'] = $janjiKonseling->id_konselor;
 
         Konseling::create($validated);
 
@@ -85,9 +85,9 @@ class KonselingController extends Controller
                                 ->groupByRaw("MONTH('tgl_konseling')")
                                 ->get();
         }
-        
+
         if ($rekapkonselings && $rekapkonselings->isEmpty()) {
-            $rekapkonselings = null; 
+            $rekapkonselings = null;
         } else {
             // Default query if no filter or filter results are found
             $rekapkonselings = $rekapkonselings ?: DB::table('konseling')
@@ -96,7 +96,7 @@ class KonselingController extends Controller
                                 ->get();
         }
 
-        
+
         return view('konseling.rekapkonseling', compact('rekapkonselings'))                               ;
     }
 

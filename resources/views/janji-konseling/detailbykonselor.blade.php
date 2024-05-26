@@ -26,7 +26,7 @@
                             <span class="card-title">{{ __('Detail') }} Janji Konseling</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary btn-sm" href="{{ route('janji-konselings.index') }}">
+                            <a class="btn btn-primary btn-sm" href="{{ route('janji-konselings.janjikonselor') }}">
                                 {{ __('Kembali') }}</a>
                         </div>
                     </div>

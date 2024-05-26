@@ -23,12 +23,17 @@
             6. Remisi --}}
             <label for="status_pasien" class="form-label">{{ __('Status Pasien') }}</label>
             <select name="status_pasien" id="status_pasien" class="form-select">
-                <option value="positifhiv" {{ ($konseling->status_pasien == 'positifhiv') ? 'selected' : ''  }}>Positif HIV</option>
-                <option value="aids" {{ ($konseling->status_pasien == 'aids') ? 'selected' : ''  }}>Aids</option>
-                <option value="teshiv" {{ ($konseling->status_pasien == 'teshiv') ? 'selected' : ''  }}>Tes HIV</option>
-                <option value="terjadwalkonseling" {{ ($konseling->status_pasien == 'terjadwalkonseling') ? 'selected' : ''  }}>Terjadwal Konseling</option>
-                <option value="dalamperawatan" {{ ($konseling->status_pasien == 'dalamperawatan') ? 'selected' : ''  }}>Dalam Perawatan</option>
-                <option value="remisi" {{ ($konseling->status_pasien == 'remisi') ? 'selected' : ''  }}>Remisi</option>
+                <option value="Positif HIV" {{ $konseling->status_pasien == 'Positif HIV' ? 'selected' : '' }}>Positif
+                    HIV</option>
+                <option value="Aids" {{ $konseling->status_pasien == 'Aids' ? 'selected' : '' }}>Aids</option>
+                <option value="Tes HIV" {{ $konseling->status_pasien == 'Tes HIV' ? 'selected' : '' }}>Tes HIV
+                </option>
+                <option value="Terjadwal Konseling"
+                    {{ $konseling->status_pasien == 'Terjadwal Konseling' ? 'selected' : '' }}>Terjadwal Konseling
+                </option>
+                <option value="Dalam Perawatan" {{ $konseling->status_pasien == 'Dalam Perawatan' ? 'selected' : '' }}>
+                    Dalam Perawatan</option>
+                <option value="Remisi" {{ $konseling->status_pasien == 'Remisi' ? 'selected' : '' }}>Remisi</option>
             </select>
             {!! $errors->first(
                 'status_pasien',
@@ -37,7 +42,8 @@
         </div>
         <div class="form-group mb-2 mb20">
             <label for="keluhan" class="form-label">{{ __('Keluhan') }}</label>
-            <textarea class="form-control @error('keluhan') is-invalid @enderror" name="keluhan" placeholder="Catatan keluhan pasien" id="keluhan" style="height: 100px">{{ old('penilaian', $konseling?->keluhan) }}</textarea>
+            <textarea class="form-control @error('keluhan') is-invalid @enderror" name="keluhan"
+                placeholder="Catatan keluhan pasien" id="keluhan" style="height: 100px">{{ old('penilaian', $konseling?->keluhan) }}</textarea>
             {!! $errors->first('keluhan', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
         <div class="form-group mb-2 mb20">
@@ -52,7 +58,8 @@
     <div class="col-md-6">
         <label for="keterangan" class="form-label">Keterangan</label>
         <div class="form-group mb-2 mb20">
-            <textarea class="form-control @error('keterangan') is-invalid @enderror" name="keterangan" placeholder="Keterangan" id="keterangan" style="height: 100px">{{ old('penilaian', $konseling?->keterangan) }}</textarea>
+            <textarea class="form-control @error('keterangan') is-invalid @enderror" name="keterangan" placeholder="Keterangan"
+                id="keterangan" style="height: 100px">{{ old('penilaian', $konseling?->keterangan) }}</textarea>
             {!! $errors->first('keterangan', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
         <div class="form-group mb-2 mb20">
@@ -69,8 +76,8 @@
         <div class="form-group mb-2 mb20">
             <label for="status_konseling" class="form-label">{{ __('Status Konseling') }}</label>
             <select name="status_konseling" class="form-select" id="status_konseling">
-                <option value="selesai">Selesai</option>
-                <option value="membutuhkantindaklanjut">Membutuhkan Tindak Lanjut</option>
+                <option value="Selesai">Selesai</option>
+                <option value="Membutuhkan Tindak Lanjut">Membutuhkan Tindak Lanjut</option>
             </select>
             {!! $errors->first(
                 'status_konseling',
@@ -82,12 +89,13 @@
         <button type="submit" class="btn btn-primary">{{ __('Simpan') }}</button>
 
         @can('konselings.index')
-        <a href="{{ route('konselings.index') }}" class="btn btn-outline-dark ms-2">Kembali</a>
+            <a href="{{ route('konselings.index') }}" class="btn btn-outline-dark ms-2">Kembali</a>
         @endcan
 
-        @can('konselings.konselingbykonselor')
-        <a href="{{ route('konselings.konselingbykonselor') }}" class="btn btn-outline-dark ms-2">Kembali</a>
-        @endcan
-
+        @hasanyrole('Konselor')
+            @can('konselings.konselingbykonselor')
+                <a href="{{ route('konselings.konselingbykonselor') }}" class="btn btn-outline-dark ms-2">Kembali</a>
+            @endcan
+        @endhasanyrole
     </div>
 </div>

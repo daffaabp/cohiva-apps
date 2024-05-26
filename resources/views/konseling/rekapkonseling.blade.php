@@ -23,7 +23,7 @@
                         <form action="" method="get">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <input type="month" name="filter_bln" value="value="{{ request('filter_bln') }}" class="form-control">
+                                    <input type="month" name="filter_bln" value="{{ request('filter_bln') }}" class="form-control">
                                 </div>
                                 <div class="col-md-1">
                                     <button type="submit" class="btn btn-primary"><i class="ti ti-filter"></i></button>
@@ -61,7 +61,7 @@
                                                     11 => 'November',
                                                     12 => 'Desember',
                                                 ];
-                                            
+
                                                 $bulan = $bulan_array[$rekapkonseling->rekap_bln];
                                                 $rekap_bln = $bulan;
                                             } else {

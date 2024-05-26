@@ -24,7 +24,7 @@
             <label for="notelpon_konselor" class="form-label">{{ __('Notelpon Konselor') }}</label>
             <input type="text" name="notelpon_konselor"
                 class="form-control @error('notelpon_konselor') is-invalid @enderror"
-                value="{{ old('notelpon_konselor', $konselor?->notelpon_konselor ?? 0) }}" id="notelpon_konselor"
+                value="{{ old('notelpon_konselor', $konselor?->notelpon_konselor) }}" id="notelpon_konselor"
                 placeholder="Notelpon Konselor">
             {!! $errors->first(
                 'notelpon_konselor',

@@ -23,7 +23,7 @@ class KonselorRequest extends FormRequest
     {
         return [
             'nama_konselor' => 'required|string',
-            'notelpon_konselor' => 'string',
+            'notelpon_konselor' => 'nullable|string',
             'unit_kerja' => 'required',
             'foto_konselor' => 'mimes:jpg,png|max:2048',
             'is_aktif' => 'required'
