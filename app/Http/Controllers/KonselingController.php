@@ -70,7 +70,7 @@ class KonselingController extends Controller
 
         return redirect()->route('konselings.konselingbykonselor')
             ->with('success', 'Konseling berhasil disimpan.');
-    }
+    } 
 
     public function rekapkonseling(Request $request){
         $rekapkonselings = null;

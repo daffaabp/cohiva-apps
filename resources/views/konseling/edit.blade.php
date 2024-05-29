@@ -18,6 +18,7 @@
                             {{ method_field('PATCH') }}
                             @csrf
 
+                            <input type="hidden" name="id_janjikonseling" value="{{ $konseling->id_janjikonseling }}">
                             @include('konseling.form')
 
                         </form>

@@ -31,7 +31,7 @@ class KonselingRequest extends FormRequest
 			'status_konseling' => 'required|string',
             'id_janjikonseling' => 'required'
         ];
-    }
+    } 
 
     public function messages()
     {

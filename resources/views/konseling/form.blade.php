@@ -43,7 +43,7 @@
         <div class="form-group mb-2 mb20">
             <label for="keluhan" class="form-label">{{ __('Keluhan') }}</label>
             <textarea class="form-control @error('keluhan') is-invalid @enderror" name="keluhan"
-                placeholder="Catatan keluhan pasien" id="keluhan" style="height: 100px">{{ old('penilaian', $konseling?->keluhan) }}</textarea>
+                placeholder="Catatan keluhan pasien" id="keluhan" style="height: 100px">{{ old('keluhan', $konseling?->keluhan) }}</textarea>
             {!! $errors->first('keluhan', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
         <div class="form-group mb-2 mb20">
