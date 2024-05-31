@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Pasien;
 use App\Http\Requests\PasienRequest;
 use Illuminate\Support\Facades\Auth;
@@ -19,8 +20,7 @@ class PasienController extends Controller
     {
         $pasiens = Pasien::paginate();
 
-        return view('pasien.index', compact('pasiens'))
-            ->with('i', (request()->input('page', 1) - 1) * $pasiens->perPage());
+        return view('pasien.index', compact('pasiens'))->with('i', (request()->input('page', 1) - 1) * $pasiens->perPage());
     }
 
     /**
@@ -40,16 +40,25 @@ class PasienController extends Controller
         $validated = $request->validated();
         $validated['id_user'] = Auth::user()->id;
 
+        // Mendapatkan user yang sedang login
+        $user = Auth::user();
+
+        // Memperbarui nama pada user
+        $user->name = $request->input('nama_pasien');
+        $user->save();
+
+        // Memperbarui kolom email_verified_at pada user dengan waktu sekarang
+        $user->email_verified_at = now();
+        $user->save();
+
         Pasien::create($validated);
 
         //kalau pasien nanti di redirect ke home
-        if(Auth::user()->hasRole('Pasien')){
-            return redirect()->route('info_hiv')
-                ->with('success', 'Berhasil mengisi data pasien.');
+        if (Auth::user()->hasRole('Pasien')) {
+            return redirect()->route('info_hiv')->with('success', 'Berhasil mengisi data pasien.');
         }
-        
-        return redirect()->route('pasiens.index')
-            ->with('success', 'Pasien created successfully.');
+
+        return redirect()->route('pasiens.index')->with('success', 'Pasien created successfully.');
     }
 
     /**
@@ -67,27 +76,30 @@ class PasienController extends Controller
      */
     public function edit($id)
     {
-        $pasien = Pasien::find($id);
-
+        $pasien = Pasien::findOrFail($id);
         return view('pasien.edit', compact('pasien'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(PasienRequest $request, Pasien $pasien)
+    public function update(PasienRequest $request, $id)
     {
-        $pasien->update($request->validated());
+        $pasien = Pasien::findOrFail($id);
+        $validated = $request->validated();
+        $pasien->update($validated);
 
-        return redirect()->route('pasiens.index')
-            ->with('success', 'Pasien updated successfully');
+        // Update kolom name pada tabel users
+        $user = $pasien->user;
+        $user->name = $validated['nama_pasien'];
+        $user->save();
+        return redirect()->route('pasiens.index')->with('success', 'Pasien berhasil diperbarui');
     }
 
     public function destroy($id)
     {
         Pasien::find($id)->delete();
 
-        return redirect()->route('pasiens.index')
-            ->with('success', 'Pasien deleted successfully');
+        return redirect()->route('pasiens.index')->with('success', 'Pasien deleted successfully');
     }
 }

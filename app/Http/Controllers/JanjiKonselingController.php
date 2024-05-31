@@ -23,7 +23,7 @@ class JanjiKonselingController extends Controller
      */
     public function index()
     {
-        $janjiKonselings = JanjiKonseling::paginate();
+        $janjiKonselings = JanjiKonseling::orderBy('status_janji', 'ASC')->paginate();
         $konselors = Konselor::all();
 
         return view('janji-konseling.index', compact('janjiKonselings', 'konselors'))
@@ -38,7 +38,7 @@ class JanjiKonselingController extends Controller
         $konselor = Konselor::where('id_user', $id_user)->first();
         $id_konselor = $konselor->id_konselor;
 
-        $janjiKonselings = JanjiKonseling::where('id_konselor',$id_konselor)->get();
+        $janjiKonselings = JanjiKonseling::where('id_konselor',$id_konselor)->orderBy('status_janji', 'ASC')->get();
 
         return view('janji-konseling.janjikonselor', compact('janjiKonselings'));
     }

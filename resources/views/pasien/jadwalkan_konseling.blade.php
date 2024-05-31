@@ -13,7 +13,7 @@
                     </div>
                     <div class="card-body d-grid">
                         <p>Silahkan klik tombol dibawah ini untuk konsultasi dengan Admin :</p>
-                        <a href="https://wa.me/6281225011283?text=Halo%2C%20saya%20ingin%20berkonsultasi%20via%20Chat%20WhatsApp.%0ANama%20%3A%0AUmur%20%3A%0AAlamat%20%3A%0AKeluhan%20%3A"
+                        <a href="https://wa.me/6285640094009?text=Halo%2C%20saya%20ingin%20berkonsultasi%20via%20Chat%20WhatsApp.%0ANama%20%3A%0AUmur%20%3A%0AAlamat%20%3A%0AKeluhan%20%3A"
                             class="btn btn-success btn-lg btn-block">
                             <i class="fab fa-whatsapp me-2"></i>Chat via WhatsApp
                         </a>
@@ -29,7 +29,7 @@
                     </div>
                     <div class="card-body d-grid">
                         <p>Silahkan klik tombol dibawah ini untuk konsultasi dengan Admin :</p>
-                        <a href="https://wa.me/6281225011283?text=Halo%2C%20saya%20ingin%20berkonsultasi%20via%20Video%20Call%20WhatsApp.%0ANama%20%3A%0AUmur%20%3A%0AAlamat%20%3A%0AKeluhan%20%3A"
+                        <a href="https://wa.me/6285640094009?text=Halo%2C%20saya%20ingin%20berkonsultasi%20via%20Video%20Call%20WhatsApp.%0ANama%20%3A%0AUmur%20%3A%0AAlamat%20%3A%0AKeluhan%20%3A"
                             class="btn btn-danger btn-lg btn-block">
                             <i class="fab fa-whatsapp me-2"></i>Video Call via WhatsApp
                         </a>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="card-body d-grid">
                         <p>Silahkan klik tombol dibawah ini untuk konsultasi dengan Admin :</p>
-                        <a href="https://wa.me/6281225011283?text=Halo%2C%20saya%20ingin%20berkonsultasi%20via%20Telpon%20WhatsApp.%0ANama%20%3A%0AUmur%20%3A%0AAlamat%20%3A%0AKeluhan%20%3A"
+                        <a href="https://wa.me/6285640094009?text=Halo%2C%20saya%20ingin%20berkonsultasi%20via%20Telpon%20WhatsApp.%0ANama%20%3A%0AUmur%20%3A%0AAlamat%20%3A%0AKeluhan%20%3A"
                             class="btn btn-primary btn-lg btn-block">
                             <i class="fab fa-whatsapp me-2"></i>Telpon via WhatsApp
                         </a>

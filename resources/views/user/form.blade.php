@@ -2,9 +2,9 @@
     <div class="col-md-12">
 
         <div class="form-group mb-2 mb20">
-            <label for="name" class="form-label">{{ __('Name') }}</label>
+            <label for="name" class="form-label">{{ __('Nama Lengkap Admin') }}</label>
             <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                value="{{ old('name', $user?->name) }}" id="name" placeholder="Name">
+                value="{{ old('name', $user?->name) }}" id="name" placeholder="Nama">
             {!! $errors->first('name', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
         <div class="form-group mb-2 mb20">
@@ -20,7 +20,7 @@
             {!! $errors->first('username', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
         <div class="form-group mb-2 mb20">
-            <label for="isPasien" class="form-label">{{ __('Is Pasien') }}</label>
+            <label for="isPasien" class="form-label">{{ __('Is Pasien (waji bisi dengan "Non Pasien")') }}</label>
             <div class="form-check">
                 <input class="form-check-input" value="1" type="radio"
                     {{ $user?->isPasien == 1 ? 'checked' : '' }} name="isPasien" id="flexRadioDefault1">
@@ -46,7 +46,7 @@
             {!! $errors->first('password', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
         <div class="form-group mb-2 mb20">
-            <label for="password_confirmation" class="form-label">{{ __('Konfirm Password') }}</label>
+            <label for="password_confirmation" class="form-label">{{ __('Konfirmasi Password') }}</label>
             <input type="password" name="password_confirmation"
                 class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation"
                 placeholder="Konfirm Password">
@@ -57,7 +57,7 @@
         </div>
 
         <div class="form-group mb-2 mb20">
-            <label for="role" class="form-label">{{ __('Roles') }}</label>
+            <label for="role" class="form-label">{{ __('Roles (hanya untuk menambahkan "Admin", jangan pilih selain "Admin")') }}</label>
             @foreach ($roles as $r)
                 <div class="form-check">
                     <input class="form-check-input" value="{{ $r->name }}" type="radio" name="role"

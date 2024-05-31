@@ -58,7 +58,13 @@
                                             <td>{{ ++$i }}</td>
 
                                             <td>{{ $konselor->nama_konselor }}</td>
-                                            <td>{{ $konselor->notelpon_konselor }}</td>
+
+                                            @if ($konselor->notelpon_konselor)
+                                                <td>{{ $konselor->notelpon_konselor }}</td>
+                                            @else
+                                                <td>-</td>
+                                            @endif
+
                                             <td>{{ $konselor->unit_kerja }}</td>
                                             <td>
                                                 @if ($konselor->is_aktif == 1)

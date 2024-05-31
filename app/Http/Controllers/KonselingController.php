@@ -70,7 +70,7 @@ class KonselingController extends Controller
 
         return redirect()->route('konselings.konselingbykonselor')
             ->with('success', 'Konseling berhasil disimpan.');
-    } 
+    }
 
     public function rekapkonseling(Request $request){
         $rekapkonselings = null;
@@ -127,8 +127,11 @@ class KonselingController extends Controller
     {
         $konseling->update($request->validated());
 
-        return redirect()->route('konselings.index')
-            ->with('success', 'Konseling berhasil diperbarui');
+        if (auth()->user()->hasRole('Admin')) {
+            return redirect()->route('konselings.index')->with('success', 'Konseling berhasil diperbarui');
+        } else {
+            return redirect()->route('konselings.konselingbykonselor')->with('success', 'Konseling berhasil diperbarui');
+        }
     }
 
     public function destroy($id)

@@ -81,7 +81,7 @@
                                             <td>
                                                 @if ($janjiKonseling->status_janji == 'DIJADWALKAN')
                                                     <span
-                                                        class="badge rounded-pill text-bg-primary">{{ $janjiKonseling->status_janji }}</span>
+                                                        class="badge rounded-pill text-bg-warning">{{ $janjiKonseling->status_janji }}</span>
                                                 @elseif($janjiKonseling->status_janji == 'TERLAKSANA')
                                                     <span
                                                         class="badge rounded-pill text-bg-success">{{ $janjiKonseling->status_janji }}</span>
