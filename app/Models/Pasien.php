@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -22,7 +23,7 @@ class Pasien extends Model
     protected $table = "pasien";
     protected $primaryKey = "id_pasien";
     public $timestamps = false;
-    
+
 
     protected $perPage = 20;
 
@@ -36,6 +37,11 @@ class Pasien extends Model
 
     public function konseling(){
         return $this->hasMany(Konseling::class, 'id_pasien', 'id_pasien');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
     }
 
 }

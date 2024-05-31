@@ -29,11 +29,38 @@
 
                     <div class="card-body bg-white">
 
+                        <?php
+                        if ($konseling['tgl_konseling'] != null) {
+                            $tanggal = date('j', strtotime($konseling['tgl_konseling']));
+                            $bulan_array = [
+                                1 => 'Jan',
+                                2 => 'Feb',
+                                3 => 'Mar',
+                                4 => 'Apr',
+                                5 => 'Mei',
+                                6 => 'Jun',
+                                7 => 'Jul',
+                                8 => 'Ags',
+                                9 => 'Sep',
+                                10 => 'Okt',
+                                11 => 'Nov',
+                                12 => 'Des',
+                            ];
+
+                            $bl = date('n', strtotime($konseling['tgl_konseling']));
+                            $bulan = $bulan_array[$bl];
+                            $tahun = date('Y', strtotime($konseling['tgl_konseling']));
+                            $tgl_konseling = $tanggal . ' ' . ' ' . $bulan . ' ' . $tahun;
+                        } else {
+                            $tgl_konseling = '';
+                        }
+                        ?>
+
                         <table class="table">
                             <tr>
                                 <th style="width: 200px; vertical-align: top;">Tanggal Konseling</th>
                                 <th style="width: 30px; vertical-align: top;">:</th>
-                                <td>{{ $konseling->tgl_konseling }}</td>
+                                <td>{{ $tgl_konseling }}</td>
                             </tr>
                             <tr>
                                 <th style="width: 200px; vertical-align: top;">Pasien</th>

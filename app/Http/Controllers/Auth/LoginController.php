@@ -43,9 +43,9 @@ class LoginController extends Controller
     {
         if (!$user->hasRole(['Superadmin', 'Admin', 'Konselor'])) {
 
-            if (!$user->hasVerifiedEmail()) {
-                return redirect()->route('verification.verify');  // Jika email belum diverifikasi, arahkan ke halaman tertentu
-            }
+            // if (!$user->hasVerifiedEmail()) {
+            //     return redirect()->route('verification.verify');  // Jika email belum diverifikasi, arahkan ke halaman tertentu
+            // }
 
             //cek role usernya dulu
             if ($user->hasRole('Pasien')) {

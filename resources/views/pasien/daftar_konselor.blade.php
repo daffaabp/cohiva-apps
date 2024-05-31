@@ -21,18 +21,15 @@
                                     alt="avatar">
                             @endif
 
-
-
-
                         </div>
                         <div class="card-body bg-light text-center">
                             <h4 class="card-title font-weight-bold">{{ $konselor->nama_konselor }}</h4>
                             <p class="card-text">Unit Kerja : {{ $konselor->unit_kerja }}</p>
-                            {{-- <p class="card-text" style="margin-top: -10px;"><small class="text-muted">Alamat : 123
-                                Street Name, City,
-                                Country</small></p> --}}
-                            <a class="card-text text-center" href="https://wa.me/628123456789" target="_blank"><i
-                                    class="bi bi-whatsapp dark"></i></a>
+                            @if (!empty($konselor->notelpon_konselor))
+                                <p class="card-text text-center font-weight-bold">
+                                    <i class="fab fa-whatsapp fa-lg"></i> : {{ $konselor->notelpon_konselor }}
+                                </p>
+                            @endif
                         </div>
                     </div>
                 </div>

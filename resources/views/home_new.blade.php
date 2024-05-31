@@ -27,7 +27,7 @@
                                 </li>
                                 <li class="mb-2">
                                     <i class="fas fa-check" style="color: #28a745;"></i>
-                                    Menjadwalkan sesi konseling sesuai dengan kenyamanan waktu Anda.
+                                    Menjadwalkan sesi konseling sesuai dengan kenyamanan waktu Anda lewat Admin Cohiva Apps.
                                 </li>
                             </ul>
                         </div>

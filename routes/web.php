@@ -26,10 +26,10 @@ use App\Http\Controllers\Auth\VerificationController;
 */
 
 
-Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('/register', 'App\Http\Controllers\Auth\RegisterController@register');
-Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
-    ->name('verification.verify');
+// Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
+// Route::post('/register', 'App\Http\Controllers\Auth\RegisterController@register');
+// Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
+//     ->name('verification.verify');
 
 
 Route::get('/', function () {
@@ -72,13 +72,13 @@ Route::middleware(['auth', 'isloggedin'])->group(function () {
     // end routing menu konselors
 
     // routing menu create pasiens
-    Route::get('/pasiens', [PasienController::class, 'index'])->name('pasiens.index');
-    Route::get('/pasiens/create', [PasienController::class, 'create'])->name('pasiens.create');
-    Route::post('/pasiens', [PasienController::class, 'store'])->name('pasiens.store');
-    Route::patch('/pasiens/{id_pasien}', [PasienController::class, 'update'])->name('pasiens.update');
-    Route::get('/pasiens/{id_pasien}/edit', [PasienController::class, 'edit'])->name('pasiens.edit');
-    Route::delete('/pasiens/{id_pasien}', [PasienController::class, 'destroy'])->name('pasiens.destroy');
-    Route::get('/pasiens/{id_pasien}', [PasienController::class, 'show'])->name('pasiens.show');
+    Route::get('/pasiens', [PasienController::class, 'index'])->name('pasiens.index')->middleware('permission:pasiens.index');
+    Route::get('/pasiens/create', [PasienController::class, 'create'])->name('pasiens.create')->middleware('permission:pasiens.create');
+    Route::post('/pasiens', [PasienController::class, 'store'])->name('pasiens.store')->middleware('permission:pasiens.store');
+    Route::patch('/pasiens/{id_pasien}', [PasienController::class, 'update'])->name('pasiens.update')->middleware('permission:pasiens.update');
+    Route::get('/pasiens/{id_pasien}/edit', [PasienController::class, 'edit'])->name('pasiens.edit')->middleware('permission:pasiens.edit');
+    Route::delete('/pasiens/{id_pasien}', [PasienController::class, 'destroy'])->name('pasiens.destroy')->middleware('permission:pasiens.destroy');
+    Route::get('/pasiens/{id_pasien}', [PasienController::class, 'show'])->name('pasiens.show')->middleware('permission:pasiens.show');
     // end routing menu create pasiens
 
     // routing menu users

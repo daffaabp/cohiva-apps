@@ -2,7 +2,7 @@
     <!-- Sidebar scroll-->
     <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
-            <a href="./index.html" class="text-nowrap logo-img">
+            <a href="{{ route('home_new') }}" class="text-nowrap logo-img">
                 <img src="{{ URL::to('/assets/images/logos/cohiva-logo.svg') }}" width="180" style="margin-left: 15px"
                     alt="" />
             </a>
@@ -11,6 +11,7 @@
             </div>
         </div>
         <!-- Sidebar navigation-->
+
         <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
             <ul id="sidebarnav">
                 @hasanyrole('Superadmin|Admin|Konselor|Pasien')
@@ -37,7 +38,7 @@
                     </li>
                     @can('konselings.index')
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('konselings.index') }}" aria-expanded="false">
+                            <a class="sidebar-link {{ request()->is('konselings*') && !request()->is('konselings/rekapkonseling') ? 'active' : '' }}" href="{{ route('konselings.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-article"></i>
                                 </span>
@@ -65,7 +66,7 @@
 
                     @can('janji-konselings.index')
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('janji-konselings.index') }}" aria-expanded="false">
+                            <a class="sidebar-link {{ request()->is('janji-konseling*') ? 'active' : '' }}" href="{{ route('janji-konselings.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-clipboard"></i>
                                 </span>
@@ -76,7 +77,7 @@
 
                     @can('konselings.konselingbykonselor')
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('konselings.konselingbykonselor') }}" aria-expanded="false">
+                            <a class="sidebar-link {{ request()->is('konselings*') ? 'active' : '' }}" href="{{ route('konselings.konselingbykonselor') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-comments">&#xeaef;</i>
                                 </span>
@@ -92,7 +93,7 @@
                         <span class="hide-menu">JADWAL</span>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{ route('jadwal-konselors.index') }}" aria-expanded="false">
+                        <a class="sidebar-link {{ request()->is('jadwal-konselors*') ? 'active' : '' }}" href="{{ route('jadwal-konselors.index') }}" aria-expanded="false">
                             <span>
                                 <i class="ti ti-calendar"></i>
                             </span>
@@ -109,7 +110,7 @@
                     @can('janji-konselings.janjikonselor')
                         {{-- menu janji konseling by konselor --}}
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('janji-konselings.janjikonselor') }}" aria-expanded="false">
+                            <a class="sidebar-link {{ request()->is('janji-konseling*') ? 'active' : '' }}" href="{{ route('janji-konselings.janjikonselor') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-clipboard"></i>
                                 </span>
@@ -126,7 +127,7 @@
                     </li>
                     @can('konselors.index')
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('konselors.index') }}" aria-expanded="false">
+                            <a class="sidebar-link {{ request()->is('konselors*') ? 'active' : '' }}" href="{{ route('konselors.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-cards"></i>
                                 </span>
@@ -137,7 +138,7 @@
 
                     @can('pasiens.index')
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('pasiens.index') }}" aria-expanded="false">
+                            <a class="sidebar-link {{ request()->is('pasiens*') ? 'active' : '' }}" href="{{ route('pasiens.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-heart-broken"></i>
                                 </span>
@@ -154,8 +155,8 @@
                     </li>
 
                     @can('roles.index')
-                        <li class="sidebar-item sub-menu">
-                            <a class="sidebar-link" href="{{ route('roles.index') }}" aria-expanded="false">
+                        <li class="sidebar-item">
+                            <a class="sidebar-link {{ request()->is('roles*') ? 'active' : '' }}" href="{{ route('roles.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-cards"></i>
                                 </span>
@@ -165,8 +166,8 @@
                     @endcan
 
                     @can('users.index')
-                        <li class="sidebar-item sub-menu">
-                            <a class="sidebar-link" href="{{ route('users.index') }}" aria-expanded="false">
+                        <li class="sidebar-item">
+                            <a class="sidebar-link {{ request()->is('users*') ? 'active' : '' }}" href="{{ route('users.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-id-badge"></i>
                                 </span>
@@ -232,38 +233,3 @@
     </div>
     <!-- End Sidebar scroll-->
 </aside>
-
-<style>
-    #userDropdown {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.2s linear;
-    }
-
-    #userDropdown.show {
-        max-height: 200px;
-    }
-
-    .menu-arrow {
-        margin-left: auto;
-        margin-right: 10px;
-    }
-
-    .sub-menu {
-        padding-left: 20px;
-    }
-</style>
-
-<script>
-    function toggleUserDropdown() {
-        var userDropdown = document.getElementById("userDropdown");
-        userDropdown.classList.toggle("show");
-
-
-        var menuArrow = document.querySelector(
-            ".sidebar-item .menu-arrow i"); // Perbarui selektor untuk mengambil ikon FontAwesome
-        menuArrow.classList.toggle("fa-chevron-down");
-        menuArrow.classList.toggle("fa-chevron-up");
-
-    }
-</script>

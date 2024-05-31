@@ -49,14 +49,17 @@ class RegisterController extends Controller
 
     protected function registered(Request $request, $user)
     {
-        $user->sendEmailVerificationNotification();
+        // $user->sendEmailVerificationNotification();
         // Tambahkan role "Pasien" setelah registrasi dan verifikasi email
         $role = Role::where('name', 'Pasien')->first();
         $user->assignRole($role);
 
         // Tambahkan permissions yang terkait dengan role "Pasien"
         $user->syncPermissions($role->permissions);
-        return redirect($this->redirectPath());
+        // Logout user after registration
+        $this->guard()->logout();
+
+        return redirect($this->redirectPath())->with('success', 'Registrasi berhasil. Silahkan login kembali.');
     }
 
     /**
@@ -70,13 +73,17 @@ class RegisterController extends Controller
         return Validator::make(
             $data,
             [
-                'username' => ['required', 'string', 'max:255', 'unique:users'],
+                'username' => ['required', 'string', 'max:20', 'unique:users', 'regex:/^\S*$/', 'min:5'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
             ],
             [
-                'username.unique' => 'Username sudah pernah digunakan.',
+                'username.unique' => 'Username sudah ada, harap isi dengan yang lain.',
+                'regex' => 'Username tidak boleh mengandung karakter spasi',
+                'min' => 'Username minimal berisi 5 karakter',
+                'max' => 'Username tidak boleh melebihi 20 karakter',
                 'email.unique' => 'Email sudah pernah digunakan atau tidak valid.',
+                'confirmed' => 'Konfirmasi Password harus sama.',
             ],
         );
     }
@@ -92,6 +99,7 @@ class RegisterController extends Controller
         return User::create([
             'username' => $data['username'],
             'email' => $data['email'],
+            'email_verified_at' => now(),
             'password' => Hash::make($data['password']),
             'isPasien' => 1,
         ]);

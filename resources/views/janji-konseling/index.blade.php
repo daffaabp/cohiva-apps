@@ -75,7 +75,7 @@
                                                 $tgl_janji_konseling = $tanggal . ' ' . ' ' . $bulan . ' ' . $tahun;
                                             } else {
                                                 $tgl_janji_konseling = '';
-                                            } 
+                                            }
                                             ?>
                                             <td>{{ $tgl_janji_konseling }}</td>
                                             <td>{{ $janjiKonseling->nama_konselor }}</td>
@@ -86,7 +86,7 @@
                                             <td>
                                                 @if ($janjiKonseling->status_janji == 'DIJADWALKAN')
                                                     <span
-                                                        class="badge rounded-pill text-bg-primary">{{ $janjiKonseling->status_janji }}</span>
+                                                        class="badge rounded-pill text-bg-warning">{{ $janjiKonseling->status_janji }}</span>
                                                 @elseif($janjiKonseling->status_janji == 'TERLAKSANA')
                                                     <span
                                                         class="badge rounded-pill text-bg-success">{{ $janjiKonseling->status_janji }}</span>

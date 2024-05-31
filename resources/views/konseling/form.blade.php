@@ -65,8 +65,10 @@
         <div class="form-group mb-2 mb20">
             <label for="jenis_konseling" class="form-label">{{ __('Jenis Konseling') }}</label>
             <select name="jenis_konseling" class="form-select" id="jenis_konseling">
-                <option value="Terbuka">Terbuka</option>
-                <option value="Tertutup">Tertutup</option>
+                <option value="Terbuka" {{ $konseling->jenis_konseling == 'Terbuka' ? 'selected' : '' }}>Terbuka
+                </option>
+                <option value="Tertutup" {{ $konseling->jenis_konseling == 'Tertutup' ? 'selected' : '' }}>Tertutup
+                </option>
             </select>
             {!! $errors->first(
                 'jenis_konseling',
@@ -76,8 +78,8 @@
         <div class="form-group mb-2 mb20">
             <label for="status_konseling" class="form-label">{{ __('Status Konseling') }}</label>
             <select name="status_konseling" class="form-select" id="status_konseling">
-                <option value="Selesai">Selesai</option>
-                <option value="Membutuhkan Tindak Lanjut">Membutuhkan Tindak Lanjut</option>
+                <option value="Selesai" {{ $konseling->status_konseling == 'Selesai' ? 'selected' : '' }}>Selesai</option>
+                <option value="Membutuhkan Tindak Lanjut" {{ $konseling->status_konseling == 'Membutuhkan Tindak Lanjut' ? 'selected' : '' }}>Membutuhkan Tindak Lanjut</option>
             </select>
             {!! $errors->first(
                 'status_konseling',
