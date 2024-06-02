@@ -21,16 +21,28 @@ class JanjiKonselingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $req)
     {
-        $janjiKonselings = JanjiKonseling::orderBy('status_janji', 'ASC')->paginate();
-        $konselors = Konselor::all();
 
-        return view('janji-konseling.index', compact('janjiKonselings', 'konselors'))
+        $keyword = $req->keyword;
+        $janjiKonselings = JanjiKonseling::orderBy('status_janji', 'ASC');
+
+        if (isset($keyword)) {
+            $janjiKonselings = $janjiKonselings->where('nama_konselor', 'like', '%' . $keyword . '%')
+                ->orWhereHas('pasien', function($query) use ($keyword) {
+                    $query->where('nama_pasien', 'like', '%' . $keyword . '%');
+                })
+                ->orWhere('hari', 'like', '%'.$keyword.'%');
+        }
+
+        $janjiKonselings = $janjiKonselings->paginate();
+
+        return view('janji-konseling.index', compact('janjiKonselings'))
             ->with('i', (request()->input('page', 1) - 1) * $janjiKonselings->perPage());
     }
 
-    public function janjikonselor(){
+    public function janjikonselor()
+    {
         //ambil id usernya
         $id_user = Auth::user()->id;
 
@@ -38,12 +50,13 @@ class JanjiKonselingController extends Controller
         $konselor = Konselor::where('id_user', $id_user)->first();
         $id_konselor = $konselor->id_konselor;
 
-        $janjiKonselings = JanjiKonseling::where('id_konselor',$id_konselor)->orderBy('status_janji', 'ASC')->get();
+        $janjiKonselings = JanjiKonseling::where('id_konselor', $id_konselor)->orderBy('status_janji', 'ASC')->get();
 
         return view('janji-konseling.janjikonselor', compact('janjiKonselings'));
     }
 
-    public function detailbykonselor($id){
+    public function detailbykonselor($id)
+    {
         $janjiKonseling = JanjiKonseling::find($id);
 
         return view('janji-konseling.detailbykonselor', compact('janjiKonseling'));
@@ -56,7 +69,7 @@ class JanjiKonselingController extends Controller
     {
         $id_konselor = $id;
         $janjiKonseling = new JanjiKonseling();
-        $jadwalkonselors = JadwalKonselor::where('id_konselor','=', $id_konselor)->get();
+        $jadwalkonselors = JadwalKonselor::where('id_konselor', '=', $id_konselor)->get();
         $pasiens = Pasien::all();
 
         return view('janji-konseling.create', compact('janjiKonseling', 'jadwalkonselors', 'pasiens', 'id_konselor'));
@@ -115,7 +128,7 @@ class JanjiKonselingController extends Controller
         $jadwal_hari = $jadwalkonselor->hari;
 
         $selectedHari = Carbon::parse($request->tgl_janji_konseling)->locale('id')->dayName;
-        if($selectedHari != $jadwal_hari){
+        if ($selectedHari != $jadwal_hari) {
             return redirect()->action([JanjiKonselingController::class, 'create'], ['id' => $id_konselor])->with('error', 'Tanggal yang dipilih tidak sesuai jadwal!');
         }
 
@@ -178,7 +191,8 @@ class JanjiKonselingController extends Controller
             ->with('success', 'Janji Konseling berhasil di hapus!');
     }
 
-    public function getjadwal(Request $request){
+    public function getjadwal(Request $request)
+    {
         $idKonselor = $request->input('id_konselor');
 
         $jadwalKonselor = JadwalKonselor::where('id_konselor', '=', $idKonselor)->get();
@@ -186,15 +200,16 @@ class JanjiKonselingController extends Controller
         return response()->json($jadwalKonselor);
     }
 
-    public function pilihkonselor(Request $request){
+    public function pilihkonselor(Request $request)
+    {
 
         $konselors = DB::table('jadwal_konselor')
-                    ->leftJoin('konselor','jadwal_konselor.id_konselor','=','konselor.id_konselor')
-                    ->select('jadwal_konselor.hari', 'jadwal_konselor.jam', 'konselor.id_konselor', 'konselor.nama_konselor')
-                    ->groupBy('konselor.id_konselor')
-                    ->get();
+            ->leftJoin('konselor', 'jadwal_konselor.id_konselor', '=', 'konselor.id_konselor')
+            ->select('jadwal_konselor.hari', 'jadwal_konselor.jam', 'konselor.id_konselor', 'konselor.nama_konselor')
+            ->groupBy('konselor.id_konselor')
+            ->get();
 
-        if(isset($request->id_konselor)){
+        if (isset($request->id_konselor)) {
             return redirect()->action(
                 [JanjiKonselingController::class, 'create'],
                 ['id' => $request->id_konselor]

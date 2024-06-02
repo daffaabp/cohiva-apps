@@ -21,21 +21,32 @@ class KonselingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $req)
     {
-        $konselings = Konseling::paginate();
+        $keyword = $req->keyword;
+        $konselings = Konseling::query();
+
+        if (isset($keyword)) {
+            $konselings = $konselings->whereHas('konselor', function ($query) use ($keyword) {
+                $query->where('nama_konselor', 'like', '%' . $keyword . '%');
+            })->orWhereHas('pasien', function ($query) use ($keyword) {
+                    $query->where('nama_pasien', 'like', '%' . $keyword . '%');
+                })->orWhere('status_pasien', 'like', '%'.$keyword.'%');
+        }
+
+        $konselings = $konselings->paginate();
 
         return view('konseling.index', compact('konselings'))
             ->with('i', (request()->input('page', 1) - 1) * $konselings->perPage());
     }
 
-    public function konselingbykonselor(){
+    public function konselingbykonselor()
+    {
         $id_user = Auth::user()->id;
         $konselor = Konselor::where('id_user', $id_user)->first();
         $konselings = Konseling::where('id_konselor', $konselor->id_konselor)->get();
 
         return view('konseling.konselingbykonselor', compact('konselings'));
-
     }
 
     /**
@@ -72,18 +83,19 @@ class KonselingController extends Controller
             ->with('success', 'Konseling berhasil disimpan.');
     }
 
-    public function rekapkonseling(Request $request){
+    public function rekapkonseling(Request $request)
+    {
         $rekapkonselings = null;
         $filter_bln = $request->filter_bln;
 
-        if($filter_bln){
+        if ($filter_bln) {
             list($tahun, $bulan) = explode('-', $filter_bln);
             $rekapkonselings = DB::table('konseling')
-                                ->select(DB::raw('COUNT(id_konseling) as jml_konseling, MONTH(tgl_konseling) as rekap_bln, YEAR(tgl_konseling) as rekap_tahun'))
-                                ->whereYear('tgl_konseling', $tahun)
-                                ->whereMonth('tgl_konseling', $bulan)
-                                ->groupByRaw("MONTH('tgl_konseling')")
-                                ->get();
+                ->select(DB::raw('COUNT(id_konseling) as jml_konseling, MONTH(tgl_konseling) as rekap_bln, YEAR(tgl_konseling) as rekap_tahun'))
+                ->whereYear('tgl_konseling', $tahun)
+                ->whereMonth('tgl_konseling', $bulan)
+                ->groupByRaw("MONTH('tgl_konseling')")
+                ->get();
         }
 
         if ($rekapkonselings && $rekapkonselings->isEmpty()) {
@@ -91,13 +103,13 @@ class KonselingController extends Controller
         } else {
             // Default query if no filter or filter results are found
             $rekapkonselings = $rekapkonselings ?: DB::table('konseling')
-                                ->select(DB::raw('COUNT(id_konseling) as jml_konseling, MONTH(tgl_konseling) as rekap_bln, YEAR(tgl_konseling) as rekap_tahun'))
-                                ->groupByRaw("MONTH(tgl_konseling), YEAR(tgl_konseling)")
-                                ->get();
+                ->select(DB::raw('COUNT(id_konseling) as jml_konseling, MONTH(tgl_konseling) as rekap_bln, YEAR(tgl_konseling) as rekap_tahun'))
+                ->groupByRaw("MONTH(tgl_konseling), YEAR(tgl_konseling)")
+                ->get();
         }
 
 
-        return view('konseling.rekapkonseling', compact('rekapkonselings'))                               ;
+        return view('konseling.rekapkonseling', compact('rekapkonselings'));
     }
 
     /**
