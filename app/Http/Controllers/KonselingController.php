@@ -105,7 +105,8 @@ class KonselingController extends Controller
      */
     public function show($id)
     {
-        $konseling = Konseling::find($id);
+        $id_konseling = decrypt($id);
+        $konseling = Konseling::find($id_konseling);
 
         return view('konseling.show', compact('konseling'));
     }
@@ -115,7 +116,8 @@ class KonselingController extends Controller
      */
     public function edit($id)
     {
-        $konseling = Konseling::find($id);
+        $id_konseling = decrypt($id);
+        $konseling = Konseling::find($id_konseling);
 
         return view('konseling.edit', compact('konseling'));
     }

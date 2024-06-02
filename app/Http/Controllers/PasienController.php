@@ -40,14 +40,9 @@ class PasienController extends Controller
         $validated = $request->validated();
         $validated['id_user'] = Auth::user()->id;
 
-        // Mendapatkan user yang sedang login
-        $user = Auth::user();
-
-        // Memperbarui nama pada user
-        $user->name = $request->input('nama_pasien');
-        $user->save();
-
-        // Memperbarui kolom email_verified_at pada user dengan waktu sekarang
+        //memperbarui data nama user dan waktu verifikasi email saat menginputkan data pasien
+        $user = User::find(Auth::user()->id);
+        $user->name = $request->nama_pasien;
         $user->email_verified_at = now();
         $user->save();
 
@@ -58,7 +53,7 @@ class PasienController extends Controller
             return redirect()->route('info_hiv')->with('success', 'Berhasil mengisi data pasien.');
         }
 
-        return redirect()->route('pasiens.index')->with('success', 'Pasien created successfully.');
+        // return redirect()->route('pasiens.index')->with('success', 'Pasien created successfully.');
     }
 
     /**

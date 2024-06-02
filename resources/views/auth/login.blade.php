@@ -51,7 +51,7 @@
                                         <label for="exampleInputEmail1" class="form-label">Username</label>
                                         <input id="username" type="text"
                                             class="form-control @error('username') is-invalid @enderror" name="username"
-                                            value="{{ old('username') }}" required autocomplete="username" autofocus>
+                                            value="{{ old('username') }}" required autocomplete="off" autofocus>
                                     </div>
 
                                     <div class="mb-4">

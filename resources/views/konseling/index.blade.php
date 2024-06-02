@@ -86,16 +86,16 @@
 
                                             <td>
                                                 <form id="delete-form"
-                                                    action="{{ route('konselings.destroy', $konseling->id_konseling) }}"
+                                                    action="{{ route('konselings.destroy', encrypt($konseling->id_konseling)) }}"
                                                     method="POST">
                                                     @can('konselings.show')
                                                         <a class="btn btn-sm btn-primary "
-                                                            href="{{ route('konselings.show', $konseling->id_konseling) }}"><i
+                                                            href="{{ route('konselings.show', encrypt($konseling->id_konseling)) }}"><i
                                                                 class="ti ti-eye"></i></a>
                                                     @endcan
                                                     @can('konselings.edit')
                                                         <a class="btn btn-sm btn-success"
-                                                            href="{{ route('konselings.edit', $konseling->id_konseling) }}"><i
+                                                            href="{{ route('konselings.edit', encrypt($konseling->id_konseling)) }}"><i
                                                                 class="ti ti-pencil"></i></a>
                                                     @endcan
                                                     @can('konselings.destroy')

@@ -36,6 +36,7 @@
                                 <input id="username" type="text" name="username"
                                     class="form-control @error('username') is-invalid @enderror"
                                     value="{{ old('username') }}" required autocomplete="username" autofocus>
+                                    <div id="username" class="form-text"><span class="text-danger">*</span>Silahkan input username tanpa tanda spasi</div>
                                 @error('username')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

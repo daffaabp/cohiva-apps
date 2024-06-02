@@ -1,6 +1,7 @@
 <div class="row padding-1 p-1">
     <div class="col-md-6">
 
+        <input type="hidden" name="id_jadwalkonselor" value="{{ $janjiKonseling->id_jadwalkonselor }}">
         <div class="form-group mb-2 mb20">
             <label for="tgl_janji_konseling" class="form-label">{{ __('Tanggal Janji') }}</label>
             <input type="date" name="tgl_janji_konseling"
@@ -14,7 +15,7 @@
         </div>
 
         <div class="form-group mb-2 mb20">
-            <label for="status_janji" class="form-label">{{ __('Is Aktif') }}</label>
+            <label for="status_janji" class="form-label">{{ __('Status Janji') }}</label>
             <div class="form-check mb-2">
                 <input class="form-check-input" value="DIJADWALKAN"
                     {{ $janjiKonseling->status_janji == 'DIJADWALKAN' ? 'checked' : '' }} type="radio"

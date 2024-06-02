@@ -99,7 +99,7 @@
                                             <td>
                                                 @can('janji-konselings.show')
                                                     <a class="btn btn-sm btn-primary "
-                                                        href="{{ route('janji-konselings.show', $janjiKonseling->id) }}"> <i
+                                                        href="{{ route('janji-konselings.show', encrypt($janjiKonseling->id)) }}"> <i
                                                             class="ti ti-eye"></i></a>
                                                 @endcan
 
@@ -108,7 +108,7 @@
                                                 @if ($janjiKonseling->status_janji == 'DIJADWALKAN' && date('Y-m-d') <= $janjiKonseling->tgl_janji_konseling)
                                                     @can('janji-konselings.edit')
                                                         <a class="btn btn-sm btn-success"
-                                                            href="{{ route('janji-konselings.edit', $janjiKonseling->id) }}">
+                                                            href="{{ route('janji-konselings.edit', encrypt($janjiKonseling->id)) }}">
                                                             <i class="ti ti-pencil"></i></a>
                                                     @endcan
 

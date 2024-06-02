@@ -65,7 +65,7 @@ class JanjiKonselingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(JanjiKonselingRequest $request)
+    public function store(JanjiKonselingRequest $request) 
     {
         //deklarasi variable
         $id_jadwalkonselor = $request->id_jadwalkonselor;
@@ -142,7 +142,8 @@ class JanjiKonselingController extends Controller
      */
     public function show($id)
     {
-        $janjiKonseling = JanjiKonseling::find($id);
+        $id_janjikonseling = decrypt($id);
+        $janjiKonseling = JanjiKonseling::find($id_janjikonseling);
 
         return view('janji-konseling.show', compact('janjiKonseling'));
     }
