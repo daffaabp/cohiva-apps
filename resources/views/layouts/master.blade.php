@@ -4,9 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cohiva Apps</title>
+    <title>@yield('template_title')</title>
     <link rel="shortcut icon" type="image/png" href="{{ URL::to('/assets/images/logos/logo.svg') }}" />
     <link rel="stylesheet" href="{{ URL::to('/assets/css/styles.min.css') }}" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    @stack('custom-css')
 </head>
 
 <body>
@@ -28,15 +31,12 @@
             <!--  Header End -->
 
 
-            <div class="container-fluid">
-                <!--  Row 1 -->
 
-                @yield('content')
+            @yield('content')
 
 
 
-                @include('layouts.footer')
-            </div>
+            @include('layouts.footer')
         </div>
     </div>
     <script src="{{ URL::to('/assets/libs/jquery/dist/jquery.min.js') }}"></script>
@@ -46,6 +46,30 @@
     <script src="{{ URL::to('/assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ URL::to('/assets/libs/simplebar/dist/simplebar.js') }}"></script>
     <script src="{{ URL::to('/assets/js/dashboard.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $("#delete-btn").click(function(event) {
+                event.preventDefault(); // Menghentikan aksi default (submit form)
+                if (confirm('Yakin ingin menghapus data?')) {
+                    $("#delete-form").submit(); // Mengirimkan formulir jika pengguna menekan OK
+                }
+            });
+
+            $(document).keydown(function(event) {
+                if (event.ctrlKey && event.key === '/') {
+                    $('#formkeyword').find('input, button').prop('disabled', false);
+                    $('#formkeyword input:first').focus();
+                    event.preventDefault();
+                }
+            });
+
+            $('.js-example-basic-single').select2(); //running select2
+
+        });
+    </script>
+
 </body>
 
 </html>
