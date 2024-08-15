@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Konselor;
 use Illuminate\Database\Eloquent\Model;
 
 /**

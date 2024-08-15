@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Konseling;
+use App\Models\JadwalKonselor;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -39,12 +41,12 @@ class Konselor extends Model
      */
     public function konselings()
     {
-        return $this->hasMany(\App\Models\Konseling::class, 'id_konselor', 'id_konselor');
+        return $this->hasMany(Konseling::class, 'id_konselor', 'id_konselor');
     }
 
-    public function jadwal_konselor(){
+    public function jadwalKonselors(){
         return $this->hasMany(JadwalKonselor::class, 'id_konselor', 'id_konselor');
     }
-    
+
 
 }

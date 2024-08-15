@@ -30,6 +30,15 @@
                                     <i class="fab fa-whatsapp fa-lg"></i> : {{ $konselor->notelpon_konselor }}
                                 </p>
                             @endif
+
+                            {{-- Tambahkan bagian jadwal konseling --}}
+                            {{-- @forelse ($konselor->jadwalKonselors as $jadwal)
+                                <p>
+                                    {{ $jadwal->hari }} - {{ $jadwal->jam }} ({{ $jadwal->status }})
+                                </p>
+                            @empty
+                                <p>Jadwal belum tersedia.</p>
+                            @endforelse --}}
                         </div>
                     </div>
                 </div>
