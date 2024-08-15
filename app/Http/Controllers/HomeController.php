@@ -35,7 +35,7 @@ class HomeController extends Controller
                 return redirect()->route('pasiens.create');
             }
         }
-        
+
         return view('home_new');
     }
 
@@ -46,7 +46,7 @@ class HomeController extends Controller
 
     public function daftar_konselor()
     {
-        $konselors = Konselor::where('is_aktif','=', 1)->get();
+        $konselors = Konselor::where('is_aktif','=', 1)->with('jadwalKonselors')->get();
         return view('pasien.daftar_konselor', compact('konselors'));
     }
 
