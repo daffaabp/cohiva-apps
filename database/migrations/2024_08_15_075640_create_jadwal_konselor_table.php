@@ -12,12 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('jadwal_konselor', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('id_konselor');
-            $table->string('hari', length:10);
-            $table->time('jam', precision: 0);
-            $table->string('status', length:10);
+            $table->bigIncrements('id');
+            $table->unsignedInteger('id_konselor');
+            $table->string('hari', 10);
+            $table->time('jam');
+            $table->string('status', 10);
             $table->timestamps();
+
+            $table->foreign('id_konselor')->references('id_konselor')->on('konselor')->onUpdate('cascade')->onDelete('restrict');
         });
     }
 
